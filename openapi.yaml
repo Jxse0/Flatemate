@@ -82,6 +82,7 @@ paths:
                 id:
                   type: string
                   format: string
+                  example: b535e4d6-d412-461d-bb36-757c49e43f49
       responses:
         '200':
           description: User details retrieved successfully
