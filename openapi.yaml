@@ -73,16 +73,13 @@ paths:
       summary: Get user details
       tags:
         - USER
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                id:
-                  type: string
-                  example: "3c7fa4e9-8d9d-4d76-8dea-80c6edf312e7"
+      parameters:
+        - name: id
+          in: query
+          description: ID of the user
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: User details retrieved successfully
