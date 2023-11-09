@@ -1,9 +1,13 @@
 export interface User {
-  id: number;
+  id: string;
   email: string;
-  firstname: string;
-  lastname: string;
+  username: string;
   paypal: string;
+  password: string;
+}
+
+export interface UserNotFoundError {
+  message: string;
 }
 
 export type CreateUser = Omit<User, "id">;

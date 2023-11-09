@@ -1,44 +1,65 @@
-import { User, CreateUser } from "../types/User";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { User, CreateUser, UserNotFoundError } from "../types/User";
+import db from "../utils/db";
+import bcrypt from "bcrypt";
 
 const service = {
   async getAll(): Promise<User[]> {
     try {
-      const users = await prisma.user.findMany();
-      await prisma.$disconnect();
+      const users = await db.user.findMany();
+      await db.$disconnect();
       return users as User[];
     } catch (e) {
       console.error(e);
-      await prisma.$disconnect();
+      await db.$disconnect();
       process.exit(1);
     }
   },
 
   async create(user: CreateUser) {
-    console.log(user);
-    const ids = await this.getAll();
-    const id = ids.length + 1;
-    console.log(id);
-    await prisma.user
-      .create({
-        data: {
-          id: id,
-          email: user.email,
-          firstname: user.firstname,
-          lastname: user.lastname,
-          paypal: user.paypal,
-        },
-      })
-      .then(async () => {
-        await prisma.$disconnect();
-      })
-      .catch(async (e) => {
-        console.error(e);
-        await prisma.$disconnect();
-        process.exit(1);
+    try {
+      user.password = bcrypt.hashSync(user.password, 12);
+      const newUser = await db.user.create({
+        data: user,
       });
+      await db.$disconnect();
+      return newUser;
+    } catch (e) {
+      console.error(e);
+      await db.$disconnect();
+      process.exit(1);
+    }
+  },
+
+  async getOne(id: string): Promise<User | UserNotFoundError> {
+    try {
+      const user = await db.user.findUnique({
+        where: { id },
+      });
+
+      if (!user) {
+        return { message: "User not found" };
+      }
+
+      return user;
+    } catch (error) {
+      console.error(error);
+      return { message: "Error retrieving user" };
+    }
+  },
+  async findUserByEmail(email: string) {
+    try {
+      const user = await db.user.findUnique({
+        where: {
+          email,
+        },
+      });
+      return user;
+    } catch (e) {
+      console.error(e);
+      throw new Error("Error finding user by email");
+    } finally {
+      await db.$disconnect();
+    }
   },
 };
 
