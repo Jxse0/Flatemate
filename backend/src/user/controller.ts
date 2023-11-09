@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import service from "./service";
+import returnUser from "../middleware/returnUser";
 
 const controller = {
   async getAll(request: Request, response: Response) {
@@ -30,7 +31,8 @@ const controller = {
     }
   },
   async getOne(request: Request, response: Response) {
-    const user = await service.getOne(request.body.id);
+    const user_token = returnUser(request);
+    const user = await service.getOne(user_token.id);
     response.json(user);
   },
 };
