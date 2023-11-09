@@ -69,7 +69,7 @@ paths:
         '401':
           description: Unauthorized - Invalid email or password
   "/user/info":
-    get:
+    post:
       tags: [USER]
       summary: Get user details
       requestBody:
