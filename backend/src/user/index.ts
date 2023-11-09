@@ -4,6 +4,5 @@ import controller from "./controller";
 const app = express.Router();
 
 app.get("", controller.getAll);
-
-app.post("", controller.create);
+app.post("/info", controller.getOne);
 export default app;

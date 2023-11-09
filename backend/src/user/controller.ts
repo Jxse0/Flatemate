@@ -11,6 +11,10 @@ const controller = {
     const newData = await service.create(request.body);
     response.status(201).json(newData);
   },
+  async getOne(request: Request, response: Response) {
+    const user = await service.getOne(request.body.id);
+    response.json(user);
+  },
 };
 
 export default controller;
