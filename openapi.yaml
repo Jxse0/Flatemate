@@ -34,7 +34,7 @@ paths:
                   email: "PeterParker@web.spider"
                   password: "spiderman123!"
                   username: "Spidey"
-                  paypal": "avengers@marvel.com" 
+                  paypal: "avengers@marvel.com" 
       responses:
         '201':
           description: User successfully registered
