@@ -68,3 +68,24 @@ paths:
           description: User logged in successfully
         '401':
           description: Unauthorized - Invalid email or password
+  /user/info:
+    get:
+      summary: Get user details
+      tags:
+        - USER
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: string
+                  description: Userid
+      responses:
+        '200':
+          description: User details retrieved successfully
+        '401':
+          description: Unauthorized - User details not available
