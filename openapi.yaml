@@ -1,15 +1,17 @@
 openapi: 3.0.0
 info:
-  title: User Authentication API
+  title: Flatmate
   version: 1.0.0
-  description: API endpoints for user registration and login
+  description: API endpoints for Flatmate
 
 servers:
   - url: http://localhost:3001
+    description: DEV Localhost
 
 paths:
   /auth/register:
     post:
+      tags: ["AUTH"]
       summary: Register a new user
       requestBody:
         required: true
@@ -23,7 +25,6 @@ paths:
                   format: email
                 password:
                   type: string
-                  description: Password should have a minimum length and include special characters
                 username:
                   type: string
                 paypal:
@@ -37,6 +38,7 @@ paths:
 
   /auth/login:
     post:
+      tags: ["AUTH"]
       summary: User login
       requestBody:
         required: true
@@ -48,6 +50,7 @@ paths:
                 email:
                   type: string
                   format: email
+                  description: E-Mail of the User 
                 password:
                   type: string
                   description: Password for the user
