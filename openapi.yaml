@@ -1,0 +1,58 @@
+openapi: 3.0.0
+info:
+  title: User Authentication API
+  version: 1.0.0
+  description: API endpoints for user registration and login
+
+servers:
+  - url: http://localhost:3001
+
+paths:
+  /auth/register:
+    post:
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  description: Password should have a minimum length and include special characters
+                username:
+                  type: string
+                paypal:
+                  type: string
+                  format: email
+      responses:
+        '201':
+          description: User successfully registered
+        '400':
+          description: Invalid request data
+
+  /auth/login:
+    post:
+      summary: User login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  description: Password for the user
+      responses:
+        '200':
+          description: User logged in successfully
+        '401':
+          description: Unauthorized - Invalid email or password
