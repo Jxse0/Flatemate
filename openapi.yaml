@@ -82,7 +82,6 @@ paths:
               properties:
                 id:
                   type: string
-                  format: string
                   description: Userid
       responses:
         '200':
