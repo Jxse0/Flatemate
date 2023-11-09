@@ -1,10 +1,11 @@
-import express from "express";
-import controller from "./controller";
+import { Router } from "express";
+import authController from "./controller";
+import validate from "../middleware/valitator";
+import * as auth_validator from "../validations/auth";
 
-const app = express.Router();
+const authRouter = Router();
 
-app.post("/register", controller.create);
-app.post("/login", controller.login);
-app.post("/refreshToken", controller.refreshToken);
-app.post("/logout", controller.logout);
-export default app;
+authRouter.post("/login", validate(auth_validator.login), authController.login);
+authRouter.post("/token", authController.token);
+
+export default authRouter;

@@ -1,69 +1,42 @@
-import { RefreshToken, RefreshTokenData } from "../types/Auth";
-import db from "../utils/db";
-import hashToken from "../utils/hashToken";
+import jwt from "jsonwebtoken";
+
+type ywtAuth = {
+  token: string;
+  refreshToken: string;
+};
+
+function generateAccessToken(id: string, username: string) {
+  return jwt.sign({ id: id, username: username }, process.env.SECRET || "", {
+    expiresIn: "3h",
+  });
+}
 
 const service = {
-  async create({
-    jti,
-    refreshToken,
-    userId,
-  }: RefreshTokenData): Promise<RefreshToken> {
+  login(id: string, username: string): ywtAuth {
+    const token = generateAccessToken(id, username);
+
+    const refreshToken = jwt.sign(
+      { id: id, username: username },
+      process.env.REFRESH_SECRET || ""
+    );
+    return { token, refreshToken };
+  },
+  token(refreshToken: string) {
     try {
-      const createdToken = await db.refreshToken.create({
-        data: {
-          id: jti,
-          hashedToken: hashToken(refreshToken),
-          userId,
-          revoked: false,
-        },
-      });
-
-      await db.$disconnect();
-      return createdToken;
-    } catch (e) {
-      console.error(e);
-      await db.$disconnect();
-      throw new Error("Error creating token");
+      const user_token = jwt.verify(
+        refreshToken,
+        process.env.REFRESH_SECRET || ""
+      );
+      if (user_token) {
+        const accessToken = generateAccessToken(
+          (<any>user_token).id,
+          (<any>user_token).username
+        );
+        return accessToken;
+      }
+    } catch (error) {
+      console.error(error);
     }
-  },
-
-  // used to check if the token sent by the client is in the database.
-  async getOne(id: string): Promise<RefreshToken | null> {
-    return await db.refreshToken.findUnique({
-      where: {
-        id,
-      },
-    });
-  },
-
-  async remove(id: string): Promise<RefreshToken> {
-    return await db.refreshToken.update({
-      where: {
-        id,
-      },
-      data: {
-        revoked: true,
-      },
-    });
-  },
-
-  async revoke(userId: string): Promise<RefreshToken[]> {
-    await db.refreshToken.updateMany({
-      where: {
-        userId,
-      },
-      data: {
-        revoked: true,
-      },
-    });
-
-    const updatedTokens = await db.refreshToken.findMany({
-      where: {
-        userId,
-      },
-    });
-
-    return updatedTokens;
   },
 };
 

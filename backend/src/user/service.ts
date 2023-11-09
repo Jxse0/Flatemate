@@ -1,5 +1,5 @@
 import { User, CreateUser, UserNotFoundError } from "../types/User";
-import db from "../utils/db";
+import db from "../../prisma/db";
 import bcrypt from "bcrypt";
 
 const service = {

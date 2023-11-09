@@ -4,6 +4,8 @@ export interface User {
   username: string;
   paypal: string;
   password: string;
+  surname: string;
+  name: string;
 }
 
 export interface UserNotFoundError {
