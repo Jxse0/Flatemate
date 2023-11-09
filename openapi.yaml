@@ -30,6 +30,11 @@ paths:
                 paypal:
                   type: string
                   format: email
+              example:
+                  email: "PeterParker@web.spider"
+                  password: "spiderman123!"
+                  username: "Spidey"
+                  paypal": "avengers@marvel.com" 
       responses:
         '201':
           description: User successfully registered
@@ -54,6 +59,10 @@ paths:
                 password:
                   type: string
                   description: Password for the user
+              example:
+                email: "PeterParker@web.spider"
+                password: "spiderman123!"
+
       responses:
         '200':
           description: User logged in successfully
