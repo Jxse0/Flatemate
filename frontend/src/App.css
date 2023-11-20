@@ -14,7 +14,7 @@
 button {
   color: var(--textColor);
   background-color: var(--secondary);
-  border: 2px var(--textColor) solid;
+  border: 2px var(--highlight) solid;
   transition: all .5s;
 }
 

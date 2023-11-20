@@ -4,6 +4,10 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 import SignUp from "./components/SignUp";
 import useLocalStorage from "use-local-storage";
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import { IconButton } from "@mui/material";
+
 
 function App() {
   const [count, setCount] = useState(0);
@@ -11,11 +15,10 @@ function App() {
   const [theme, setTheme] = useLocalStorage('theme', defaultDark ? 'dark' : 'light');
 
   const switchTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    console.log("yeah boi");
-    
+    const newTheme = theme === "test" ? "dark" : "test";    
     setTheme(newTheme);
   }
+  
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
@@ -24,9 +27,10 @@ function App() {
   return (
     <div className="App">
       <SignUp />
-      <button className="ToggleButton" onClick={switchTheme}>
-        Switch to {theme === "light" ? "purple" : "green" } Theme
-      </button>
+        Switch to {theme === "light" ? "dark" : "light" } Theme
+      <IconButton sx={{ ml: 1 }} onClick={switchTheme} color="inherit">
+        {theme === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+      </IconButton>
     </div>
   );
 }
