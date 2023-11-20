@@ -19,7 +19,6 @@ const authController = {
           user?.id as string,
           user?.username as string
         );
-        refreshTokens.push(ywtAuth.refreshToken);
 
         if (ywtAuth.token) {
           response.status(200).send(ywtAuth);
