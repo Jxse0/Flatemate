@@ -12,9 +12,12 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  firstname  String?
-  lastname  String?
-  paypal String?
+  id            String         @id @unique @default(uuid())
+  email         String         @unique
+  username      String
+  surname       String
+  name          String
+  paypal        String
+  password      String
+  
 }
