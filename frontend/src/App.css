@@ -1,8 +1,21 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
+}
+.App {
+  color: var(--textColor);
+  background-color: var(--background);
+  font-size: large;
+  font-weight: bold;
+  padding: 20px;
+  transition: all .5s;
+}
+button {
+  color: var(--textColor);
+  background-color: var(--secondary);
+  border: 2px var(--highlight) solid;
+  transition: all .5s;
 }
 
 .logo {
