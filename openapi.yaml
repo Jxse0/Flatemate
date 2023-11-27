@@ -43,20 +43,31 @@ paths:
                   type: string
                   format: email
               example:
-                  email: "PeterParker@web.spider"
-                  password: "spiderman123!"
-                  username: "Spidey"
-                  paypal: "avengers@marvel.com" 
-                  surname: "Peter"
-                  name: "Parker"
+                email: "PeterParker@web.spider"
+                password: "spiderman123!"
+                username: "Spidey"
+                paypal: "avengers@marvel.com"
+                surname: "Peter"
+                name: "Parker"
       responses:
         '201':
           description: User successfully registered
         '400':
           description: Invalid request data
 
-  /user:
-    get:
+    get:  # Hier war ein kleiner Fehler, es sollte "get" statt "Get" sein
+      tags: ["USER"]
+      summary: Get user details
+      security:
+        - Bearer: []
+      responses:
+        '200':
+          description: User details retrieved successfully
+        '401':
+          description: Unauthorized - User details not available
+
+  /auth/login:
+    post:  # Es sollte "post" sein, da es sich um einen Login handelt
       tags: ["AUTH"]
       summary: User login
       requestBody:
@@ -82,25 +93,3 @@ paths:
           description: User logged in successfully
         '401':
           description: Unauthorized - Invalid email or password
-    /user:
-    Get:
-      tags: [USER]
-      summary: Get user details
-      security:
-        - Bearer: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                token:
-                  type: string
-                  format: string
-                  example: b535e4d6-d412-461d-bb36-757c49e43f49
-      responses:
-        '200':
-          description: User details retrieved successfully
-        '401':
-          description: Unauthorized - User details not available
