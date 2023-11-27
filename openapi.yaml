@@ -55,7 +55,7 @@ paths:
         '400':
           description: Invalid request data
 
-    get:  # Hier war ein kleiner Fehler, es sollte "get" statt "Get" sein
+    get:
       tags: ["USER"]
       summary: Get user details
       security:
@@ -67,7 +67,7 @@ paths:
           description: Unauthorized - User details not available
 
   /auth/login:
-    post:  # Es sollte "post" sein, da es sich um einen Login handelt
+    post:
       tags: ["AUTH"]
       summary: User login
       requestBody:
