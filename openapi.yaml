@@ -9,10 +9,10 @@ servers:
     description: DEV Localhost
 
 paths:
-  /auth/register:
+  /user:
     post:
       tags: ["AUTH"]
-      summary: Register a new user
+      summary: Create a new user
       requestBody:
         required: true
         content:
@@ -29,12 +29,18 @@ paths:
                   type: string
                 paypal:
                   type: string
+                surname:
+                  type: string
+                name:
+                  type: string
                   format: email
               example:
                   email: "PeterParker@web.spider"
                   password: "spiderman123!"
                   username: "Spidey"
                   paypal: "avengers@marvel.com" 
+                  surname: "Peter"
+                  name": "Parker"
       responses:
         '201':
           description: User successfully registered
