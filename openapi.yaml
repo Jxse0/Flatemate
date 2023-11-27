@@ -8,6 +8,14 @@ servers:
   - url: http://localhost:3001
     description: DEV Localhost
 
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: >-
+      Enter the token with the `Bearer: ` prefix, e.g. "Bearer abcde12345".
+
 paths:
   /user:
     post:
@@ -74,10 +82,12 @@ paths:
           description: User logged in successfully
         '401':
           description: Unauthorized - Invalid email or password
-  "/user/info":
-    post:
+    /user:
+    Get:
       tags: [USER]
       summary: Get user details
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -85,7 +95,7 @@ paths:
             schema:
               type: object
               properties:
-                id:
+                token:
                   type: string
                   format: string
                   example: b535e4d6-d412-461d-bb36-757c49e43f49
