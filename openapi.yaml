@@ -40,7 +40,7 @@ paths:
                   username: "Spidey"
                   paypal: "avengers@marvel.com" 
                   surname: "Peter"
-                  name": "Parker"
+                  name: "Parker"
       responses:
         '201':
           description: User successfully registered
