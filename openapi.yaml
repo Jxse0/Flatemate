@@ -59,7 +59,7 @@ paths:
       tags: ["USER"]
       summary: Get user details
       security:
-        - Bearer: []
+        - Bearer: []  # Hier kannst du den Bearer-Token eingeben
       responses:
         '200':
           description: User details retrieved successfully
