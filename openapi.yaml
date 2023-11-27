@@ -55,7 +55,7 @@ paths:
         '400':
           description: Invalid request data
 
-/user:
+  /user:
     get:
       tags: ["AUTH"]
       summary: User login
