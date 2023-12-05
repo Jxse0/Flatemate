@@ -1,0 +1,44 @@
+/* SidebarLeft.css */
+
+.sidebar-container {
+    display: flex;
+  }
+  
+  .app-bar {
+    width: calc(100% - 240px);
+    margin-left: 240px;
+  }
+  
+  .drawer {
+    width: 240px;
+    flex-shrink: 0;
+  }
+  
+  .drawer-paper {
+    width: 240px;
+    box-sizing: border-box;
+  }
+  
+  .main-content {
+    flex-grow: 1;
+    background-color: #f0f0f0; /* Adjust background color as needed */
+    padding: 20px; /* Adjust padding as needed */
+  }
+
+  .sidebar-top {
+    height:  12%;
+    position: relative;
+    justify-content: flex-start;
+    display: flex;
+    padding-left: 15px;
+    padding-bottom: 10px;
+    align-items: end;
+
+    
+  }
+  .profile-icon{
+    
+  }
+  
+  /* Add any additional styling for your specific components */
+  

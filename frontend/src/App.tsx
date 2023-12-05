@@ -7,6 +7,7 @@ import useLocalStorage from "use-local-storage";
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { IconButton } from "@mui/material";
+import SidebarLeft from "./components/sidebar";
 
 
 function App() {
@@ -15,7 +16,7 @@ function App() {
   const [theme, setTheme] = useLocalStorage('theme', defaultDark ? 'dark' : 'light');
 
   const switchTheme = () => {
-    const newTheme = theme === "test" ? "dark" : "test";    
+    const newTheme = theme === "light" ? "dark" : "light";    
     setTheme(newTheme);
   }
   
@@ -26,6 +27,7 @@ function App() {
 
   return (
     <div className="App">
+      <SidebarLeft/>
       <SignUp />
         Switch to {theme === "light" ? "dark" : "light" } Theme
       <IconButton sx={{ ml: 1 }} onClick={switchTheme} color="inherit">

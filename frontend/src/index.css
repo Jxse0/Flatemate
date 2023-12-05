@@ -4,7 +4,7 @@
   --font-weight: 400;
 }
 
-[data-theme='light'] {
+[data-theme='test'] {
   --background: #6da5c0;
   --textColor: #ffffff;
   --primary: #072e33;
@@ -19,8 +19,9 @@
   --secondary: #522b5b;
   --highlight: #dfb6b2;
 }
-[data-theme='test'] {
+[data-theme='light'] {
   --background: #166379;
+  --sidebar-color:#0c7075;
   --textColor: #E0E0E0;
   --primary: #74B46A;
   --secondary: #EA7148;
