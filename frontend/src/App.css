@@ -7,6 +7,7 @@
   color: var(--textColor);
   background-color: var(--background);
   font-size: large;
+  display: flex;
   font-weight: bold;
   padding: 20px;
   transition: all .5s;
@@ -16,6 +17,19 @@ button {
   background-color: var(--secondary);
   border: 2px var(--highlight) solid;
   transition: all .5s;
+}
+/* SidebarLeft.css */
+
+button.MuiListItemButton-root:hover,
+button.MuiListItemButton-root.Mui-focusVisible {
+  background-color: var(--highlight); /* Apply hover and focus background color */
+}
+
+button.MuiListItemButton-root.Mui-selected,
+button.MuiListItemButton-root.Mui-selected:hover,
+button.MuiListItemButton-root.Mui-selected.Mui-focusVisible {
+  background-color: var(--secondary); /* Apply selected, hover, and focus background color */
+  color: var(--textColor); /* Apply selected text color */
 }
 
 .logo {

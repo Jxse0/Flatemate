@@ -14,6 +14,7 @@
 
 [data-theme='dark'] {
   --background: #190019;
+  --sidebar-color:#8b218b;
   --textColor: #ffffff;
   --primary: #2b124c;
   --secondary: #522b5b;
@@ -21,13 +22,12 @@
 }
 [data-theme='light'] {
   --background: #166379;
-  --sidebar-color:#0c7075;
+  --sidebar-color:#1e2f2f;
   --textColor: #E0E0E0;
   --primary: #74B46A;
   --secondary: #EA7148;
   --highlight: #E0A100;
 }
-
 
 body {
   transition: all .5s;

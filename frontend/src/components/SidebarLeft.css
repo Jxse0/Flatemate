@@ -25,20 +25,36 @@
     padding: 20px; /* Adjust padding as needed */
   }
 
+  /* SidebarLeft.css
+   */
+/*Styling for all ListItemButtons*/
+.MuiButtonBase-root.MuiListItemButton-root,
+.MuiListItemIcon-root,
+.MuiSvgIcon-root{
+  color: var(--textColor);
+}
+.MuiButtonBase-root.MuiListItemButton-root:hover,
+.MuiButtonBase-root.MuiListItemButton-root.Mui-focusVisible {
+  background-color: var(--secondary);
+  /* Apply hover and focus background color */
+}
+
+.MuiButtonBase-root.MuiListItemButton-root.Mui-selected,
+.MuiButtonBase-root.MuiListItemButton-root.Mui-selected:hover,
+.MuiButtonBase-root.MuiListItemButton-root.Mui-selected.Mui-focusVisible {
+  background-color: var(--secondary); /* Apply selected, hover, and focus background color */
+  color: var(--textColor); /* Apply selected text color */
+}
+
+
   .sidebar-top {
     height:  12%;
     position: relative;
     justify-content: flex-start;
     display: flex;
-    padding-left: 15px;
     padding-bottom: 10px;
     align-items: end;
+  }
 
-    
-  }
-  .profile-icon{
-    
-  }
-  
   /* Add any additional styling for your specific components */
   
