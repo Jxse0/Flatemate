@@ -16,6 +16,7 @@ import './SidebarLeft.css';
 import { IconButton } from '@mui/material';
 import useLocalStorage from 'use-local-storage';
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
 const SidebarLeft = () => {
@@ -32,12 +33,14 @@ const SidebarLeft = () => {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
 
-
-    const items = [
-        { text: 'Inbox', icon: <InboxIcon /> },
-        { text: 'Starred', icon: <MailIcon /> },
-        { text: 'Send email', icon: <CalendarMonthIcon /> },
-        { text: 'Drafts', icon: <AccountCircleIcon /> },
+  /*Here is where you add your Icon text and the link to your page
+  and then it will do the magic
+  */
+  const items = [
+        { text: 'SignUp', icon: <InboxIcon/>, path:'/signup' },
+        { text: 'Starred', icon: <MailIcon />,path:'/' },
+        { text: 'Send email', icon: <CalendarMonthIcon />,path:'/' },
+        { text: 'Drafts', icon: <AccountCircleIcon />,path:'/' },
       ];
     
   return (
@@ -68,12 +71,14 @@ const SidebarLeft = () => {
         <Divider />
         <List>
       {items.map((item, index) => (
+        <Link to={item.path}>
         <ListItem key={item.text} disablePadding>
           <ListItemButton>
             <ListItemIcon>{item.icon}</ListItemIcon>
             <ListItemText primary={item.text} />
           </ListItemButton>
         </ListItem>
+        </Link>
       ))}
     </List>
         <Divider />
