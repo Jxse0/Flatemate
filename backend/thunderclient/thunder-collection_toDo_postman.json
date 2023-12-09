@@ -1,0 +1,62 @@
+{
+    "info": {
+        "_postman_id": "d5da53b8-67e7-4fa8-be07-07090934a2c5",
+        "name": "toDo",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": ""
+    },
+    "item": [
+        {
+            "name": "http://localhost:3001/todo",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:3001/todo",
+                    "path": [
+                        "todo"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"title\": \"Putzen\",\n  \"description\": \"Selbsterklärend\",\n  \"frequenz\": \"2\",\n  \"ids\": [\"123\", \"456\", \"789\"]\n}"
+                }
+            }
+        },
+        {
+            "name": "todo",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:3001/todo",
+                    "path": [
+                        "todo"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\"id\":\"123\"}"
+                }
+            }
+        }
+    ]
+}

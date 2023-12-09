@@ -1,0 +1,128 @@
+{
+    "info": {
+        "_postman_id": "ff42eb5e-69b4-4b5b-a45e-14100e544c3d",
+        "name": "wg",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": ""
+    },
+    "item": [
+        {
+            "name": "http://localhost:3001/wg",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:3001/wg",
+                    "path": [
+                        "wg"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "header": [
+                    {
+                        "key": "Accept",
+                        "value": "*/*",
+                        "disabled": true
+                    },
+                    {
+                        "key": "User-Agent",
+                        "value": "Thunder Client (https://www.thunderclient.com)",
+                        "disabled": true
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"name\": \"Putzen\",\n  \"description\": \"Selbsterklärend\",\n  \"rules\": \"2\",\n  \"userid\": \"7dc9a099-ba5d-4a8d-80b0-23a2437ae76e\"\n}"
+                }
+            }
+        },
+        {
+            "name": "http://localhost:3001/wg",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:3001/wg",
+                    "path": [
+                        "wg"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\"userid\": \"7dc9a099-ba5d-4a8d-80b0-23a2437ae76e\"}"
+                }
+            }
+        },
+        {
+            "name": "http://localhost:3001/wg/members",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:3001/wg/members",
+                    "path": [
+                        "wg",
+                        "members"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\"userid\":\"7dc9a099-ba5d-4a8d-80b0-23a2437ae76e\"}"
+                }
+            }
+        },
+        {
+            "name": "http://localhost:3001/wg/newMember",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:3001/wg/newMember",
+                    "path": [
+                        "wg",
+                        "newMember"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\"userid\": \"7dc9a099-ba5d-4a8d-80b0-23a2437ae76e\",\n  \"newMemberId\": \"973a1c9d-eced-40cc-b996-071fa0fae4e5\"\n}"
+                }
+            }
+        }
+    ]
+}
