@@ -34,5 +34,19 @@ model UserTodo {
   id            String         @id @unique @default(uuid())
   userid        String
   todoid        String
-  turn          String 
+}
+
+model Wg {
+  id            String         @id @unique @default(uuid())
+  name          String
+  description   String
+  rules         String
+}
+
+model WgMember {
+  id            String         @id @unique @default(uuid())
+  wgid          String
+  userid        String
+  aktive        Boolean        @default(false)
+  role          String
 }

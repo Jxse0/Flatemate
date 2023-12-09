@@ -3,13 +3,12 @@ import db from "../../prisma/db";
 
 const service = {
   async create(todo: CreateTodo, userid: string[]) {
-    console.log(todo);
     const newTodo = await db.todo.create({
       data: todo,
     });
 
     userid.forEach(async (user) => {
-      const data = { userid: user, todoid: newTodo.id, turn: newTodo.frequenz };
+      const data = { userid: user, todoid: newTodo.id };
       const newUserTodo = await db.userTodo.create({
         data: data,
       });
@@ -35,7 +34,6 @@ const service = {
 
       return todos;
     } catch (e) {
-      console.error(e);
       await db.$disconnect();
       process.exit(1);
     }
