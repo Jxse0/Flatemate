@@ -4,7 +4,7 @@
   --font-weight: 400;
 }
 
-[data-theme='light'] {
+[data-theme='test'] {
   --background: #6da5c0;
   --textColor: #ffffff;
   --primary: #072e33;
@@ -14,19 +14,20 @@
 
 [data-theme='dark'] {
   --background: #190019;
+  --sidebar-color:#8b218b;
   --textColor: #ffffff;
   --primary: #2b124c;
   --secondary: #522b5b;
   --highlight: #dfb6b2;
 }
-[data-theme='test'] {
+[data-theme='light'] {
   --background: #166379;
+  --sidebar-color:#1e2f2f;
   --textColor: #E0E0E0;
   --primary: #74B46A;
   --secondary: #EA7148;
   --highlight: #E0A100;
 }
-
 
 body {
   transition: all .5s;

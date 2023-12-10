@@ -5,7 +5,7 @@ const openai = new OpenAI({
 });
 
 const service = {
-  async get(message: string) {
+  async retrieveMessage(message: string) {
     const stream = openai.beta.chat.completions.stream({
       model: "gpt-4",
       messages: [{ role: "user", content: message }],

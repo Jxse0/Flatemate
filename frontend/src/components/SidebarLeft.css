@@ -1,0 +1,60 @@
+/* SidebarLeft.css */
+
+.sidebar-container {
+    display: flex;
+  }
+  
+  .app-bar {
+    width: calc(100% - 240px);
+    margin-left: 240px;
+  }
+  
+  .drawer {
+    width: 240px;
+    flex-shrink: 0;
+  }
+  
+  .drawer-paper {
+    width: 240px;
+    box-sizing: border-box;
+  }
+  
+  .main-content {
+    flex-grow: 1;
+    background-color: #f0f0f0; /* Adjust background color as needed */
+    padding: 20px; /* Adjust padding as needed */
+  }
+
+  /* SidebarLeft.css
+   */
+/*Styling for all ListItemButtons*/
+.MuiButtonBase-root.MuiListItemButton-root,
+.MuiListItemIcon-root,
+.MuiSvgIcon-root{
+  color: var(--textColor);
+}
+.MuiButtonBase-root.MuiListItemButton-root:hover,
+.MuiButtonBase-root.MuiListItemButton-root.Mui-focusVisible {
+  background-color: var(--secondary);
+  /* Apply hover and focus background color */
+}
+
+.MuiButtonBase-root.MuiListItemButton-root.Mui-selected,
+.MuiButtonBase-root.MuiListItemButton-root.Mui-selected:hover,
+.MuiButtonBase-root.MuiListItemButton-root.Mui-selected.Mui-focusVisible {
+  background-color: var(--secondary); /* Apply selected, hover, and focus background color */
+  color: var(--textColor); /* Apply selected text color */
+}
+
+
+  .sidebar-top {
+    height:  12%;
+    position: relative;
+    justify-content: flex-start;
+    display: flex;
+    padding-bottom: 10px;
+    align-items: end;
+  }
+
+  /* Add any additional styling for your specific components */
+  

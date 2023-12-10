@@ -1,37 +1,25 @@
-import { useEffect, useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
-import SignUp from "./components/SignUp";
-import useLocalStorage from "use-local-storage";
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
-import { IconButton } from "@mui/material";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
+import "./App.css";
+import SidebarLeft from "./components/sidebar";
+import SignUp from "./components/SignUp";
+import Dashboard from "./components/Dashboard";
 
 function App() {
-  const [count, setCount] = useState(0);
-  const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const [theme, setTheme] = useLocalStorage('theme', defaultDark ? 'dark' : 'light');
 
-  const switchTheme = () => {
-    const newTheme = theme === "test" ? "dark" : "test";    
-    setTheme(newTheme);
-  }
-  
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-  }, [theme]);
-
-
+  /*If you wanna add your page just do it lime the signup is done
+  You can choose the path freely, they just have to match with the one in the sidebar.tsx
+  */ 
   return (
-    <div className="App">
-      <SignUp />
-        Switch to {theme === "light" ? "dark" : "light" } Theme
-      <IconButton sx={{ ml: 1 }} onClick={switchTheme} color="inherit">
-        {theme === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-      </IconButton>
-    </div>
+    <Router>
+      <div className="App">
+        <SidebarLeft />
+        <Routes>
+          <Route path="/signup" element={<SignUp/>} />
+          <Route path="/dashboard" element={<Dashboard/>} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
