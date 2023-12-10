@@ -5,10 +5,10 @@ const openai = new OpenAI({
 });
 
 const service = {
-  async get() {
+  async get(message: string) {
     const stream = openai.beta.chat.completions.stream({
       model: "gpt-4",
-      messages: [{ role: "user", content: "What is the meaning of life?" }],
+      messages: [{ role: "user", content: message }],
       stream: true,
     });
     const completion = await stream.finalChatCompletion();
