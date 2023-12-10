@@ -6,6 +6,6 @@ import validate from "../middleware/validator";
 const app = express.Router();
 
 //app.get("/", authenticateToken, controller.get);
-app.get("/", validate(gpt_validator.gpt), controller.get);
+app.post("/", validate(gpt_validator.gpt), controller.retrieveMessage);
 
 export default app;
