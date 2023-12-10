@@ -21,3 +21,32 @@ model User {
   password      String
   
 }
+
+model Todo{
+  id            String         @id @unique @default(uuid())
+  title         String        
+  description   String
+  frequenz      String
+
+}
+
+model UserTodo {
+  id            String         @id @unique @default(uuid())
+  userid        String
+  todoid        String
+}
+
+model Wg {
+  id            String         @id @unique @default(uuid())
+  name          String
+  description   String
+  rules         String
+}
+
+model WgMember {
+  id            String         @id @unique @default(uuid())
+  wgid          String
+  userid        String
+  aktive        Boolean        @default(false)
+  role          String
+}
