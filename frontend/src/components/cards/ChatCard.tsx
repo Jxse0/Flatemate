@@ -20,7 +20,7 @@ function ChatBoxCard() {
 
   const handleSubmit = async () => {
     //This will handle the ChatGPT API
-    setResponse("Amigo is thinking....");
+    setResponse("AImigo is thinking....");
 
     const response = await axios({
       method: "post",
@@ -35,7 +35,7 @@ function ChatBoxCard() {
     <Card sx={{ height: 300, display: "flex", flexDirection: "column" }}>
       <CardContent sx={{ flexGrow: 1 }}>
         <Typography variant="h5" component="div">
-          Ask Amigo
+          Ask AImigo
         </Typography>
         <Box
           id="message-container"
