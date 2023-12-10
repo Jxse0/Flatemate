@@ -10,6 +10,7 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import MailIcon from '@mui/icons-material/Mail';
+import HouseIcon from '@mui/icons-material/House';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import './SidebarLeft.css';
@@ -38,6 +39,7 @@ const SidebarLeft = () => {
   */
   const items = [
         { text: 'SignUp', icon: <InboxIcon/>, path:'/signup' },
+        { text: 'Dashboard', icon: <HouseIcon/>, path:'/dashboard' },
         { text: 'Starred', icon: <MailIcon />,path:'/' },
         { text: 'Send email', icon: <CalendarMonthIcon />,path:'/' },
         { text: 'Drafts', icon: <AccountCircleIcon />,path:'/' },
