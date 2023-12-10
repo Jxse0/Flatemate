@@ -1,6 +1,9 @@
 import express from "express";
 import userRouter from "./user/index";
 import authRouter from "./auth/index";
+import todoRouter from "./toDo/index";
+import wgRouter from "./wg/index";
+import gptRouter from "./gpt/index";
 import cors from "cors";
 
 const app = express();
@@ -11,5 +14,8 @@ app.use(cors());
 
 app.use("/user", userRouter);
 app.use("/auth", authRouter);
+app.use("/todo", todoRouter);
+app.use("/wg", wgRouter);
+app.use("/gpt", gptRouter);
 
 app.listen(3001, () => console.log("Flatmate Backend is ready for operations"));
