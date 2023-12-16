@@ -1,48 +1,24 @@
 #root {
-  max-width: 1280px;
   margin: 0 auto;
   text-align: center;
+  display: flex;
+  height: 100%;
+  align-items: center;
 }
 .App {
   color: var(--textColor);
   background-color: var(--background);
-  font-size: large;
   display: flex;
+  font-size: large;
   font-weight: bold;
-  padding: 20px;
   transition: all .5s;
 }
+
 button {
   color: var(--textColor);
   background-color: var(--secondary);
   border: 2px var(--highlight) solid;
   transition: all .5s;
-}
-/* SidebarLeft.css */
-
-button.MuiListItemButton-root:hover,
-button.MuiListItemButton-root.Mui-focusVisible {
-  background-color: var(--highlight); /* Apply hover and focus background color */
-}
-
-button.MuiListItemButton-root.Mui-selected,
-button.MuiListItemButton-root.Mui-selected:hover,
-button.MuiListItemButton-root.Mui-selected.Mui-focusVisible {
-  background-color: var(--secondary); /* Apply selected, hover, and focus background color */
-  color: var(--textColor); /* Apply selected text color */
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
 @keyframes logo-spin {
@@ -58,10 +34,6 @@ button.MuiListItemButton-root.Mui-selected.Mui-focusVisible {
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
   }
-}
-
-.card {
-  padding: 2em;
 }
 
 .read-the-docs {

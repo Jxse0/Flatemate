@@ -9,6 +9,7 @@ import {
   Box,
 } from "@mui/material";
 import axios from "axios";
+import { colorChannel } from "@mui/system";
 
 function ChatBoxCard() {
   const [prompt, setPrompt] = useState("");
@@ -70,7 +71,7 @@ function ChatBoxCard() {
             <Button
               fullWidth
               variant="contained"
-              color="primary"
+              sx={{backgroundColor:"var(--highlight)"}}
               onClick={handleSubmit}
             >
               Submit

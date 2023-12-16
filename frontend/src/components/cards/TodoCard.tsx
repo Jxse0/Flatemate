@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, CardContent, List, ListItem, ListItemText, Typography } from '@mui/material';
+import './cards.css';
 
 const TodoCard = () => {
 
@@ -12,7 +13,7 @@ const TodoCard = () => {
         <Typography variant="h5" component="h2">
           Todo List
         </Typography>
-        <CardContent sx={{ height: 200, overflowY: 'auto' }}>        
+        <CardContent >        
         <List>
           {todos.map((todo, index) => (
             <ListItem key={index}>

@@ -1,9 +1,11 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import "./App.css";
-import SidebarLeft from "./components/sidebar";
+import SidebarLeft from "./components/sidebar/sidebar";
 import SignUp from "./components/SignUp";
 import Dashboard from "./components/Dashboard";
+import { RouteErrorContext } from "react-router/dist/lib/context";
+import ShoppingList from "./components/shoppinglist/shoppingList";
 
 function App() {
 
@@ -15,10 +17,13 @@ function App() {
       <div className="App">
         <SidebarLeft />
         <Routes>
+          {/*The default is set with the index property */}
+          <Route index element={<Dashboard/>}/>
           <Route path="/signup" element={<SignUp/>} />
           <Route path="/dashboard" element={<Dashboard/>} />
+          <Route path="/cart" element={<ShoppingList/>}/>
         </Routes>
-      </div>
+        </div>
     </Router>
   );
 }

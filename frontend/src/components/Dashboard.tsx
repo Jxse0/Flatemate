@@ -9,6 +9,8 @@ import {
 import TodoCard from "./cards/TodoCard";
 import GroceryCard from "./cards/GroceryCard";
 import ChatCard from "./cards/ChatCard";
+import '../App.css';
+import Cards from "./Newtry/rotate";
 
 type CardData = {
   title: string;
@@ -37,7 +39,7 @@ function getCard(card: CardData) {
 
 const Dashboard = () => {
   return (
-    <Container sx={{ display: "flex" }}>
+    <Container>
       <Grid container spacing={6}>
         <Grid item xs={12} sm={6} md={8}>
           <ChatCard />
@@ -51,7 +53,7 @@ const Dashboard = () => {
           })}
         </Grid>
         <Grid item xs={12} sm={6} md={8}>
-          <TodoCard />
+          <TodoCard/>
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
           <GroceryCard />

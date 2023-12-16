@@ -2,10 +2,12 @@
   --font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   --line-height: 1.5;
   --font-weight: 400;
+  height: 100%;
 }
 
 [data-theme='test'] {
   --background: #6da5c0;
+  --cardBackground:#ffffff;
   --textColor: #ffffff;
   --primary: #072e33;
   --secondary: #0c7075;
@@ -14,14 +16,17 @@
 
 [data-theme='dark'] {
   --background: #190019;
-  --sidebar-color:#8b218b;
+  --cardBackground:#151415;
+  --sidebar-color:#241f24;
   --textColor: #ffffff;
   --primary: #2b124c;
   --secondary: #522b5b;
   --highlight: #dfb6b2;
 }
+
 [data-theme='light'] {
   --background: #166379;
+  --cardBackground:#06557d;
   --sidebar-color:#1e2f2f;
   --textColor: #E0E0E0;
   --primary: #74B46A;
@@ -56,7 +61,7 @@ body {
   display: flex;
   place-items: center;
   min-width: 320px;
-  min-height: 100vh;
+  height: 100%;
 }
 
 h1 {
