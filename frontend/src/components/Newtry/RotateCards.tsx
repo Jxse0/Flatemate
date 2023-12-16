@@ -64,10 +64,7 @@ const RotateCards: React.FC<CardsProps> = () => {
   return (
     <div className="cards">
       <MuiCard className="fill-orange card" data-card="0">
-        <div className="card__icon" data-icon="0"></div>
-        <CardContent>
-          <Typography variant="h5">details</Typography>
-        </CardContent>
+       <GroceryCard/>
       </MuiCard>
       <MuiCard className="fill-blue card" data-card="1">
         <div className="card__icon" data-icon="1"></div>
