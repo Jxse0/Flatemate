@@ -1,6 +1,6 @@
 // ShoppingList.js
 import React, { useState } from "react";
-import Cards from "../Newtry/rotate";
+import RotateCards from "../Newtry/rotate";
 
 const ShoppingList = () => {
   // State to manage the items in the shopping list
@@ -13,7 +13,7 @@ const ShoppingList = () => {
   return (
   
   <div >
-      <Cards></Cards>
+      <RotateCards></RotateCards>
        </div>
   );
 };

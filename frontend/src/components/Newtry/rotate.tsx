@@ -6,7 +6,7 @@ import GroceryCard from '../cards/GroceryCard';
 
 interface CardsProps {}
 
-const Cards: React.FC<CardsProps> = () => {
+const RotateCards: React.FC<CardsProps> = () => {
   useEffect(() => {
     init();
   }, []);
@@ -38,8 +38,8 @@ const Cards: React.FC<CardsProps> = () => {
     
   if (card === 0) {
     cards[3].classList.add('card--left');
-    cards[2].classList.add('card--right');
-    cards[1].classList.add('card--hidden');
+    cards[1].classList.add('card--right');
+    cards[2].classList.add('card--hidden');
   }
 
   if (card === 1) {
@@ -89,4 +89,4 @@ const Cards: React.FC<CardsProps> = () => {
   );
 };
 
-export default Cards;
+export default RotateCards;

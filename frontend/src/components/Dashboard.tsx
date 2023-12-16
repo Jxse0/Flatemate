@@ -9,8 +9,6 @@ import {
 import TodoCard from "./cards/TodoCard";
 import GroceryCard from "./cards/GroceryCard";
 import ChatCard from "./cards/ChatCard";
-import '../App.css';
-import Cards from "./Newtry/rotate";
 
 type CardData = {
   title: string;
