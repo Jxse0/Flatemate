@@ -1,6 +1,6 @@
 // ShoppingList.js
 import React, { useState } from "react";
-import RotateCards from "../Newtry/RotateCards";
+import RotateCards from "../dashboard/RotateCards";
 
 const ShoppingList = () => {
   // State to manage the items in the shopping list

@@ -26,7 +26,7 @@
   align-items:center;
   justify-content:center;
   position: relative;
-  height:22rem;
+  height:25rem;
   width:100%;
 }
 
@@ -36,13 +36,12 @@
 .card
 {
   display:flex;
+  flex-direction: column;
   width:50rem;
   height:30rem;
   border-radius:0.5rem;
   transform-origin:center center;
   transform:scale(1) translate(0px,0px) perspective( 750px ) rotateY(0deg) ;
-  transition-timing-function: cubic-bezier(0.42, 0, 0.58, 1);
-  transition-duration: 0.5s;
   position:absolute;
   top:0;
   box-shadow:0 30px 50px rgba(0,0,0,0.1);
@@ -51,23 +50,24 @@
   overflow:hidden;
 }
 
-.card *
-{
-  pointer-events: none;
-}
-
-.MuiPaper-root.MuiCard-root.card--left
-{
-  transform:scale(0.75) translate(-335px,0px) perspective( 750px ) rotateY(10deg);
-  box-shadow:0 15px 25px rgba(0,0,0,0.1);
-  z-index:1;
-}
-
 .MuiPaper-root.MuiCard-root.card--center
 {
   transform:scale(1) translate(0px, 0px) perspective( 750px ) rotateY(0deg);
   box-shadow:0 30px 50px rgba(0,0,0,0.1);
   z-index:3;
+}
+.card.card--front * {
+  pointer-events: auto; /* Set to 'auto' to enable pointer events for the front card */
+}
+
+.card * {
+  pointer-events: none;
+}
+.MuiPaper-root.MuiCard-root.card--left
+{
+  transform:scale(0.75) translate(-335px,0px) perspective( 750px ) rotateY(10deg);
+  box-shadow:0 15px 25px rgba(0,0,0,0.1);
+  z-index:1;
 }
 
 .MuiPaper-root.MuiCard-root.card--right
@@ -77,23 +77,24 @@
   z-index:1;
 }
 
-.card--hidden
+.MuiPaper-root.MuiCard-root.card--hidden
 {
-  transform: scale(0.75) translate(0px, 0px) perspective(750px) rotateY(10deg);
+  transform: scale(0.75) translate(0px, 0px) perspective(750px) rotateY(0deg);
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
   z-index: -3;
   visibility: hidden;
   opacity: 0;
+  pointer-events: none;
   }
 
 .card__icon
 {
   width:30%;
-  height:100%;
+  height:20%;
   background:rgba(255,255,255,0.5);
   position:relative;
   display:flex;
-  align-items: center;
+  align-items: top;
   justify-content: center;
 }
 
@@ -105,8 +106,8 @@
   display:flex;
   align-items: center;
   justify-content: center;
-  width:100px;
-  height:100px;
+  width:80px;
+  height:80px;
   border-radius: 50px;
   background:rgba(255,255,255,1);
 }
@@ -130,7 +131,7 @@
   .card
   {
     display:flex;
-    width:90%;
+    width:100%;
   }
 
   .card--left

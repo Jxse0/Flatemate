@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
-import { Card as MuiCard, CardContent, Typography } from '@mui/material';
-import './card.css'
+import { Card as MuiCard, CardContent, Typography, Grid, Button } from '@mui/material';
+import './rotateCards.css';
 import TodoCard from '../cards/TodoCard';
 import GroceryCard from '../cards/GroceryCard';
+import { Link } from 'react-router-dom';
 
 interface CardsProps {}
 
@@ -20,6 +21,7 @@ const RotateCards: React.FC<CardsProps> = () => {
     }
   };
 
+  //Needed so we can click to move around
   const clicked: EventListener = (e) => {
     const card = (e.target as HTMLDivElement);
     if (card.getAttribute('data-card')) {
@@ -27,9 +29,9 @@ const RotateCards: React.FC<CardsProps> = () => {
     }
   };
 
+  //Reaarange Logic to make the card go around in correct order
   const rearrange = (card: number) => {
     const cards = document.querySelectorAll('.cards .card') as NodeListOf<HTMLDivElement>;
-    console.log(cards.length);
     
     for (let n = 0; n < cards.length; n++) {
       cards[n].classList.remove('card--left', 'card--center', 'card--right', 'card--hidden');
@@ -59,26 +61,38 @@ const RotateCards: React.FC<CardsProps> = () => {
     cards[0].classList.add('card--right');
     cards[1].classList.add('card--hidden');
   }
+  
+  //card--front is used for making sure you can click around on the front card
+  // Remove the 'card--front' class from all cards
+  cards.forEach((card) => card.classList.remove('card--front'));
+
+  // Add the 'card--front' class to the front card
+  cards[card].classList.add('card--front');
   };
 
   return (
     <div className="cards">
       <MuiCard className="fill-orange card" data-card="0">
+      <Button className="card__icon" data-icon="0" component={Link} to='/cart'/>
+      <div className='card-detail'>
        <GroceryCard/>
+      </div>
       </MuiCard>
       <MuiCard className="fill-blue card" data-card="1">
-        <div className="card__icon" data-icon="1"></div>
+      <button className="card__icon" data-icon="1" onClick={() => {console.log("hello")}}/>
+      <div className='card-detail'>
         <TodoCard/>
+      </div>
       </MuiCard>
       <MuiCard className="fill-green card" data-card="2">
-        <div className="card__icon" data-icon="2"></div>
+        <button className="card__icon" data-icon="2" onClick={() => {console.log("hello")}}/>
         <CardContent>
           <Typography variant="h5">details</Typography>
         </CardContent>
       </MuiCard>
-      <MuiCard className="fill-red card" data-card="3">
-        <div className="card__icon" data-icon="3"></div>
-        <CardContent>
+      <MuiCard className="fill-purple card" data-card="3">
+      <button className="card__icon" data-icon="3" onClick={() => {console.log("hello")}}/>
+        <CardContent className='card-detail'>
           <Typography variant="h5">details</Typography>
         </CardContent>
       </MuiCard>
