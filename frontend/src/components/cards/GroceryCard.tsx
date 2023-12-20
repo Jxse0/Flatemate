@@ -10,7 +10,7 @@ const GroceryCard = () => {
     <Card>
       <CardContent>
         <Typography variant="h5" component="h2">
-          Grocery Shopping List
+           Shopping List
         </Typography>
         <CardContent sx={{ height: 200, overflowY: 'auto' }}>
         <List>

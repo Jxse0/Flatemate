@@ -18,6 +18,7 @@ import { IconButton } from "@mui/material";
 import useLocalStorage from "use-local-storage";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import BallotIcon from '@mui/icons-material/Ballot';
 
 const drawerWidth = 240;
 const SidebarLeft = () => {
@@ -42,7 +43,7 @@ const SidebarLeft = () => {
   const items = [
     { text: "SignUp", icon: <InboxIcon />, path: "/signup" },
     { text: "Dashboard", icon: <HouseIcon />, path: "/dashboard" },
-    { text: "Starred", icon: <MailIcon />, path: "/" },
+    { text: "Shopping List", icon: <BallotIcon />, path: "/cart" },
     { text: "Send email", icon: <CalendarMonthIcon />, path: "/" },
     { text: "Drafts", icon: <AccountCircleIcon />, path: "/" },
   ];
@@ -69,12 +70,14 @@ const SidebarLeft = () => {
           }}
           className="sidebar-top"
         >
+          <Link to={"/account"}>
           <ListItemButton>
             <ListItemIcon>
               <AccountCircleIcon fontSize="large" />
             </ListItemIcon>
             <ListItemText primary="Account" />
           </ListItemButton>
+          </Link>
         </div>
         <Divider />
         <List>
@@ -87,19 +90,6 @@ const SidebarLeft = () => {
                 </ListItemButton>
               </ListItem>
             </Link>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
           ))}
         </List>
         <Divider />
