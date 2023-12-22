@@ -9,7 +9,7 @@ export interface UserTodo {
   id: string;
   userid: string;
   todoid: string;
-  turn: string;
+  nextTurn: Date;
 }
 
 export interface TodoList {

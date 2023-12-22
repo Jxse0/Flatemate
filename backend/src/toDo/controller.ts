@@ -17,8 +17,8 @@ const controller = {
         description: request.body.description,
         frequenz: request.body.frequenz,
       };
-
-      await service.create(newTodo, request.body.ids);
+      const date = new Date(request.body.startdate);
+      await service.create(newTodo, request.body.ids, date);
       response.status(201).send({
         status: "success",
         data: request.body.email,

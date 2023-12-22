@@ -34,6 +34,7 @@ model UserTodo {
   id            String         @id @unique @default(uuid())
   userid        String
   todoid        String
+  nextTurn      DateTime
 }
 
 model Wg {
