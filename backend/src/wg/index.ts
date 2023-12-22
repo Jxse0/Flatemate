@@ -1,7 +1,7 @@
 import express from "express";
 import controller from "./controller";
-import validate from "../middleware/validator";
-import * as user_validate from "../validations/user";
+import validate from "../validations/validator";
+import * as user_validate from "../validations/todo";
 import { authenticateToken } from "../auth/authenticateToken";
 
 const app = express.Router();
