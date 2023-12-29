@@ -3,18 +3,6 @@ import db from "../../prisma/db";
 import bcrypt from "bcrypt";
 
 const service = {
-  async getAll(): Promise<User[]> {
-    try {
-      const users = await db.user.findMany();
-      await db.$disconnect();
-      return users as User[];
-    } catch (e) {
-      console.error(e);
-      await db.$disconnect();
-      process.exit(1);
-    }
-  },
-
   async create(user: CreateUser) {
     try {
       user.password = bcrypt.hashSync(user.password, 12);
@@ -59,6 +47,59 @@ const service = {
       throw new Error("Error finding user by email");
     } finally {
       await db.$disconnect();
+    }
+  },
+  async add2Wg(userid: string, wgid: string) {
+    try {
+      const newMember = await db.user.update({
+        where: {
+          id: userid,
+        },
+        data: {
+          wgid: wgid,
+        },
+      });
+      await db.$disconnect();
+      return newMember;
+    } catch (e) {
+      console.error(e);
+      await db.$disconnect();
+      process.exit(1);
+    }
+  },
+  async removeMember(userid: string) {
+    try {
+      const updatedUser = await db.user.update({
+        where: {
+          id: userid,
+        },
+        data: {
+          wgid: null, // Entfernen der WG-Zuweisung für den Benutzer
+        },
+      });
+      await db.$disconnect();
+      return updatedUser;
+    } catch (e) {
+      console.error(e);
+      await db.$disconnect();
+      process.exit(1);
+    }
+  },
+  async update(userid: string, data: any) {
+    try {
+      const updatedUser = await db.user.update({
+        where: {
+          id: userid, // Identifizieren des Benutzers durch seine ID
+        },
+        data: data, // Die Daten, die aktualisiert werden sollen
+      });
+      await db.$disconnect();
+      return updatedUser;
+    } catch (error) {
+      // Fehlerbehandlung
+      console.error("Fehler beim Aktualisieren des Benutzers:", error);
+      await db.$disconnect();
+      throw error;
     }
   },
 };

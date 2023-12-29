@@ -3,90 +3,38 @@ import db from "../../prisma/db";
 import { User } from "../types/User";
 
 const service = {
-  async create(wg: CreateWg, userid: string) {
+  async create(wg: CreateWg) {
     try {
       const newWg = await db.wg.create({
-        data: wg,
+        data: {
+          name: wg.name,
+          description: wg.description,
+          rules: wg.rules,
+          Users: {
+            connect: [{ id: wg.userid }], // Verbinden eines oder mehrerer User mit der WG
+          },
+        },
       });
 
-      const getWg = await db.wg.findUnique({ where: { id: newWg.id } });
-      if (getWg) {
-        const wgId = getWg.id;
-        const data = {
-          wgid: wgId,
-          userid: userid,
-          aktive: true,
-          role: "Admin",
-        };
-        const newWgMember = await db.wgMember.create({
-          data: data,
-        });
-        await db.$disconnect();
-        return newWgMember;
-      }
+      await db.$disconnect();
+      return newWg;
     } catch (e) {
       await db.$disconnect();
-      process.exit(1);
+      throw e; // Weitergeben des Fehlers
     }
   },
-
-  async getOne(userid: string): Promise<Wg> {
+  async getOne(wgid: string): Promise<Wg> {
     try {
-      const wgMember = await db.wgMember.findMany({
-        where: { userid: userid },
-      });
-
-      const wg = (await db.wg.findUnique({
-        where: { id: wgMember[0].wgid },
-      })) as Wg;
-      await db.$disconnect();
-      return wg;
-    } catch (e) {
-      await db.$disconnect();
-      process.exit(1);
-    }
-  },
-  async addMember(userid: string, newMemberId: string) {
-    try {
-      const wgMember = await db.wgMember.findMany({
-        where: { userid: userid },
-      });
-      const wg = (await db.wg.findUnique({
-        where: { id: wgMember[0].wgid },
-      })) as Wg;
-      const data = {
-        wgid: wg.id,
-        userid: newMemberId,
-        role: "Future Mate",
-      };
-      const newWgMember = await db.wgMember.create({
-        data: data,
-      });
-
-      await db.$disconnect();
-      return newWgMember;
-    } catch (e) {
-      await db.$disconnect();
-      process.exit(1);
-    }
-  },
-  async getMembers(userid: string): Promise<User[]> {
-    try {
-      const wgId = await db.wgMember.findMany({
-        where: { userid: userid },
-      });
-
-      const members = await db.wgMember.findMany({
-        where: { wgid: wgId[0].wgid },
-      });
-
-      const userIds = members.map((member) => member.userid);
-
-      const userList = await db.user.findMany({
-        where: { id: { in: userIds } },
+      const wgMember = await db.wg.findUnique({
+        where: {
+          id: wgid,
+        },
+        include: {
+          Users: true, // Lädt alle Benutzer, die zu dieser WG gehören
+        },
       });
       await db.$disconnect();
-      return userList;
+      return wgMember as any;
     } catch (e) {
       await db.$disconnect();
       process.exit(1);
