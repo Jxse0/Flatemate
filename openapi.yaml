@@ -211,32 +211,6 @@ paths:
         '200':
           description: Successful response
 
-  /wg/newMember:
-    post:
-      tags:
-        - wg
-      summary: Add a new member to a WG
-      description: Add a new member to a WG.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - userid
-                - newMemberId
-              properties:
-                userid:
-                  type: string
-                newMemberId:
-                  type: string
-              example:
-                userid: "c66ba81d-1609-426a-9b6e-e2073cce0fc4"
-                newMemberId: "6e05d76c-5c25-4985-827a-b39261f75812"
-      responses:
-        '200':
-          description: New member added to WG
 
 components:
   securitySchemes:
