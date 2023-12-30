@@ -258,6 +258,8 @@ paths:
         - todos
       summary: Get a list of todos
       description: Retrieve a list of todos.
+      security:
+        - bearerAuth: []  # Hinzufügen des Bearer Tokens
       responses:
         '200':
           description: List of todos
@@ -275,6 +277,8 @@ paths:
           description: Unique ID of the todo
           schema:
             type: string
+      security:
+        - bearerAuth: []  # Hinzufügen des Bearer Tokens
       responses:
         '200':
           description: Details of the todo
