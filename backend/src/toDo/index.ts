@@ -9,5 +9,6 @@ const app = express.Router();
 //app.get("/", authenticateToken, controller.getOne);
 app.post("/", validate(todo_validate.todo_create), controller.create);
 app.get("/", authenticateToken, controller.getAll);
+app.get("/:todoid", authenticateToken, controller.getOne);
 
 export default app;
