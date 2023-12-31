@@ -1,10 +1,9 @@
 import { body, query } from "express-validator";
 
 const user_update = [
-  query("id").notEmpty().isNumeric(),
   body("surname").optional().notEmpty().isString(),
   body("name").optional().notEmpty().isString(),
-  body("email").notEmpty().isEmail(),
+  body("email").optional().isEmail(),
   body("username").optional().notEmpty().isString(),
   body("password").optional().notEmpty().isString(),
   body("paypal").optional().notEmpty().isString(),

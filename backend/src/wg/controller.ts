@@ -1,22 +1,14 @@
 import { Request, Response, NextFunction } from "express";
 import service from "./service";
+import returnUser from "../middleware/returnUser";
 
 const controller = {
   async getOne(request: Request, response: Response) {
-    const data = await service.getOne(request.body.userid);
+    const user_token = returnUser(request);
+    const data = await service.getOne(user_token.wgid);
     response.json(data);
   },
-  async getMembers(request: Request, response: Response) {
-    const data = await service.getMembers(request.body.userid);
-    response.json(data);
-  },
-  async addMember(request: Request, response: Response) {
-    const data = await service.addMember(
-      request.body.userid,
-      request.body.newMemberId
-    );
-    response.json(data);
-  },
+
   async create(
     request: Request,
     response: Response,
@@ -27,9 +19,10 @@ const controller = {
         name: request.body.name,
         description: request.body.description,
         rules: request.body.rules,
+        userid: request.body.userid,
       };
 
-      await service.create(newWg, request.body.userid);
+      await service.create(newWg);
       response.status(201).send({
         status: "success",
       });

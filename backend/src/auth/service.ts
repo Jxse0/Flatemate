@@ -5,18 +5,18 @@ type ywtAuth = {
   refreshToken: string;
 };
 
-function generateAccessToken(id: string, username: string) {
-  return jwt.sign({ id: id, username: username }, process.env.SECRET || "", {
+function generateAccessToken(userid: string, wgid: string) {
+  return jwt.sign({ userid: userid, wgid: wgid }, process.env.SECRET || "", {
     expiresIn: "3h",
   });
 }
 
 const service = {
-  login(id: string, username: string): ywtAuth {
-    const token = generateAccessToken(id, username);
+  login(userid: string, wgid: string): ywtAuth {
+    const token = generateAccessToken(userid, wgid);
 
     const refreshToken = jwt.sign(
-      { id: id, username: username },
+      { userid: userid, wgid: wgid },
       process.env.REFRESH_SECRET || ""
     );
     return { token, refreshToken };
@@ -30,7 +30,7 @@ const service = {
       if (user_token) {
         const accessToken = generateAccessToken(
           (<any>user_token).id,
-          (<any>user_token).username
+          (<any>user_token).wgid
         );
         return accessToken;
       }

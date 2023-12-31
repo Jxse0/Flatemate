@@ -12,41 +12,39 @@ datasource db {
 }
 
 model User {
-  id            String         @id @unique @default(uuid())
-  email         String         @unique
-  username      String
-  surname       String
-  name          String
-  paypal        String
-  password      String
-  
+  id        String     @id @unique @default(uuid())
+  email     String     @unique
+  username  String
+  surname   String
+  name      String
+  paypal    String
+  password  String
+  wgid      String?    // Optionale Spalte für die WG-ID
+  Wg        Wg?        @relation(fields: [wgid], references: [id]) // Optional
+  UserTodo  UserTodo[]
 }
 
-model Todo{
-  id            String         @id @unique @default(uuid())
-  title         String        
-  description   String
-  frequenz      String
-
+model Todo {
+  id          String     @id @unique @default(uuid())
+  title       String        
+  description String
+  frequenz    String
+  UserTodo    UserTodo[] 
 }
 
 model UserTodo {
-  id            String         @id @unique @default(uuid())
-  userid        String
-  todoid        String
+  id      String    @id @unique @default(uuid())
+  userid  String
+  todoid  String
+  nextTurn DateTime
+  User    User      @relation(fields: [userid], references: [id])
+  Todo    Todo      @relation(fields: [todoid], references: [id])
 }
 
 model Wg {
-  id            String         @id @unique @default(uuid())
-  name          String
-  description   String
-  rules         String
-}
-
-model WgMember {
-  id            String         @id @unique @default(uuid())
-  wgid          String
-  userid        String
-  aktive        Boolean        @default(false)
-  role          String
+  id          String   @id @unique @default(uuid())
+  name        String
+  description String
+  rules       String
+  Users       User[]
 }

@@ -1,9 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import service from "./service";
+import returnUser from "../middleware/returnUser";
 
 const controller = {
   async getAll(request: Request, response: Response) {
-    const data = await service.getAll(request.body.id);
+    const user_token = returnUser(request);
+    const data = await service.getAll(user_token.userid);
     response.json(data);
   },
   async create(
@@ -17,15 +19,20 @@ const controller = {
         description: request.body.description,
         frequenz: request.body.frequenz,
       };
-
-      await service.create(newTodo, request.body.ids);
+      const date = new Date(request.body.startdate);
+      const newtodo = await service.create(newTodo, request.body.ids, date);
       response.status(201).send({
         status: "success",
-        data: request.body.email,
+        data: newtodo,
       });
     } catch (error) {
       next(error);
     }
+  },
+  async getOne(request: Request, response: Response) {
+    const todoid = request.params.todoid;
+    const userTodos = await service.getOne(todoid as string);
+    response.json(userTodos);
   },
 };
 

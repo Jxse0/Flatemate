@@ -15,10 +15,7 @@ const authController = {
 
     try {
       if (await bcrypt.compare(password, user?.password as string)) {
-        const ywtAuth = service.login(
-          user?.id as string,
-          user?.username as string
-        );
+        const ywtAuth = service.login(user?.id as string, user?.wgid as string);
 
         if (ywtAuth.token) {
           response.status(200).send(ywtAuth);
