@@ -44,7 +44,7 @@ const SidebarLeft = () => {
     { text: "SignUp", icon: <InboxIcon />, path: "/signup" },
     { text: "Dashboard", icon: <HouseIcon />, path: "/dashboard" },
     { text: "Shopping List", icon: <BallotIcon />, path: "/cart" },
-    { text: "Send email", icon: <CalendarMonthIcon />, path: "/" },
+    { text: "Login(remove after)", icon: <CalendarMonthIcon />, path: "/login" },
     { text: "Drafts", icon: <AccountCircleIcon />, path: "/" },
   ];
 

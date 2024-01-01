@@ -7,13 +7,12 @@ import Dashboard from "./components/dashboard/Dashboard";
 import { RouteErrorContext } from "react-router/dist/lib/context";
 import ShoppingList from "./components/shoppinglist/shoppingList";
 import Login from "./components/login/login";
+import AuthProvider from "./AuthProvider";
 
 function App() {
 
-  /*If you wanna add your page just do it lime the signup is done
-  You can choose the path freely, they just have to match with the one in the sidebar.tsx
-  */ 
   return (
+    <AuthProvider>
     <Router>
       <div className="App">
         <SidebarLeft />
@@ -28,6 +27,7 @@ function App() {
         </Routes>
         </div>
     </Router>
+    </AuthProvider>
   );
 }
 

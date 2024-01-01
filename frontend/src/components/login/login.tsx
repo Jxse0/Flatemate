@@ -1,14 +1,31 @@
 import { useNavigate } from "react-router-dom";
 import "./logincard.css";
+import axios from "axios";
+import { useState } from "react";
 
 const Login = () => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     const navigate = useNavigate();
 
     const handleLogin =() => {
-        //TODO
-
-        navigate('/');
+        try{
+            axios
+            .post("http://localhost:3001/auth/login", {
+              email: email,
+              password: password,
+            })
+            .then((response) => {
+              console.log("Erfolgreich gesendet:", response.data);
+              navigate('/');
+            })
+            .catch((error) => {
+              console.error("Fehler beim Senden:", error);
+            });
+        } catch (error) {
+            console.error("Failed Login", error);
+        }       
     }
 
     return (
@@ -26,7 +43,11 @@ const Login = () => {
                 id="user-email"
                 className="form-content"
                 type="email"
+                value={email}
                 name="email"
+                onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
                 autoComplete="on"
                 required
               />
@@ -38,6 +59,10 @@ const Login = () => {
                 id="user-password"
                 className="form-content"
                 type="password"
+                value={password}
+                onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
                 name="password"
                 required
               />

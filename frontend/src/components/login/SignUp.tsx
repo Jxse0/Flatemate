@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./logincard.css";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -18,6 +19,7 @@ const SignUp = () => {
       setIsFilled(false);
     }
   };
+  const navigate = useNavigate();
 
   const handleFormSubmit = () => {
     if (isFilled) {
@@ -32,6 +34,7 @@ const SignUp = () => {
         })
         .then((response) => {
           console.log("Erfolgreich gesendet:", response.data);
+          navigate('/');
         })
         .catch((error) => {
           console.error("Fehler beim Senden:", error);
@@ -125,7 +128,7 @@ const SignUp = () => {
           required
         />
         <div className="form-border"/>
-        <input id="submit-btn" type="submit" name="submit" value="Register" onClick={handleFormSubmit} disabled={!isFilled}/>
+        <input id="submit-btn" type="submit" name="submit" value="Register" onClick={handleFormSubmit}/>
         </form>
       </div>
     </div>
