@@ -6,6 +6,7 @@ import SignUp from "./components/SignUp";
 import Dashboard from "./components/dashboard/Dashboard";
 import { RouteErrorContext } from "react-router/dist/lib/context";
 import ShoppingList from "./components/shoppinglist/shoppingList";
+import Login from "./components/login/login";
 
 function App() {
 
@@ -18,6 +19,8 @@ function App() {
         <SidebarLeft />
         <Routes>
           {/*The default is set with the index property */}
+          <Route path="/login" element={<Login/>}/>
+          <Route path="/register"/>
           <Route index element={<Dashboard/>}/>
           <Route path="/signup" element={<SignUp/>} />
           <Route path="/dashboard" element={<Dashboard/>} />

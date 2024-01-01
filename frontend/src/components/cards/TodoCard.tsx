@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, CardContent, List, ListItem, ListItemText, Typography } from '@mui/material';
-import './cards.css';
+
 
 const TodoCard = () => {
 
