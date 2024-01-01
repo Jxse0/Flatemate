@@ -19,9 +19,18 @@ model User {
   name      String
   paypal    String
   password  String
-  wgid      String?    // Optionale Spalte für die WG-ID
-  Wg        Wg?        @relation(fields: [wgid], references: [id]) // Optional
+  wgid      String?    
+  Wg        Wg?        @relation(fields: [wgid], references: [id]) 
   UserTodo  UserTodo[]
+  Chats     Chat[]   
+}
+
+model Chat {
+  id        String   @id @unique @default(uuid())
+  message   String
+  time      DateTime @default(now())
+  userId    String
+  User      User     @relation(fields: [userId], references: [id])
 }
 
 model Todo {
