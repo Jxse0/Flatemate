@@ -2,17 +2,18 @@ import { Todo, CreateTodo, TodoNotFoundError } from "../types/Todo";
 import db from "../../prisma/db";
 
 const service = {
-  async send(todo: CreateTodo, userid: string[], startdate: Date) {
+  async send(userId: string, message: string) {
     try {
+      const chatMessage = await db.chat.create({
+        data: {
+          message: message,
+          userId: userId,
+        },
+      });
+      return chatMessage;
     } catch (error) {
+      console.error("Fehler beim Erstellen der Chat-Nachricht:", error);
       throw error;
-    }
-  },
-  async getAll(userid: string) {
-    try {
-    } catch (e) {
-      await db.$disconnect();
-      process.exit(1);
     }
   },
 };
