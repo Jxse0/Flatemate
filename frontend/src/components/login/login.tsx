@@ -1,9 +1,18 @@
+import { useNavigate } from "react-router-dom";
 import "./logincard.css";
 
 const Login = () => {
 
+    const navigate = useNavigate();
+
+    const handleLogin =() => {
+        //TODO
+
+        navigate('/');
+    }
+
     return (
-        <div id="card">
+        <div id="logincard">
           <div id="card-content">
             <div id="card-title">
               <h2>LOGIN</h2>
@@ -36,8 +45,8 @@ const Login = () => {
               <a href="#">
                 <legend id="forgot-pass">Forgot password?</legend>
               </a>
-              <input id="submit-btn" type="submit" name="submit" value="LOGIN" />
-              <a href="#" id="signup">
+              <input id="submit-btn" type="submit" name="submit" value="LOGIN" onClick={handleLogin} />
+              <a href="/signup" id="signup">
                 Don't have an account yet?
               </a>
             </form>

@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import "./App.css";
 import SidebarLeft from "./components/sidebar/sidebar";
-import SignUp from "./components/SignUp";
+import SignUp from "./components/login/SignUp";
 import Dashboard from "./components/dashboard/Dashboard";
 import { RouteErrorContext } from "react-router/dist/lib/context";
 import ShoppingList from "./components/shoppinglist/shoppingList";

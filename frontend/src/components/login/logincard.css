@@ -13,13 +13,21 @@ a {
     margin-top: 3px;
     text-align: right;
   }
-  #card {
+  #logincard {
     background: #1d1c1c;
     border-radius: 8px;
     box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.65);
     height: 410px;
     margin: 6rem auto 8.1rem auto;
     width: 329px;
+  }
+  #signupcard {
+    background: #1d1c1c;
+    border-radius: 8px;
+    box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.65);
+    height: 610px;
+    margin: 6rem auto 8.1rem auto;
+    width: 379px;
   }
   #card-content {
     padding: 12px 44px;
@@ -66,6 +74,7 @@ a {
   }
   .form-content {
     background: #1d1c1c;
+    color: var(--textColor);
     border: none;
     outline: none;
     padding-top: 14px;
