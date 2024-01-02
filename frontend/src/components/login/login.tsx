@@ -1,32 +1,35 @@
 import { useNavigate } from "react-router-dom";
 import "./logincard.css";
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { tokenContext } from "../../AuthProvider";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [,setToken] = useContext(tokenContext);
 
     const navigate = useNavigate();
 
-    const handleLogin =() => {
-        try{
-            axios
-            .post("http://localhost:3001/auth/login", {
-              email: email,
-              password: password,
-            })
-            .then((response) => {
-              console.log("Erfolgreich gesendet:", response.data);
-              navigate('/');
-            })
-            .catch((error) => {
-              console.error("Fehler beim Senden:", error);
-            });
-        } catch (error) {
-            console.error("Failed Login", error);
-        }       
-    }
+    const handleLogin = async (event: React.FormEvent) => {
+      event.preventDefault();
+      try {
+        const response = await axios.post("http://localhost:3001/auth/login", {
+          email: email,
+          password: password,
+        });        
+  
+        const { token } = response.data;        
+        // Store token in the context
+        setToken(token);
+        
+        console.debug("Erfolgreicher Login:", response.data);
+        navigate('/');
+      } catch (error) {
+        console.error("Fehler beim einloggen:", error);
+      }
+    };
+  
 
     return (
         <div id="logincard">

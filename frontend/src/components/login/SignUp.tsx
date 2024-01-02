@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
+  const [username, setUserName] = useState("");
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [paypal, setPaypal] = useState("");
@@ -28,14 +29,15 @@ const SignUp = () => {
       axios
         .post("http://localhost:3001/user", {
           email: email,
-          firstname: firstname,
-          lastname: lastname,
+          username: username,
           paypal: paypal,
           password: password,
+          surname: firstname,
+          name:lastname
         })
         .then((response) => {
           console.log("Erfolgreich gesendet:", response.data);
-          navigate('/');
+          navigate('/login');
         })
         .catch((error) => {
           console.error("Fehler beim Senden:", error);
@@ -53,6 +55,21 @@ const SignUp = () => {
         <div className="underline-title"></div>
       </div>
       <form method="post" className="form">
+         {/*Username Field */}
+         <label style={{ paddingTop: '13px' }}>
+          &nbsp;Username
+        </label>
+        <input
+        id="username"
+        className="form-content"
+        value={username}
+        onChange={(e) => {
+          setUserName(e.target.value);
+          handleInputChange();
+        }}
+        required
+        />
+        <div className="form-border"/>
         {/*Email Field */}
         <label htmlFor="user-email" style={{ paddingTop: '13px' }}>
           &nbsp;Email

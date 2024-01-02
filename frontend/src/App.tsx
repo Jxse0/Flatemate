@@ -7,10 +7,12 @@ import Dashboard from "./components/dashboard/Dashboard";
 import { RouteErrorContext } from "react-router/dist/lib/context";
 import ShoppingList from "./components/shoppinglist/shoppingList";
 import Login from "./components/login/login";
-import AuthProvider from "./AuthProvider";
+import AuthProvider, { tokenContext } from "./AuthProvider";
+import { useContext } from "react";
 
 function App() {
-
+  
+  const [token] = useContext(tokenContext);
   return (
     <AuthProvider>
     <Router>

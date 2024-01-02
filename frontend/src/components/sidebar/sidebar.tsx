@@ -19,6 +19,7 @@ import useLocalStorage from "use-local-storage";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import BallotIcon from '@mui/icons-material/Ballot';
+import Logout from "./logout";
 
 const drawerWidth = 240;
 const SidebarLeft = () => {
@@ -50,6 +51,7 @@ const SidebarLeft = () => {
 
   return (
     <Box sx={{ display: "flex" }}>
+      <Logout/>
       <Drawer
         sx={{
           width: drawerWidth,
