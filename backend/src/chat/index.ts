@@ -7,5 +7,6 @@ import { authenticateToken } from "../auth/authenticateToken";
 const app = express.Router();
 
 app.post("/", controller.send);
+app.get("/", authenticateToken, controller.getAll);
 
 export default app;

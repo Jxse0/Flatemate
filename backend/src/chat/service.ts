@@ -2,17 +2,55 @@ import { Todo, CreateTodo, TodoNotFoundError } from "../types/Todo";
 import db from "../../prisma/db";
 
 const service = {
-  async send(userId: string, message: string) {
+  async send(userid: string, wgid: string, message: string) {
     try {
-      const chatMessage = await db.chat.create({
-        data: {
-          message: message,
-          userId: userId,
+      let chat = await db.chat.findFirst({
+        where: {
+          wgid: wgid,
         },
       });
-      return chatMessage;
+
+      if (!chat) {
+        chat = await db.chat.create({
+          data: {
+            wgid: wgid,
+          },
+        });
+      }
+
+      const newMessage = await db.message.create({
+        data: {
+          text: message,
+          userid: userid,
+          chatid: chat.id,
+        },
+      });
+
+      return newMessage;
     } catch (error) {
-      console.error("Fehler beim Erstellen der Chat-Nachricht:", error);
+      console.error("Error sending message:", error);
+      throw error;
+    }
+  },
+  async getAll(wgid: string) {
+    try {
+      const chats = await db.chat.findMany({
+        where: {
+          wgid: wgid,
+        },
+        include: {
+          messages: true,
+        },
+      });
+
+      if (chats.length === 0) {
+        console.log("No chats found for the given WG ID.");
+        return [];
+      }
+
+      return chats.map((chat) => chat.messages);
+    } catch (error) {
+      console.error("Error retrieving messages:", error);
       throw error;
     }
   },

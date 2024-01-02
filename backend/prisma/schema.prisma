@@ -22,15 +22,23 @@ model User {
   wgid      String?    
   Wg        Wg?        @relation(fields: [wgid], references: [id]) 
   UserTodo  UserTodo[]
-  Chats     Chat[]   
+  Messages     Message[]   
+}
+model Chat {
+  id        String    @id @unique @default(uuid())
+  messages   Message[]
+  wgid      String
+  Wg        Wg        @relation(fields: [wgid], references: [id])
 }
 
-model Chat {
+model Message {
   id        String   @id @unique @default(uuid())
-  message   String
+  text   String
   time      DateTime @default(now())
-  userId    String
-  User      User     @relation(fields: [userId], references: [id])
+  userid    String
+  User      User     @relation(fields: [userid], references: [id])
+  chatid    String?   // Optional reference to a Chat
+  Chat      Chat?     @relation(fields: [chatid], references: [id])
 }
 
 model Todo {
@@ -56,4 +64,5 @@ model Wg {
   description String
   rules       String
   Users       User[]
+  Chats     Chat[]    // Relation to multiple chats
 }

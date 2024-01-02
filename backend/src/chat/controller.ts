@@ -9,6 +9,7 @@ const controller = {
       const user_token = returnUser(request);
       const message = await service.send(
         user_token.userid,
+        user_token.wgid,
         request.body.message
       );
       sendMessage(request.body.message);
@@ -20,6 +21,11 @@ const controller = {
     } catch (error) {
       next(error);
     }
+  },
+  async getAll(request: Request, response: Response) {
+    const user_token = returnUser(request);
+    const data = await service.getAll(user_token.wgid);
+    response.json(data);
   },
 };
 
