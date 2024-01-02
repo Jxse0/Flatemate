@@ -19,6 +19,7 @@ import useLocalStorage from "use-local-storage";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import BallotIcon from '@mui/icons-material/Ballot';
+import Logout from "./logout";
 
 const drawerWidth = 240;
 const SidebarLeft = () => {
@@ -44,12 +45,13 @@ const SidebarLeft = () => {
     { text: "SignUp", icon: <InboxIcon />, path: "/signup" },
     { text: "Dashboard", icon: <HouseIcon />, path: "/dashboard" },
     { text: "Shopping List", icon: <BallotIcon />, path: "/cart" },
-    { text: "Send email", icon: <CalendarMonthIcon />, path: "/" },
+    { text: "Login(remove after)", icon: <CalendarMonthIcon />, path: "/login" },
     { text: "Drafts", icon: <AccountCircleIcon />, path: "/" },
   ];
 
   return (
     <Box sx={{ display: "flex" }}>
+      <Logout/>
       <Drawer
         sx={{
           width: drawerWidth,
