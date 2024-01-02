@@ -21,11 +21,12 @@ const SignUp = () => {
   };
   const navigate = useNavigate();
 
-  const handleFormSubmit = () => {
+  const handleFormSubmit = (event: { preventDefault: () => void; }) => {
+    event.preventDefault();
     if (isFilled) {
       // Hier den Axios Request durchführen
       axios
-        .post("http://localhost:3001/user/", {
+        .post("http://localhost:3001/user", {
           email: email,
           firstname: firstname,
           lastname: lastname,
@@ -129,6 +130,9 @@ const SignUp = () => {
         />
         <div className="form-border"/>
         <input id="submit-btn" type="submit" name="submit" value="Register" onClick={handleFormSubmit}/>
+        <a href="/login" id="signup">
+                Already have an account?
+              </a>
         </form>
       </div>
     </div>
