@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import service from "./service";
 import returnUser from "../middleware/returnUser";
+import returnWgid from "../middleware/returnWgid";
 
 const controller = {
   async create(
@@ -33,7 +34,8 @@ const controller = {
   async add2Wg(request: Request, response: Response, next: NextFunction) {
     try {
       const user_token = returnUser(request);
-      const user = await service.add2Wg(user_token.userid, request.body.wgid);
+      const invite = returnWgid(request.body.invite);
+      const user = await service.add2Wg(user_token.userid, invite.wgid);
 
       response.status(201).send({
         status: "success",
