@@ -66,7 +66,7 @@ paths:
       tags:
         - user
       summary: Add a new member to a WG
-      description: Add a new member to a WG using Bearer token and wgid.
+      description: Add a new member to a WG using an invitation token.
       security:
         - bearerAuth: []
       requestBody:
@@ -76,15 +76,18 @@ paths:
             schema:
               type: object
               required:
-                - wgid
+                - invite
               properties:
-                wgid:
+                invite:
                   type: string
+                  description: Invitation token to join the WG
               example:
-                wgid: "1234-wg-id"
+                invite: "Invitation Token"
       responses:
         '200':
           description: Member added to WG
+        '401':
+          description: Unauthorized
 
   /user/removeMember:
     delete:
@@ -170,7 +173,9 @@ paths:
       tags:
         - wg
       summary: Create a WG
-      description: Create a WG with name, description, rules, and user ID.
+      description: Create a WG with name, description, and rules. User ID is determined from Bearer token.
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -181,7 +186,6 @@ paths:
                 - name
                 - description
                 - rules
-                - userid
               properties:
                 name:
                   type: string
@@ -189,13 +193,10 @@ paths:
                   type: string
                 rules:
                   type: string
-                userid:
-                  type: string
               example:
-                name: "Test"
+                name: "Test WG"
                 description: "Wir sind toll"
-                rules: ""
-                userid: "388f57a0-7427-40b1-ac86-9fc0a872dfb7"
+                rules: "Keine Haustiere"
       responses:
         '201':
           description: WG created
@@ -210,6 +211,19 @@ paths:
       responses:
         '200':
           description: Successful response
+  /wg/invite:
+    get:
+      tags:
+        - wg
+      summary: Generate a WG invitation link
+      description: Generate an invitation link for a WG. Requires Bearer token for authentication.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Invitation link generated
+        '401':
+          description: Unauthorized
 
   /todo:
     post:
