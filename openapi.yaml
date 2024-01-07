@@ -170,7 +170,9 @@ paths:
       tags:
         - wg
       summary: Create a WG
-      description: Create a WG with name, description, rules, and user ID.
+      description: Create a WG with name, description, and rules. User ID is determined from Bearer token.
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -181,7 +183,6 @@ paths:
                 - name
                 - description
                 - rules
-                - userid
               properties:
                 name:
                   type: string
@@ -189,13 +190,10 @@ paths:
                   type: string
                 rules:
                   type: string
-                userid:
-                  type: string
               example:
-                name: "Test"
+                name: "Test WG"
                 description: "Wir sind toll"
-                rules: ""
-                userid: "388f57a0-7427-40b1-ac86-9fc0a872dfb7"
+                rules: "Keine Haustiere"
       responses:
         '201':
           description: WG created
@@ -210,6 +208,32 @@ paths:
       responses:
         '200':
           description: Successful response
+  /wg/invite:
+    get:
+      tags:
+        - wg
+      summary: Invite a user to a WG
+      description: Send an invite to a user to join a WG. Requires Bearer token for authentication.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+              properties:
+                email:
+                  type: string
+              example:
+                email: "invitee@example.com"
+      responses:
+        '200':
+          description: Invitation sent
+        '401':
+          description: Unauthorized      
 
   /todo:
     post:
