@@ -8,4 +8,6 @@ const app = express.Router();
 
 app.post("/", validate(wg_validate.wg_create), controller.create);
 app.get("/", authenticateToken, controller.getOne);
+app.get("/invite", authenticateToken, controller.invite);
+
 export default app;

@@ -1,6 +1,6 @@
 import { Wg, CreateWg } from "../types/Wg";
 import db from "../../prisma/db";
-import { User } from "../types/User";
+import jwt from "jsonwebtoken";
 
 const service = {
   async create(wg: CreateWg) {
@@ -11,7 +11,7 @@ const service = {
           description: wg.description,
           rules: wg.rules,
           Users: {
-            connect: [{ id: wg.userid }], // Verbinden eines oder mehrerer User mit der WG
+            connect: [{ id: wg.userid }],
           },
         },
       });
@@ -20,7 +20,7 @@ const service = {
       return newWg;
     } catch (e) {
       await db.$disconnect();
-      throw e; // Weitergeben des Fehlers
+      throw e;
     }
   },
   async getOne(wgid: string): Promise<Wg> {
@@ -39,6 +39,11 @@ const service = {
       await db.$disconnect();
       process.exit(1);
     }
+  },
+  async getInviteLink(wgid: string) {
+    return jwt.sign({ wgid: wgid }, process.env.SECRET || "", {
+      expiresIn: "3h",
+    });
   },
 };
 export default service;
