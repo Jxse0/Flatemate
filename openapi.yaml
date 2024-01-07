@@ -66,7 +66,7 @@ paths:
       tags:
         - user
       summary: Add a new member to a WG
-      description: Add a new member to a WG using Bearer token and wgid.
+      description: Add a new member to a WG using an invitation token.
       security:
         - bearerAuth: []
       requestBody:
@@ -76,15 +76,18 @@ paths:
             schema:
               type: object
               required:
-                - wgid
+                - invite
               properties:
-                wgid:
+                invite:
                   type: string
+                  description: Invitation token to join the WG
               example:
-                wgid: "1234-wg-id"
+                invite: "Invitation Token"
       responses:
         '200':
           description: Member added to WG
+        '401':
+          description: Unauthorized
 
   /user/removeMember:
     delete:
@@ -212,28 +215,15 @@ paths:
     get:
       tags:
         - wg
-      summary: Invite a user to a WG
-      description: Send an invite to a user to join a WG. Requires Bearer token for authentication.
+      summary: Generate a WG invitation link
+      description: Generate an invitation link for a WG. Requires Bearer token for authentication.
       security:
         - bearerAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - email
-              properties:
-                email:
-                  type: string
-              example:
-                email: "invitee@example.com"
       responses:
         '200':
-          description: Invitation sent
+          description: Invitation link generated
         '401':
-          description: Unauthorized      
+          description: Unauthorized
 
   /todo:
     post:
