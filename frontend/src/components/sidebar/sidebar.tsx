@@ -16,13 +16,15 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import "./SidebarLeft.css";
 import { IconButton } from "@mui/material";
 import useLocalStorage from "use-local-storage";
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import BallotIcon from '@mui/icons-material/Ballot';
-import Logout from "./logout";
+import { tokenContext } from "../../AuthProvider";
 
 const drawerWidth = 240;
 const SidebarLeft = () => {
+  const [, setToken] = useContext(tokenContext);
+  const navigate = useNavigate();
   const defaultDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
   const [theme, setTheme] = useLocalStorage(
     "theme",
@@ -38,6 +40,12 @@ const SidebarLeft = () => {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
 
+  function doLogout() {
+    setToken('');
+    navigate('/login');
+  }
+
+
   /*Here is where you add your Icon text and the link to your page
   and then it will do the magic
   */
@@ -46,12 +54,11 @@ const SidebarLeft = () => {
     { text: "Dashboard", icon: <HouseIcon />, path: "/dashboard" },
     { text: "Shopping List", icon: <BallotIcon />, path: "/cart" },
     { text: "Login(remove after)", icon: <CalendarMonthIcon />, path: "/login" },
-    { text: "Drafts", icon: <AccountCircleIcon />, path: "/" },
+    { text: "WG-Details", icon: <AccountCircleIcon />, path: "/wg-details" },
   ];
 
   return (
     <Box sx={{ display: "flex" }}>
-      <Logout/>
       <Drawer
         sx={{
           width: drawerWidth,
@@ -95,19 +102,27 @@ const SidebarLeft = () => {
           ))}
         </List>
         <Divider />
-        <ListItemButton
-          onClick={switchTheme}
-          sx={{ position: "absolute", bottom: 0, width: "100%" }}
+        <ListItem
+          disablePadding
+          sx={{ flexDirection: "column", alignItems: "flex-start", marginTop:"auto", width:"100%" }}
         >
-          <ListItemIcon>
-            <IconButton>
-              {theme === "light" ? <Brightness7Icon /> : <Brightness4Icon />}
-            </IconButton>
-          </ListItemIcon>
-          <ListItemText>
-            {theme === "light" ? "Light" : "Dark"} Mode
-          </ListItemText>
-        </ListItemButton>
+          <ListItemButton onClick={() => doLogout()} sx={{width:"100%"}}>
+            Logout
+          </ListItemButton>
+          <ListItemButton
+            onClick={switchTheme}
+            sx={{width: "100%" }}
+          >
+            <ListItemIcon>
+              <IconButton>
+                {theme === "light" ? <Brightness7Icon /> : <Brightness4Icon />}
+              </IconButton>
+            </ListItemIcon>
+            <ListItemText>
+              {theme === "light" ? "Light" : "Dark"} Mode
+            </ListItemText>
+          </ListItemButton>
+        </ListItem>
       </Drawer>
     </Box>
   );

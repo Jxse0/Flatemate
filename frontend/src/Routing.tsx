@@ -6,6 +6,7 @@ import ShoppingList from "./components/shoppinglist/shoppingList";
 import SidebarLeft from "./components/sidebar/sidebar";
 import Login from "./components/login/login";
 import Dashboard from "./components/dashboard/Dashboard";
+import WGDetails from "./components/workgroup/wgDetails";
 
 type Props = {
   children: React.ReactNode;
@@ -46,6 +47,13 @@ function Router() {
                   </IsLoggedIn>
                 }
               />
+              <Route
+              path="/wg-details"
+              element={
+                <IsLoggedIn>
+                  <WGDetails/>
+                </IsLoggedIn>
+              }/>
             </Routes>
           </div>
         </BrowserRouter>
