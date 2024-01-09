@@ -19,7 +19,6 @@ import useLocalStorage from "use-local-storage";
 import { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import BallotIcon from '@mui/icons-material/Ballot';
-import Logout from "./logout";
 import { tokenContext } from "../../AuthProvider";
 
 const drawerWidth = 240;
@@ -55,7 +54,7 @@ const SidebarLeft = () => {
     { text: "Dashboard", icon: <HouseIcon />, path: "/dashboard" },
     { text: "Shopping List", icon: <BallotIcon />, path: "/cart" },
     { text: "Login(remove after)", icon: <CalendarMonthIcon />, path: "/login" },
-    { text: "Drafts", icon: <AccountCircleIcon />, path: "/" },
+    { text: "WG-Details", icon: <AccountCircleIcon />, path: "/wg-details" },
   ];
 
   return (
