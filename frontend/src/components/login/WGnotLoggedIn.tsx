@@ -3,15 +3,28 @@ import { tokenContext } from '../../AuthProvider';
 import axios from 'axios';
 import "./logincard.css";
 import { useNavigate } from 'react-router-dom';
+import { flushSync } from 'react-dom';
 
 const WGnotLoggedIn = () => {
   const [token] = useContext(tokenContext);
+  const [invitationToken, setInvitationToken] = useState('');
   const [wgname, setWgname] = useState('');
   const [wgdescription, setWgdescription] = useState('');
   const [wgrules, setWgrules] = useState('');
   const [showCreateForm, setShowCreateForm] = useState(false);
-
+  const [showInviteForm, setShowInviteForm] = useState(false);
   const navigate = useNavigate();
+  
+  const handleCreateButtonClick = () => {
+    setShowCreateForm((prev) => !prev);
+    setShowInviteForm(false);
+  };
+
+  const handleInviteButtonClick = () => {
+    setShowInviteForm((prev) => !prev);
+    setShowCreateForm(false);
+  };
+
   
   const handleCreateWorkgroup = async () => {
     try {
@@ -33,9 +46,19 @@ const WGnotLoggedIn = () => {
     }
   };
 
-  const handleInviteMembers = () => {
+  const handleInvitation = async () => {
     // Logic to invite members to the workgroup
-    console.log('Members invited!');
+    try {
+      const response = await axios.put('http://localhost:3001/user/newMember',{
+        invite: invitationToken,
+      });
+
+      console.debug('Members invited!');
+      setShowInviteForm(false);
+
+    } catch (error) {
+      console.error("Error inviting yourself", error);   
+    }
   };
 
   return (
@@ -45,14 +68,15 @@ const WGnotLoggedIn = () => {
       </h1>
 
       <div
-        style={{
-          opacity: showCreateForm ? 1 : 0,
-          transition: 'opacity 0.5s ease-in-out',
-          overflow: 'hidden',
-        }}
+           style={{
+            opacity: (showCreateForm || showInviteForm) ? 1 : 0,
+            transition: 'max-height 0.5s ease-in-out, opacity 0.5s ease-in-out',
+            overflow: 'hidden',
+          }}
       >
+        {/* We either show the Create Form or the Token Form based on  the buttons */}
         {showCreateForm && (
-          <div id='wgdetailscard'>
+          <div id='wgdetailscard'  key="create">
             <div id='card-content'>
             {/* Form for creating a new workgroup */}
             <form method='post' className='form'>
@@ -93,17 +117,41 @@ const WGnotLoggedIn = () => {
             </div>
           </div>
         )}
+        {showInviteForm && (
+         <div id='wgdetailscard' key="invite">
+         <div id='card-content'>
+         {/* Form for creating a new workgroup */}
+         <form method='post' className='form'>
+         <label  style={{ paddingTop: '13px' }}>
+         &nbsp;I need your Invitation Token
+         </label>
+           <input
+             type="text"
+             value={invitationToken}
+             onChange={(e) => setInvitationToken(e.target.value)}
+             className="form-content"
+             required
+             />
+         <div className="form-border"></div>
+             </form>
+         </div>
+       </div>
+        )}
       </div>
       {/* The 2 Buttons */ }
         <div>
           <button
-            onClick={showCreateForm ? handleCreateWorkgroup: () => setShowCreateForm((prev) => !prev)}
+            onClick={showCreateForm ? handleCreateWorkgroup: handleCreateButtonClick}
             id="submit-btn"
             style={{ width: '100%' }}
           >
             Create New Flatmate
           </button>
-          <button onClick={handleInviteMembers} id="submit-btn" style={{ width: '100%' }}>
+          <button 
+            onClick={showInviteForm? handleInvitation: handleInviteButtonClick} 
+            id="submit-btn" 
+            style={{ width: '100%' }}
+          >
             Join your Amigos
           </button>
         </div>
