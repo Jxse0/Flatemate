@@ -2,32 +2,31 @@ import React, { useContext, useState } from 'react';
 import { tokenContext } from '../../AuthProvider';
 import axios from 'axios';
 import "./logincard.css";
+import { useNavigate } from 'react-router-dom';
 
-const WGDetails = () => {
+const WGnotLoggedIn = () => {
   const [token] = useContext(tokenContext);
   const [wgname, setWgname] = useState('');
   const [wgdescription, setWgdescription] = useState('');
   const [wgrules, setWgrules] = useState('');
-  const [isLoggedIn, setLoggedIn] = useState(false);
-  const [workgroupDetails, setWorkgroupDetails] = useState({
-    name: 'Sample Workgroup',
-    members: ['Member1', 'Member2', 'Member3'],
-  });
   const [showCreateForm, setShowCreateForm] = useState(false);
 
+  const navigate = useNavigate();
+  
   const handleCreateWorkgroup = async () => {
     try {
       const response = await axios.post('http://localhost:3001/wg', {
         name: wgname,
         description: wgdescription,
         rules: wgrules,
-      });
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },});
 
-      // Handle the response or perform any necessary actions
-      console.log('Workgroup created successfully:', response.data);
-
-      // Close the form after creating the workgroup
+      console.debug('Workgroup created successfully:', response.data);
       setShowCreateForm(false);
+      navigate('/login');
     } catch (error) {
       // Handle errors
       console.error('Error creating workgroup:', error);
@@ -95,16 +94,7 @@ const WGDetails = () => {
           </div>
         )}
       </div>
-
-      {isLoggedIn ? (
-        // Display details if the user is logged into the workgroup
-        <div>
-          <h2>{workgroupDetails.name}</h2>
-          <p>Members: {workgroupDetails.members.join(', ')}</p>
-          {/* Add more details as needed */}
-        </div>
-      ) : (
-        // Show options to create a new workgroup or invite members
+      {/* The 2 Buttons */ }
         <div>
           <button
             onClick={showCreateForm ? handleCreateWorkgroup: () => setShowCreateForm((prev) => !prev)}
@@ -114,12 +104,12 @@ const WGDetails = () => {
             Create New Flatmate
           </button>
           <button onClick={handleInviteMembers} id="submit-btn" style={{ width: '100%' }}>
-            Invite Amigos
+            Join your Amigos
           </button>
         </div>
-      )}
+ 
     </div>
   );
 };
 
-export default WGDetails;
+export default WGnotLoggedIn;
