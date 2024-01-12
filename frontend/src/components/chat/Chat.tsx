@@ -15,7 +15,6 @@ const Chat: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState<string>("");
   const [token] = useContext(tokenContext);
-  const wgid = "122";
 
   useEffect(() => {
     const initMessages = async () => {
