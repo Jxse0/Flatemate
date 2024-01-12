@@ -9,7 +9,6 @@ import {
   Box,
 } from "@mui/material";
 import axios from "axios";
-import { colorChannel } from "@mui/system";
 
 function ChatBoxCard() {
   const [prompt, setPrompt] = useState("");
@@ -33,9 +32,16 @@ function ChatBoxCard() {
   };
 
   return (
-    <Card sx={{ height: 300, display: "flex", flexDirection: "column" }}>
+    <Card sx={{ 
+      height: 300, 
+      display: "flex", 
+      flexDirection: "column", 
+      background: "var(--cardBackground)", 
+      borderRadius: "8px",
+      boxShadow: "1px 2px 8px rgba(0, 0, 0, 0.65)"
+    }}>
       <CardContent sx={{ flexGrow: 1 }}>
-        <Typography variant="h5" component="div">
+        <Typography variant="h5" component="div" sx={{ color: "var(--textColor)" }}>
           Ask AImigo
         </Typography>
         <Box
@@ -50,7 +56,7 @@ function ChatBoxCard() {
           }}
         >
           {response && (
-            <Typography variant="body1" component="p">
+            <Typography variant="body1" component="p" sx={{ color: "var(--textColor)" }}>
               {response}
             </Typography>
           )}
@@ -59,23 +65,35 @@ function ChatBoxCard() {
       <Box sx={{ p: 2 }}>
         <Grid container spacing={2} alignItems="center" justifyContent="center">
           <Grid item xs={12} sm={8}>
-            <TextField
-              fullWidth
-              label="Prompt"
-              variant="outlined"
-              value={prompt}
-              onChange={handlePromptChange}
-            />
+          <TextField
+  fullWidth
+  label="Prompt"
+  variant="outlined"
+  value={prompt}
+  onChange={handlePromptChange}
+  sx={{
+    "& label": {
+      color: "var(--textColor)",
+    },
+    "& .MuiOutlinedInput-root": {
+      borderColor: "var(--highlight)", // Set your desired outline color here
+      "&:hover fieldset": {
+        borderColor: "var(--highlight)", // Change the color on hover
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "var(--highlight)", // Change the color on focus
+            },
+             }, 
+             "& .Mui-focused": {
+              color: "var(--highlight)", // Change the color of the label on focus
+            },
+             }}
+          />
           </Grid>
           <Grid item xs={12} sm={4}>
-            <Button
-              fullWidth
-              variant="contained"
-              sx={{backgroundColor:"var(--highlight)"}}
-              onClick={handleSubmit}
-            >
+            <button onClick={handleSubmit} style={{ color: "var(--textColor)" }}>
               Submit
-            </Button>
+            </button>
           </Grid>
         </Grid>
       </Box>

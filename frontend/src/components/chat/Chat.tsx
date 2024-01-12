@@ -41,6 +41,7 @@ const Chat: React.FC = () => {
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    
     e.preventDefault();
     await ChatApi.sendMessage(newMessage);
     setNewMessage("");
@@ -66,7 +67,7 @@ const Chat: React.FC = () => {
           onChange={(e) => setNewMessage(e.target.value)}
           placeholder="Type your message here..."
         />
-        <button type="submit" className="send-button">
+        <button type="submit" className="send-button">          
           Send
         </button>
       </form>
