@@ -7,6 +7,7 @@ import SidebarLeft from "./components/sidebar/sidebar";
 import Login from "./components/login/login";
 import Dashboard from "./components/dashboard/Dashboard";
 import WGDetails from "./components/workgroup/wgDetails";
+import Chat from "./components/chat/Chat";
 
 type Props = {
   children: React.ReactNode;
@@ -44,6 +45,14 @@ function Router() {
                 element={
                   <IsLoggedIn>
                     <ShoppingList />
+                  </IsLoggedIn>
+                }
+              />
+                <Route
+                path="/chat"
+                element={
+                  <IsLoggedIn>
+                    <Chat/>
                   </IsLoggedIn>
                 }
               />

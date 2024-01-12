@@ -9,10 +9,8 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
-import MailIcon from "@mui/icons-material/Mail";
 import HouseIcon from "@mui/icons-material/House";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import "./SidebarLeft.css";
 import { IconButton } from "@mui/material";
 import useLocalStorage from "use-local-storage";
@@ -20,6 +18,7 @@ import { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import BallotIcon from '@mui/icons-material/Ballot';
 import { tokenContext } from "../../AuthProvider";
+import ChatIcon from '@mui/icons-material/Chat';
 
 const drawerWidth = 240;
 const SidebarLeft = () => {
@@ -53,7 +52,7 @@ const SidebarLeft = () => {
     { text: "SignUp", icon: <InboxIcon />, path: "/signup" },
     { text: "Dashboard", icon: <HouseIcon />, path: "/dashboard" },
     { text: "Shopping List", icon: <BallotIcon />, path: "/cart" },
-    { text: "Login(remove after)", icon: <CalendarMonthIcon />, path: "/login" },
+    { text: "Chat", icon: <ChatIcon/>, path: "/chat" },
     { text: "WG-Details", icon: <AccountCircleIcon />, path: "/wg-details" },
   ];
 
