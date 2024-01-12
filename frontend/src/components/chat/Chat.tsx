@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Chat.css";
 import ChatApi from "../../api/ChatApi";
+import { tokenContext } from "../../AuthProvider";
 
 type Message = {
   id: string;
@@ -13,17 +14,18 @@ type Message = {
 const Chat: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState<string>("");
+  const [token] = useContext(tokenContext);
 
   useEffect(() => {
     const initMessages = async () => {
-      const fetchedMessages = await ChatApi.fetchMessages();
+      const fetchedMessages = await ChatApi.fetchMessages(token);
       setMessages(fetchedMessages);
     };
 
     initMessages();
 
     // WebSocket setup
-    const socket = new WebSocket("ws://localhost:8080");
+    const socket = new WebSocket(`ws://localhost:8080`);
     socket.addEventListener("open", () => {
       console.log("Socket connected");
     });
@@ -31,7 +33,14 @@ const Chat: React.FC = () => {
       console.error("WebSocket error:", event);
     });
     socket.addEventListener("message", (event: MessageEvent) => {
-      const incomingMessage: Message = JSON.parse(event.data);
+      const incomingMessage: Message = {
+        id: "",
+        text: JSON.parse(event.data),
+        time: "string",
+        userid: "d",
+        chatid: "string",
+      };
+
       setMessages((prevMessages) => [...prevMessages, incomingMessage]);
     });
 
@@ -41,24 +50,24 @@ const Chat: React.FC = () => {
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    
     e.preventDefault();
-    await ChatApi.sendMessage(newMessage);
+    await ChatApi.sendMessage(newMessage, token);
     setNewMessage("");
   };
 
   return (
     <div className="chat-container">
       <div className="messages-container">
-        {messages.map((message, index) => (
-          <div key={index} className="message">
-            <div>Message ID: {message.id}</div>
-            <div>Text: {message.text}</div>
-            <div>Time: {new Date(message.time).toLocaleString()}</div>
-            <div>User ID: {message.userid}</div>
-            <div>Chat ID: {message.chatid}</div>
-          </div>
-        ))}
+        {messages ? (
+          messages.map((message, index) => (
+            <div key={index} className="message">
+              <div>{message.text}</div>
+              <div>{message.userid}</div>
+            </div>
+          ))
+        ) : (
+          <div>No Messages</div>
+        )}
       </div>
       <form onSubmit={handleSubmit}>
         <textarea
@@ -67,7 +76,7 @@ const Chat: React.FC = () => {
           onChange={(e) => setNewMessage(e.target.value)}
           placeholder="Type your message here..."
         />
-        <button type="submit" className="send-button">          
+        <button type="submit" className="send-button">
           Send
         </button>
       </form>
