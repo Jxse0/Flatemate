@@ -1,14 +1,12 @@
 const API_URL = "http://localhost:3001/chat";
-const TOKEN =
-  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiIzMDc3MTNkOC05NThjLTRkNWYtYjMzMS0zY2RkZjIyNWE5ODQiLCJ3Z2lkIjoiNTNmODJmYWQtODg5My00OThmLTk5ZDEtNWEwZWE0NjJlMjJjIiwiaWF0IjoxNzA0MTUyMzAyLCJleHAiOjE3MDQxNjMxMDJ9.oTDCoiYSOe_TvBvk-Wa70AtqZS_DT03hu7RKyiuFkmw"; // Replace with your actual token
 
 const ChatApi = {
-  async fetchMessages() {
+  async fetchMessages(token: string) {
     try {
       const response = await fetch(API_URL, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: TOKEN,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -23,13 +21,13 @@ const ChatApi = {
     }
   },
 
-  async sendMessage(message: string) {
+  async sendMessage(message: string, token: string) {
     try {
       const response = await fetch(API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: TOKEN,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ message }),
       });
