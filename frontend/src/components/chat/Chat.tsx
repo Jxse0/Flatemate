@@ -41,7 +41,6 @@ const Chat: React.FC = () => {
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    console.log("do shit");
     
     e.preventDefault();
     await ChatApi.sendMessage(newMessage);
