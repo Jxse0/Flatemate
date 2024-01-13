@@ -305,12 +305,12 @@ paths:
         '404':
           description: Todo not found
 
-  /shoppingList:
+    /shoppingList:
     post:
       tags:
         - ShoppingList
-      summary: Create a new shopping list
-      description: Create a new shopping list with name, user IDs, and items.
+      summary: Create a shopping list
+      description: Create a shopping list with name, user IDs, and items.
       security:
         - bearerAuth: []
       requestBody:
@@ -319,10 +319,6 @@ paths:
           application/json:
             schema:
               type: object
-              required:
-                - name
-                - userIds
-                - items
               properties:
                 name:
                   type: string
@@ -334,9 +330,6 @@ paths:
                   type: array
                   items:
                     type: object
-                    required:
-                      - name
-                      - quantity
                     properties:
                       name:
                         type: string
@@ -344,81 +337,56 @@ paths:
                         type: integer
                       price:
                         type: number
-                        format: float
-                    example:
-                      name: "Wochenendeinkauf"
-                      userIds: ["user1", "user2"]
-                      items:
-                      - name: "Eier"
-                        quantity: 12
-                        price: 3.50
-                      - name: "Milch"
-                      quantity: 2
-                      price: 1.20
-        responses:
-         '201':
+              example:
+                name: "Wochenendeinkauf"
+                userIds: ["f00ef26d-849a-45b3-a0da-59a3cbf6d372", "ecdde49f-6106-4607-bb7a-e7f3d4348d8a"]
+                items:
+                  - name: "Eier"
+                    quantity: 12
+                    price: 3.50
+                  - name: "Milch"
+                    quantity: 2
+                    price: 1.20
+      responses:
+        '201':
           description: Shopping list created
+
     get:
       tags:
         - ShoppingList
       summary: Get all shopping lists
-      description: Retrieve a list of all shopping lists.
+      description: Retrieve all shopping lists.
       security:
         - bearerAuth: []
       responses:
         '200':
           description: List of shopping lists
-  /shoppingList/{listid}: 
+
+  /shoppingList/{listId}:
+    parameters:
+      - name: listId
+        in: path
+        required: true
+        description: Unique ID of the shopping list
+        schema:
+          type: string
+
     get:
       tags:
         - ShoppingList
       summary: Get a single shopping list
       description: Retrieve details of a specific shopping list by its ID.
-      parameters:
-        - name: listid
-          in: path
-          required: true
-          description: Unique ID of the shopping list
-          schema:
-            type: string
       security:
         - bearerAuth: []
       responses:
         '200':
           description: Details of the shopping list
-        '404':
-          description: Shopping list not found
-    delete:
-      tags:
-        - ShoppingList
-      summary: Delete a shopping list
-      description: Delete a specific shopping list by its ID.
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: Unique ID of the shopping list to delete
-          schema:
-            type: string
-      security:
-        - bearerAuth: []
-      responses:
-        '200':
-          description: Shopping list deleted
-        '404':
-          description: Shopping list not found
+
     put:
       tags:
         - ShoppingList
       summary: Update a shopping list
       description: Update details of a specific shopping list.
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: Unique ID of the shopping list to update
-          schema:
-            type: string
       security:
         - bearerAuth: []
       requestBody:
@@ -430,112 +398,22 @@ paths:
               properties:
                 name:
                   type: string
-                userIds:
-                  type: array
-                  items:
-                    type: string
-                items:
-                  type: array
-                  items:
-                    type: object
-                    required:
-                      - name
-                      - quantity
-                    properties:
-                      name:
-                        type: string
-                      quantity:
-                        type: integer
-                      price:
-                        type: number
-                        format: float
               example:
-                name: "Updated Shopping List Name"
-                userIds: ["user3", "user4"]
-                items:
-                  - name: "Brot"
-                    quantity: 2
-                    price: 2.50
-                  - name: "Käse"
-                    quantity: 1
-                    price: 4.00
-      responses:
-       '200':
-          description: Shopping list updated
-       '404':
-          description: Shopping list not found
-  /shoppingList/items/{itemid}: 
-    put:
-      tags:
-        - ShoppingList
-      summary: Update an item on a shopping list
-      description: Update details of a specific item on a shopping list.
-      parameters:
-        - name: shoppingListId
-          in: path
-          required: true
-          description: Unique ID of the shopping list
-          schema:
-            type: string
-        - name: itemId
-          in: path
-          required: true
-          description: Unique ID of the item to update
-          schema:
-            type: string
-      security:
-        - bearerAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - name
-                - quantity
-              properties:
-                name:
-                  type: string
-                quantity:
-                  type: integer
-                price:
-                  type: number
-                  format: float
-            example:
-              name: "Bio-Äpfel"
-              quantity: 3
-              price: 2.50
+                name: "Samstagseinkauf"
       responses:
         '200':
-          description: Shopping list item updated
-        '404':
-          description: Item or shopping list not found
+          description: Shopping list updated
+
     delete:
       tags:
         - ShoppingList
-      summary: Remove an item from a shopping list
-      description: Remove a specific item from a shopping list.
-      parameters:
-        - name: shoppingListId
-          in: path
-          required: true
-          description: Unique ID of the shopping list
-          schema:
-            type: string
-        - name: itemId
-          in: path
-          required: true
-          description: Unique ID of the item to remove
-          schema:
-            type: string
+      summary: Delete a shopping list
+      description: Delete a specific shopping list by its ID.
       security:
         - bearerAuth: []
       responses:
         '200':
-          description: Item removed from shopping list
-        '404':
-          description: Item or shopping list not found
+          description: Shopping list deleted
 
 
 
