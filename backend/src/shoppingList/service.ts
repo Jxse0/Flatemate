@@ -70,7 +70,17 @@ const ShoppingListService = {
     return db.shoppingListItem.delete({
       where: {
         id: itemId,
-        // Additional checks can be added here to ensure the item belongs to the specified shopping list
+      },
+    });
+  },
+  async addItem(
+    shoppingListId: string,
+    itemData: CreateShoppingListItem
+  ): Promise<ShoppingListItem> {
+    return db.shoppingListItem.create({
+      data: {
+        ...itemData,
+        shoppingListId: shoppingListId,
       },
     });
   },

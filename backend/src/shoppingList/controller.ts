@@ -72,7 +72,22 @@ const ShoppingListController = {
       }
     }
   },
-
+  async addItem(request: Request, response: Response) {
+    try {
+      const shoppingListId = request.params.id;
+      const itemData = request.body;
+      const newItem = await service.addItem(shoppingListId, itemData);
+      response
+        .status(201)
+        .json({ message: "Item added successfully", data: newItem });
+    } catch (error) {
+      if (error instanceof Error) {
+        response.status(500).json({ error: error.message });
+      } else {
+        response.status(500).json({ error: "An unknown error occurred" });
+      }
+    }
+  },
   async removeItem(request: Request, response: Response) {
     try {
       const { shoppingListId, itemId } = request.params;
