@@ -18,7 +18,6 @@ paths:
       responses:
         '200':
           description: Successful response
-
     post:
       tags:
         - user
@@ -60,7 +59,6 @@ paths:
       responses:
         '201':
           description: User created
-
   /user/newMember:
     put:
       tags:
@@ -88,7 +86,6 @@ paths:
           description: Member added to WG
         '401':
           description: Unauthorized
-
   /user/removeMember:
     delete:
       tags:
@@ -100,7 +97,6 @@ paths:
       responses:
         '200':
           description: Member removed from WG
-
   /user/update:
     put:
       tags:
@@ -124,7 +120,6 @@ paths:
       responses:
         '200':
           description: User updated
-
   /auth/login:
     post:
       tags:
@@ -153,7 +148,6 @@ paths:
           description: Login successful
         '401':
           description: Unauthorized
-
   /auth/token:
     post:
       tags:
@@ -167,7 +161,6 @@ paths:
           description: Token generated
         '401':
           description: Unauthorized
-
   /wg:
     post:
       tags:
@@ -200,7 +193,6 @@ paths:
       responses:
         '201':
           description: WG created
-
     get:
       tags:
         - wg
@@ -224,7 +216,6 @@ paths:
           description: Invitation link generated
         '401':
           description: Unauthorized
-
   /todo:
     post:
       tags:
@@ -266,18 +257,16 @@ paths:
       responses:
         '201':
           description: Todo created
-
     get:
       tags:
         - todos
       summary: Get a list of todos
       description: Retrieve a list of todos.
       security:
-        - bearerAuth: []  # Hinzufügen des Bearer Tokens
+        - bearerAuth: []
       responses:
         '200':
           description: List of todos
-
   /todo/{todoid}:
     get:
       tags:
@@ -292,11 +281,29 @@ paths:
           schema:
             type: string
       security:
-        - bearerAuth: []  # Hinzufügen des Bearer Tokens
+        - bearerAuth: []
       responses:
         '200':
           description: Details of the todo
-
+    delete:
+      tags:
+        - todos
+      summary: Delete a single todo
+      description: Delete a specific todo by its ID.
+      parameters:
+        - name: todoid
+          in: path
+          required: true
+          description: Unique ID of the todo to be deleted
+          schema:
+            type: string
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Todo successfully deleted
+        '404':
+          description: Todo not found
 
 components:
   securitySchemes:
