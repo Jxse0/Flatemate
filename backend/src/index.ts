@@ -5,6 +5,7 @@ import todoRouter from "./toDo/index";
 import wgRouter from "./wg/index";
 import gptRouter from "./gpt/index";
 import chatRouter from "./chat/index";
+import shoppingListRouter from "./shoppingList/index";
 import cors from "cors";
 import { initWebSocket } from "./websocket";
 
@@ -19,6 +20,7 @@ app.use("/todo", todoRouter);
 app.use("/wg", wgRouter);
 app.use("/gpt", gptRouter);
 app.use("/chat", chatRouter);
+app.use("/shoppingList", shoppingListRouter);
 
 app.listen(3001, () => console.log("Flatmate Backend is ready for operations"));
 

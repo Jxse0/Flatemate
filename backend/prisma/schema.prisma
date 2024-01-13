@@ -22,7 +22,8 @@ model User {
   wgid      String?    
   Wg        Wg?        @relation(fields: [wgid], references: [id]) 
   UserTodo  UserTodo[]
-  Messages     Message[]   
+  Messages     Message[]
+  ShoppingLists ShoppingList[]   
 }
 model Chat {
   id        String    @id @unique @default(uuid())
@@ -65,4 +66,20 @@ model Wg {
   rules       String
   Users       User[]
   Chats     Chat[]    // Relation to multiple chats
+}
+
+model ShoppingList {
+  id        String              @id @unique @default(uuid())
+  name      String              // Name der Einkaufsliste
+  Users     User[]
+  items     ShoppingListItem[]
+}
+
+model ShoppingListItem {
+  id            String        @id @unique @default(uuid())
+  name          String
+  quantity      Int
+  price         Float?        // Optional, kann null sein
+  shoppingListId String
+  ShoppingList  ShoppingList  @relation(fields: [shoppingListId], references: [id])
 }
