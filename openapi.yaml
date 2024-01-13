@@ -464,6 +464,79 @@ paths:
           description: Shopping list updated
        '404':
           description: Shopping list not found
+  /shoppingList/items/{itemid}: 
+    put:
+      tags:
+        - ShoppingList
+      summary: Update an item on a shopping list
+      description: Update details of a specific item on a shopping list.
+      parameters:
+        - name: shoppingListId
+          in: path
+          required: true
+          description: Unique ID of the shopping list
+          schema:
+            type: string
+        - name: itemId
+          in: path
+          required: true
+          description: Unique ID of the item to update
+          schema:
+            type: string
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - quantity
+              properties:
+                name:
+                  type: string
+                quantity:
+                  type: integer
+                price:
+                  type: number
+                  format: float
+            example:
+              name: "Bio-Äpfel"
+              quantity: 3
+              price: 2.50
+      responses:
+        '200':
+          description: Shopping list item updated
+        '404':
+          description: Item or shopping list not found
+    delete:
+      tags:
+        - ShoppingList
+      summary: Remove an item from a shopping list
+      description: Remove a specific item from a shopping list.
+      parameters:
+        - name: shoppingListId
+          in: path
+          required: true
+          description: Unique ID of the shopping list
+          schema:
+            type: string
+        - name: itemId
+          in: path
+          required: true
+          description: Unique ID of the item to remove
+          schema:
+            type: string
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Item removed from shopping list
+        '404':
+          description: Item or shopping list not found
+
 
 
 
