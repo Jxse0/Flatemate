@@ -2,10 +2,8 @@ openapi: 3.0.0
 info:
   title: User API
   version: 1.0.0
-description: API for managing users and authentication
 servers:
   - url: http://localhost:3001
-
 paths:
   /user:
     get:
@@ -22,7 +20,9 @@ paths:
       tags:
         - user
       summary: Create a new user
-      description: Create a new user with email, username, password, surname, name, and paypal.
+      description: >-
+        Create a new user with email, username, password, surname, name, and
+        paypal.
       requestBody:
         required: true
         content:
@@ -50,12 +50,12 @@ paths:
                 paypal:
                   type: string
               example:
-                email: "spider@web.de"
-                username: "spiderman"
-                password: "passwort123"
-                surname: "Parker"
-                name: "Peter"
-                paypal: "spider@web.de"
+                email: spider@web.de
+                username: spiderman
+                password: passwort123
+                surname: Parker
+                name: Peter
+                paypal: spider@web.de
       responses:
         '201':
           description: User created
@@ -80,7 +80,7 @@ paths:
                   type: string
                   description: Invitation token to join the WG
               example:
-                invite: "Invitation Token"
+                invite: Invitation Token
       responses:
         '200':
           description: Member added to WG
@@ -114,9 +114,9 @@ paths:
               properties:
                 username:
                   type: string
-                  description: "New username for the user"
+                  description: New username for the user
               example:
-                username: "Spidy"
+                username: Spidy
       responses:
         '200':
           description: User updated
@@ -141,8 +141,8 @@ paths:
                 password:
                   type: string
               example:
-                email: "spider@web.de"
-                password: "passwort123"
+                email: spider@web.de
+                password: passwort123
       responses:
         '200':
           description: Login successful
@@ -166,7 +166,9 @@ paths:
       tags:
         - wg
       summary: Create a WG
-      description: Create a WG with name, description, and rules. User ID is determined from Bearer token.
+      description: >-
+        Create a WG with name, description, and rules. User ID is determined
+        from Bearer token.
       security:
         - bearerAuth: []
       requestBody:
@@ -187,9 +189,9 @@ paths:
                 rules:
                   type: string
               example:
-                name: "Test WG"
-                description: "Wir sind toll"
-                rules: "Keine Haustiere"
+                name: Test WG
+                description: Wir sind toll
+                rules: Keine Haustiere
       responses:
         '201':
           description: WG created
@@ -208,7 +210,9 @@ paths:
       tags:
         - wg
       summary: Generate a WG invitation link
-      description: Generate an invitation link for a WG. Requires Bearer token for authentication.
+      description: >-
+        Generate an invitation link for a WG. Requires Bearer token for
+        authentication.
       security:
         - bearerAuth: []
       responses:
@@ -221,7 +225,9 @@ paths:
       tags:
         - todos
       summary: Create a new todo
-      description: Create a new todo with title, description, frequency, user IDs, and start date.
+      description: >-
+        Create a new todo with title, description, frequency, user IDs, and
+        start date.
       requestBody:
         required: true
         content:
@@ -249,11 +255,13 @@ paths:
                   type: string
                   format: date
               example:
-                title: "Test1"
-                description: "Selbsterklärend"
-                frequenz: "3"
-                ids: ["40705658-e5cb-431c-b99a-d5f8c4b70818", "8d4c1112-4954-42b7-a77d-5ad7bd516160"]
-                startdate: "2023-12-30"
+                title: Test1
+                description: Selbsterklärend
+                frequenz: '3'
+                ids:
+                  - 40705658-e5cb-431c-b99a-d5f8c4b70818
+                  - 8d4c1112-4954-42b7-a77d-5ad7bd516160
+                startdate: '2023-12-30'
       responses:
         '201':
           description: Todo created
@@ -285,47 +293,68 @@ paths:
       responses:
         '200':
           description: Details of the todo
-    delete:
-      tags:
-        - todos
-      summary: Delete a single todo
-      description: Delete a specific todo by its ID.
-      parameters:
-        - name: todoid
-          in: path
-          required: true
-          description: Unique ID of the todo to be deleted
-          schema:
-            type: string
-      security:
-        - bearerAuth: []
-      responses:
-        '200':
-          description: Todo successfully deleted
-        '404':
-          description: Todo not found
   /shoppingList:
     post:
       tags:
-        - ShoppingList
-      summary: Create a new shopping list
-      security:
-        - bearerAuth: []
+        - Shopping List
+      summary: Creates a new Shopping list
+      description: This endpoint is used for creating a new shopping list with specified items.
+      operationId: createShoppingList
       requestBody:
+        description: Data for the new shopping list
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ShoppingList'
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Wochenendeinkauf
+                userIds:
+                  type: array
+                  items:
+                    type: string
+                  example: ["f00ef26d-849a-45b3-a0da-59a3cbf6d372", "ecdde49f-6106-4607-bb7a-e7f3d4348d8a"]
+                items:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      quantity:
+                        type: integer
+                      price:
+                        type: number
+                        format: float
+                    example: {"name": "Eier", "quantity": 12, "price": 3.50}
       responses:
         '201':
-          description: Successfully created a new shopping list
-    get:
-      tags:
-        - ShoppingList
-      summary: Retrieve all shopping lists
+          description: Shopping list created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Shopping list created
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
       security:
         - bearerAuth: []
+    get:
+      tags:
+        - Shopping List
+      summary: Retrieves shopping lists
+      description: This endpoint is used for retrieving all available shopping lists.
+      operationId: getShoppingLists
       responses:
         '200':
           description: A list of shopping lists
@@ -334,92 +363,276 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ShoppingList'
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+                    userIds:
+                      type: array
+                      items:
+                        type: string
+                    items:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          quantity:
+                            type: integer
+                          price:
+                            type: number
+                            format: float
+              example: 
+                - id: "1234"
+                  name: "Wochenendeinkauf"
+                  userIds: ["f00ef26d-849a-45b3-a0da-59a3cbf6d372", "ecdde49f-6106-4607-bb7a-e7f3d4348d8a"]
+                  items: 
+                    - name: "Eier"
+                      quantity: 12
+                      price: 3.50
+                    - name: "Milch"
+                      quantity: 2
+                      price: 1.20
+        '401':
+          description: Unauthorized
+      security:
+        - bearerAuth: []
   /shoppingList/{listId}:
     get:
       tags:
-        - ShoppingList
-      summary: Retrieve a single shopping list
-      security:
-        - bearerAuth: []
+        - Shopping List
+      summary: Retrieves a specific shopping list
+      description: This endpoint is used for retrieving a specific shopping list by its ID.
+      operationId: getShoppingListById
       parameters:
         - name: listId
           in: path
           required: true
+          description: The ID of the shopping list to retrieve
           schema:
             type: string
       responses:
         '200':
-          description: Details of a specific shopping list
+          description: Specific shopping list data
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ShoppingList'
-    put:
-      tags:
-        - ShoppingList
-      summary: Update a shopping list
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  userIds:
+                    type: array
+                    items:
+                      type: string
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        quantity:
+                          type: integer
+                        price:
+                          type: number
+                          format: float
+                example:
+                  id: "1234"
+                  name: "Wochenendeinkauf"
+                  userIds: ["f00ef26d-849a-45b3-a0da-59a3cbf6d372", "ecdde49f-6106-4607-bb7a-e7f3d4348d8a"]
+                  items:
+                    - name: "Eier"
+                      quantity: 12
+                      price: 3.50
+                    - name: "Milch"
+                      quantity: 2
+                      price: 1.20
+        '404':
+          description: Shopping list not found
+        '401':
+          description: Unauthorized
       security:
         - bearerAuth: []
+    put:
+      tags:
+        - Shopping List
+      summary: Updates a specific shopping list
+      description: This endpoint is used for updating the name of a specific shopping list by its ID.
+      operationId: updateShoppingListById
       parameters:
         - name: listId
           in: path
           required: true
+          description: The ID of the shopping list to update
           schema:
             type: string
       requestBody:
+        description: Data for updating the shopping list
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ShoppingList'
+              type: object
+              properties:
+                name:
+                  type: string
+              example:
+                name: "Samstagseinkauf"
       responses:
         '200':
-          description: Successfully updated the shopping list
-    delete:
-      tags:
-        - ShoppingList
-      summary: Delete a shopping list
+          description: Shopping list updated successfully
+        '404':
+          description: Shopping list not found
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
       security:
         - bearerAuth: []
+        
+    delete:
+      tags:
+        - Shopping List
+      summary: Deletes a specific shopping list
+      description: This endpoint is used for deleting a specific shopping list by its ID.
+      operationId: deleteShoppingListById
       parameters:
         - name: listId
           in: path
           required: true
+          description: The ID of the shopping list to delete
           schema:
             type: string
       responses:
-        '204':
-          description: Successfully deleted the shopping list
-
-
-
+        '200':
+          description: Shopping list deleted successfully
+        '404':
+          description: Shopping list not found
+        '401':
+          description: Unauthorized
+      security:
+        - bearerAuth: []
+        
+  /shoppingList/items/{itemId}:
+    put:
+      tags:
+        - Shopping List
+      summary: Updates a specific item in the shopping list
+      description: This endpoint is used for updating the details of a specific item in the shopping list by its ID.
+      operationId: updateShoppingListItemById
+      parameters:
+        - name: itemId
+          in: path
+          required: true
+          description: The ID of the item in the shopping list to update
+          schema:
+            type: string
+      requestBody:
+        description: Data for updating the item
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                quantity:
+                  type: integer
+                price:
+                  type: number
+                  format: float
+              example:
+                name: "Bio-Eier"
+                quantity: 6
+                price: 2.30
+      responses:
+        '200':
+          description: Item updated successfully
+        '404':
+          description: Item not found
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+      security:
+        - bearerAuth: []
+    delete:
+      tags:
+        - Shopping List
+      summary: Deletes a specific item from the shopping list
+      description: This endpoint is used for deleting a specific item from the shopping list by its ID.
+      operationId: deleteShoppingListItemById
+      parameters:
+        - name: itemId
+          in: path
+          required: true
+          description: The ID of the item in the shopping list to delete
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Item deleted successfully
+        '404':
+          description: Item not found
+        '401':
+          description: Unauthorized
+      security:
+        - bearerAuth: []
+  /shoppingList/{listId}/items:
+    post:
+      tags:
+        - Shopping List
+      summary: Adds a new item to a specific shopping list
+      description: This endpoint is used for adding a new item to a shopping list identified by its ID.
+      operationId: addNewItemToShoppingList
+      parameters:
+        - name: listId
+          in: path
+          required: true
+          description: The ID of the shopping list to which the item will be added
+          schema:
+            type: string
+      requestBody:
+        description: Data for the new item to add to the shopping list
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                quantity:
+                  type: integer
+                price:
+                  type: number
+                  format: float
+              example:
+                name: "Äpfel"
+                quantity: 5
+                price: 2.50
+      responses:
+        '201':
+          description: New item added to the shopping list successfully
+        '404':
+          description: Shopping list not found
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+      security:
+        - bearerAuth: []
+        
 components:
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT
-  schemas:
-    ShoppingList:
-      type: object
-      properties:
-        name:
-          type: string
-        userIds:
-          type: array
-          items:
-            type: string
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Item'
-    Item:
-      type: object
-      properties:
-        name:
-          type: string
-        quantity:
-          type: integer
-        price:
-          type: number
