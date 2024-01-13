@@ -358,16 +358,58 @@ paths:
         responses:
          '201':
           description: Shopping list created
-  get:
-  tags:
-    - ShoppingList
-  summary: Get all shopping lists
-  description: Retrieve a list of all shopping lists.
-  security:
-    - bearerAuth: []
-  responses:
-    '200':
-      description: List of shopping lists
+    get:
+      tags:
+        - ShoppingList
+      summary: Get all shopping lists
+      description: Retrieve a list of all shopping lists.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: List of shopping lists
+  /shoppingList/{listid}: 
+    get:
+      tags:
+        - ShoppingList
+      summary: Get a single shopping list
+      description: Retrieve details of a specific shopping list by its ID.
+      parameters:
+        - name: listid
+          in: path
+          required: true
+          description: Unique ID of the shopping list
+          schema:
+            type: string
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Details of the shopping list
+        '404':
+          description: Shopping list not found
+    delete:
+      tags:
+        - ShoppingList
+      summary: Delete a shopping list
+      description: Delete a specific shopping list by its ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Unique ID of the shopping list to delete
+          schema:
+            type: string
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Shopping list deleted
+        '404':
+          description: Shopping list not found
+
+
+
 
 
 components:
