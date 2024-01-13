@@ -407,6 +407,64 @@ paths:
           description: Shopping list deleted
         '404':
           description: Shopping list not found
+    put:
+      tags:
+        - ShoppingList
+      summary: Update a shopping list
+      description: Update details of a specific shopping list.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Unique ID of the shopping list to update
+          schema:
+            type: string
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                userIds:
+                  type: array
+                  items:
+                    type: string
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - name
+                      - quantity
+                    properties:
+                      name:
+                        type: string
+                      quantity:
+                        type: integer
+                      price:
+                        type: number
+                        format: float
+              example:
+                name: "Updated Shopping List Name"
+                userIds: ["user3", "user4"]
+                items:
+                  - name: "Brot"
+                    quantity: 2
+                    price: 2.50
+                  - name: "Käse"
+                    quantity: 1
+                    price: 4.00
+      responses:
+       '200':
+          description: Shopping list updated
+       '404':
+          description: Shopping list not found
+
 
 
 
