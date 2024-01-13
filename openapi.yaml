@@ -306,6 +306,8 @@ paths:
           description: Todo not found
   /shoppingList:
     post:
+      tags:
+        - ShoppingList
       summary: Create a new shopping list
       security:
         - bearerAuth: []
@@ -319,6 +321,8 @@ paths:
         '201':
           description: Successfully created a new shopping list
     get:
+      tags:
+        - ShoppingList
       summary: Retrieve all shopping lists
       security:
         - bearerAuth: []
@@ -333,6 +337,8 @@ paths:
                   $ref: '#/components/schemas/ShoppingList'
   /shoppingList/{listId}:
     get:
+      tags:
+        - ShoppingList
       summary: Retrieve a single shopping list
       security:
         - bearerAuth: []
@@ -350,6 +356,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ShoppingList'
     put:
+      tags:
+        - ShoppingList
       summary: Update a shopping list
       security:
         - bearerAuth: []
@@ -369,6 +377,8 @@ paths:
         '200':
           description: Successfully updated the shopping list
     delete:
+      tags:
+        - ShoppingList
       summary: Delete a shopping list
       security:
         - bearerAuth: []
