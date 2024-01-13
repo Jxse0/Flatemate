@@ -85,5 +85,30 @@ const service = {
       throw error;
     }
   },
+  async delete(todoid: string) {
+    try {
+      if (!todoid) {
+        throw new Error("Todo ID ist erforderlich.");
+      }
+      // Löschen aller UserTodo-Einträge, die mit dem Todo verknüpft sind
+      await db.userTodo.deleteMany({
+        where: {
+          todoid: todoid,
+        },
+      });
+
+      // Löschen des Todo-Eintrags
+      const deletedTodo = await db.todo.delete({
+        where: {
+          id: todoid,
+        },
+      });
+
+      return deletedTodo;
+    } catch (error) {
+      console.error("Fehler beim Löschen des Todos:", error);
+      throw error;
+    }
+  },
 };
 export default service;
