@@ -305,6 +305,60 @@ paths:
         '404':
           description: Todo not found
 
+  /shoppingList:
+    post:
+      tags:
+        - ShoppingList
+      summary: Create a new shopping list
+      description: Create a new shopping list with name, user IDs, and items.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - userIds
+                - items
+              properties:
+                name:
+                  type: string
+                userIds:
+                  type: array
+                  items:
+                    type: string
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - name
+                      - quantity
+                    properties:
+                      name:
+                        type: string
+                      quantity:
+                        type: integer
+                      price:
+                        type: number
+                        format: float
+                    example:
+                      name: "Wochenendeinkauf"
+                      userIds: ["user1", "user2"]
+                      items:
+                      - name: "Eier"
+                        quantity: 12
+                        price: 3.50
+                      - name: "Milch"
+                      quantity: 2
+                      price: 1.20
+        responses:
+         '201':
+          description: Shopping list created
+
 components:
   securitySchemes:
     bearerAuth:
