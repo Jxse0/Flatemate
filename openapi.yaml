@@ -304,13 +304,9 @@ paths:
           description: Todo successfully deleted
         '404':
           description: Todo not found
-
-    /shoppingList:
+  /shoppingList:
     post:
-      tags:
-        - ShoppingList
-      summary: Create a shopping list
-      description: Create a shopping list with name, user IDs, and items.
+      summary: Create a new shopping list
       security:
         - bearerAuth: []
       requestBody:
@@ -318,106 +314,73 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                userIds:
-                  type: array
-                  items:
-                    type: string
-                items:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      name:
-                        type: string
-                      quantity:
-                        type: integer
-                      price:
-                        type: number
-              example:
-                name: "Wochenendeinkauf"
-                userIds: ["f00ef26d-849a-45b3-a0da-59a3cbf6d372", "ecdde49f-6106-4607-bb7a-e7f3d4348d8a"]
-                items:
-                  - name: "Eier"
-                    quantity: 12
-                    price: 3.50
-                  - name: "Milch"
-                    quantity: 2
-                    price: 1.20
+              $ref: '#/components/schemas/ShoppingList'
       responses:
         '201':
-          description: Shopping list created
-
+          description: Successfully created a new shopping list
     get:
-      tags:
-        - ShoppingList
-      summary: Get all shopping lists
-      description: Retrieve all shopping lists.
+      summary: Retrieve all shopping lists
       security:
         - bearerAuth: []
       responses:
         '200':
-          description: List of shopping lists
-
+          description: A list of shopping lists
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ShoppingList'
   /shoppingList/{listId}:
-    parameters:
-      - name: listId
-        in: path
-        required: true
-        description: Unique ID of the shopping list
-        schema:
-          type: string
-
     get:
-      tags:
-        - ShoppingList
-      summary: Get a single shopping list
-      description: Retrieve details of a specific shopping list by its ID.
+      summary: Retrieve a single shopping list
       security:
         - bearerAuth: []
+      parameters:
+        - name: listId
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
         '200':
-          description: Details of the shopping list
-
+          description: Details of a specific shopping list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShoppingList'
     put:
-      tags:
-        - ShoppingList
       summary: Update a shopping list
-      description: Update details of a specific shopping list.
       security:
         - bearerAuth: []
+      parameters:
+        - name: listId
+          in: path
+          required: true
+          schema:
+            type: string
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-              example:
-                name: "Samstagseinkauf"
+              $ref: '#/components/schemas/ShoppingList'
       responses:
         '200':
-          description: Shopping list updated
-
+          description: Successfully updated the shopping list
     delete:
-      tags:
-        - ShoppingList
       summary: Delete a shopping list
-      description: Delete a specific shopping list by its ID.
       security:
         - bearerAuth: []
+      parameters:
+        - name: listId
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
-        '200':
-          description: Shopping list deleted
-
-
-
-
+        '204':
+          description: Successfully deleted the shopping list
 
 
 
@@ -427,3 +390,26 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
+  schemas:
+    ShoppingList:
+      type: object
+      properties:
+        name:
+          type: string
+        userIds:
+          type: array
+          items:
+            type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Item'
+    Item:
+      type: object
+      properties:
+        name:
+          type: string
+        quantity:
+          type: integer
+        price:
+          type: number
