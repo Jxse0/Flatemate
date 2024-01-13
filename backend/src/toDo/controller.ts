@@ -34,6 +34,11 @@ const controller = {
     const userTodos = await service.getOne(todoid as string);
     response.json(userTodos);
   },
+  async delete(request: Request, response: Response) {
+    const todoid = request.params.todoid;
+    const deleteTodo = await service.delete(todoid as string);
+    response.json(deleteTodo);
+  },
 };
 
 export default controller;
