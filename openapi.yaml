@@ -296,7 +296,7 @@ paths:
       responses:
         '200':
           description: Details of the todo
-/todo/{todoid}:
+  /todo/{todoid}:
     delete:
       tags:
         - todos
