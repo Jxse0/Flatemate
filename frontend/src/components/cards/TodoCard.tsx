@@ -123,6 +123,11 @@ const TodoCard = () => {
             Add
           </Button>
           <List>
+            <ListItem>
+              <ListItemText primary={<b>Title</b>} />
+              <ListItemText primary={<b>Description</b>} />
+              <ListItemText primary={<b>Delete</b>} />
+            </ListItem>
             {todos.map((todo, index) => (
               <ListItem key={index}>
                 <ListItemText primary={todo.title} />
