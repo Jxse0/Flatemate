@@ -1,9 +1,8 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import { tokenContext } from '../../AuthProvider';
 import axios from 'axios';
 import "./logincard.css";
 import { useNavigate } from 'react-router-dom';
-import { flushSync } from 'react-dom';
 
 const WGnotLoggedIn = () => {
   const [token] = useContext(tokenContext);
@@ -41,7 +40,6 @@ const WGnotLoggedIn = () => {
       setShowCreateForm(false);
       navigate('/login');
     } catch (error) {
-      // Handle errors
       console.error('Error creating workgroup:', error);
     }
   };
@@ -55,6 +53,7 @@ const WGnotLoggedIn = () => {
 
       console.debug('Members invited!');
       setShowInviteForm(false);
+      navigate('/login');
 
     } catch (error) {
       console.error("Error inviting yourself", error);   
@@ -141,14 +140,14 @@ const WGnotLoggedIn = () => {
       {/* The 2 Buttons */ }
         <div>
           <button
-            onClick={showCreateForm ? handleCreateWorkgroup: handleCreateButtonClick}
+            onClick={showCreateForm ? handleCreateWorkgroup : handleCreateButtonClick}
             id="submit-btn"
             style={{ width: '100%' }}
           >
             Create New Flatmate
           </button>
           <button 
-            onClick={showInviteForm? handleInvitation: handleInviteButtonClick} 
+            onClick={showInviteForm ? handleInvitation : handleInviteButtonClick} 
             id="submit-btn" 
             style={{ width: '100%' }}
           >

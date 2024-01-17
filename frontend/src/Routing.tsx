@@ -6,8 +6,9 @@ import ShoppingList from "./components/shoppinglist/shoppingList";
 import SidebarLeft from "./components/sidebar/sidebar";
 import Login from "./components/login/login";
 import Dashboard from "./components/dashboard/Dashboard";
-import WGDetails from "./components/workgroup/wgDetails";
+import MeAndAmigos from "./components/accountDetails/meAndAmigos";
 import Chat from "./components/chat/Chat";
+import Todo from "./components/todoBig";
 
 type Props = {
   children: React.ReactNode;
@@ -57,12 +58,29 @@ function Router() {
                 }
               />
               <Route
+                path="/todo"
+                element={
+                  <IsLoggedIn>
+                    <Todo/>
+                  </IsLoggedIn>
+                }
+              />
+              <Route
+                path="/account"
+                element={
+                  <IsLoggedIn>
+                    <Chat/>
+                  </IsLoggedIn>
+                }
+              />
+              <Route
               path="/wg-details"
               element={
                 <IsLoggedIn>
-                  <WGDetails/>
+                  <MeAndAmigos/>
                 </IsLoggedIn>
-              }/>
+              }
+              />
             </Routes>
           </div>
         </BrowserRouter>

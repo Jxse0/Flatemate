@@ -4,10 +4,11 @@ import axios from 'axios';
 import { CircularProgress, Typography } from '@mui/material';
 import WGnotLoggedIn from '../login/WGnotLoggedIn';
 import { tokenContext } from '../../AuthProvider';
+import './accountDetails.css';
 
 
 // Main DataFetcherComponent
-const WGDetails: React.FC = () => {
+const MeAndAmigos: React.FC = () => {
     const [token] = useContext(tokenContext);
   // State to store fetched data
   const [data, setData] = useState<any>(null);
@@ -34,6 +35,8 @@ const WGDetails: React.FC = () => {
     };
 
     fetchData();
+    console.log(data);
+    
   }, []); // Empty dependency array to ensure the effect runs only once on mount
 
   // Display loading spinner while fetching data
@@ -48,12 +51,15 @@ const WGDetails: React.FC = () => {
 
   // Display normal page
   return (
-    <div>
-      <Typography variant="h4">Fetched Data:</Typography>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
-      {/* Replace the above with your own rendering logic */}
+    <div id="accountCard">
+     <h2>Me and my Amigos</h2>
+     <div className="underline-title"></div>
+     <h1 style={{color: "var(--highlight)", marginBottom:"10px"}}>{data.name}</h1>
+     <h3 style={{margin:"5px"}}>{data.description}</h3>
+     <div className='wgrules'>Regeln: {data.rules}</div>
+     <div className="form-border"></div>
     </div>
   );
 };
 
-export default WGDetails;
+export default MeAndAmigos;

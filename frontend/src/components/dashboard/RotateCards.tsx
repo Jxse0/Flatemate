@@ -95,7 +95,7 @@ const RotateCards: React.FC<CardsProps> = () => {
       </MuiCard>
       {/* Blue Card with Todo List */}
       <MuiCard className="fill-blue card" data-card="1">
-        <Button className="full-width-button" sx={buttonStyles} component={Link} to="/cart">
+        <Button className="full-width-button" sx={buttonStyles} component={Link} to="/todo">
           Todo List
         </Button>
         <CardContent style={{ flex: 1 }}>
@@ -104,7 +104,7 @@ const RotateCards: React.FC<CardsProps> = () => {
       </MuiCard>
       {/* Green Card with Chat */}
       <MuiCard className="fill-green card" data-card="2">
-        <Button className="full-width-button" sx={buttonStyles} component={Link} to="/cart">
+        <Button className="full-width-button" sx={buttonStyles} component={Link} to="/chat">
           Chat
         </Button>
         <CardContent style={{ flex: 1 }}>
@@ -113,7 +113,7 @@ const RotateCards: React.FC<CardsProps> = () => {
       </MuiCard>
       {/* Purple Card */}
       <MuiCard className="fill-purple card" data-card="3">
-        <Button className="full-width-button" sx={buttonStyles} component={Link} to="/cart">
+        <Button className="full-width-button" sx={buttonStyles} component={Link} to="/account">
           Details
         </Button>
         <CardContent className='card-detail'>
