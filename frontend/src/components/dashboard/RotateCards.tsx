@@ -4,6 +4,7 @@ import './rotateCards.css';
 import TodoCard from '../cards/TodoCard';
 import GroceryCard from '../cards/GroceryCard';
 import { Link } from 'react-router-dom';
+import Chat from '../chat/Chat';
 
 interface CardsProps {}
 
@@ -70,28 +71,51 @@ const RotateCards: React.FC<CardsProps> = () => {
   cards[card].classList.add('card--front');
   };
 
+
+  const buttonStyles = {
+    color: 'var(--primary)',
+    fontSize: 'xx-large',
+    fontWeight: 'bold',
+    '&:hover': {
+      color: 'var(--highlight)',
+    },
+  };
+
+  
   return (
     <div className="cards">
+      {/* Orange Card with Shopping List */}
       <MuiCard className="fill-orange card" data-card="0">
-      <Button className="card__icon" data-icon="0" component={Link} to='/cart'/>
-      <div className='card-detail'>
-       <GroceryCard/>
-      </div>
-      </MuiCard>
-      <MuiCard className="fill-blue card" data-card="1">
-      <button className="card__icon" data-icon="1" onClick={() => {console.log("hello")}}/>
-      <div className='card-detail'>
-        <TodoCard/>
-      </div>
-      </MuiCard>
-      <MuiCard className="fill-green card" data-card="2">
-        <button className="card__icon" data-icon="2" onClick={() => {console.log("hello")}}/>
-        <CardContent>
-          <Typography variant="h5">details</Typography>
+        <Button className="full-width-button" sx={buttonStyles} component={Link} to="/cart">
+          Shopping List
+        </Button>
+        <CardContent style={{ flex: 1 }}>
+          <GroceryCard />
         </CardContent>
       </MuiCard>
+      {/* Blue Card with Todo List */}
+      <MuiCard className="fill-blue card" data-card="1">
+        <Button className="full-width-button" sx={buttonStyles} component={Link} to="/cart">
+          Todo List
+        </Button>
+        <CardContent style={{ flex: 1 }}>
+          <TodoCard />
+        </CardContent>
+      </MuiCard>
+      {/* Green Card with Chat */}
+      <MuiCard className="fill-green card" data-card="2">
+        <Button className="full-width-button" sx={buttonStyles} component={Link} to="/cart">
+          Chat
+        </Button>
+        <CardContent style={{ flex: 1 }}>
+          <Chat />
+        </CardContent>
+      </MuiCard>
+      {/* Purple Card */}
       <MuiCard className="fill-purple card" data-card="3">
-      <button className="card__icon" data-icon="3" onClick={() => {console.log("hello")}}/>
+        <Button className="full-width-button" sx={buttonStyles} component={Link} to="/cart">
+          Details
+        </Button>
         <CardContent className='card-detail'>
           <Typography variant="h5">details</Typography>
         </CardContent>
