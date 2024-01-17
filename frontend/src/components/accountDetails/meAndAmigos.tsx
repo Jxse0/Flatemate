@@ -58,6 +58,17 @@ const MeAndAmigos: React.FC = () => {
      <h3 style={{margin:"5px"}}>{data.description}</h3>
      <div className='wgrules'>Regeln: {data.rules}</div>
      <div className="form-border"></div>
+      {/* Create div with amigocard id for each user in the array */}
+      {data.Users.map((user: any) => (
+      <div id='amigocard' key={user.id}>
+        <h4>Name: {user.name}</h4>
+        <p>Email: {user.email}</p>
+        {/* Add any additional information you want to display */}
+        <div className="user-details">
+          {/* Additional user details go here */}
+        </div>
+      </div>
+    ))}
     </div>
   );
 };
