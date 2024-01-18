@@ -20,7 +20,7 @@
   --cardBackground:#06557d;
   --sidebar-color:#1e2f2f;
   --textColor: #E0E0E0;
-  --primary: #1f5816;
+  --primary: #161d58;
   --secondary: #EA7148;
   --highlight: #E0A100;
 }
@@ -49,10 +49,11 @@ a:hover {
 }
 
 body {
-  margin: 0;
+  margin: 0 auto;
+  margin-top: auto;
   display: flex;
   place-items: center;
-  min-width: 320px;
+  width: 100%;
   height: 100%;
 }
 

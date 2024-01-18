@@ -53,6 +53,7 @@ a {
     margin-top: 16px;
     text-align: center;
   }
+  
   #submit-btn {
     background: -webkit-linear-gradient(right, var(--highlight), var(--secondary));
     border: none;
@@ -69,6 +70,7 @@ a {
   #submit-btn:hover {
     box-shadow: 0px 1px 18px var(--secondary);
   }
+
   .form {
     align-items: left;
     display: flex;

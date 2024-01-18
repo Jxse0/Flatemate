@@ -133,9 +133,6 @@ const GroceryCard = () => {
   return (
     <Card>
       <CardContent>
-        <Typography variant="h5" component="h2">
-          Shopping List
-        </Typography>
         <CardContent sx={{ height: 200, overflowY: "auto" }}>
           <TextField
             value={groceryInput}

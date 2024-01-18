@@ -103,9 +103,6 @@ const TodoCard = () => {
   return (
     <Card>
       <CardContent>
-        <Typography variant="h5" component="h2">
-          Todo List
-        </Typography>
         <CardContent>
           <TextField
             value={todoInput}
