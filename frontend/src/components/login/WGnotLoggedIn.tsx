@@ -47,9 +47,15 @@ const WGnotLoggedIn = () => {
   const handleInvitation = async () => {
     // Logic to invite members to the workgroup
     try {
-      const response = await axios.put('http://localhost:3001/user/newMember',{
+      console.log(invitationToken);
+      
+      const response = await axios.put('http://localhost:3001/user/newMember',
+      {
         invite: invitationToken,
-      });
+      },{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },});
 
       console.debug('Members invited!');
       setShowInviteForm(false);

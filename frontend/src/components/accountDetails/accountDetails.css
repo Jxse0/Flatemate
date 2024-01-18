@@ -8,12 +8,12 @@
 }
 
 #amigocard {
-    background: var(--primary);
+  background: var(--sidebar-color);
     border-radius: 8px;
     margin: 10px;
-    height: 20px;
-    
-    box-shadow: 0px 1px 10px var(--secondary);
+    height: 55px;
+    margin-bottom: 20px;
+    box-shadow: 0px 1px 10px var(--highlight);
 } 
 
 .underline-title {
@@ -28,9 +28,31 @@
     align-items: flex-start;
     margin-left: 15px;
   }
+  .amigoname {
+    margin: 2px;
 
-  .form-border {
+  }
+  
+  #invite-btn {
+    background: -webkit-linear-gradient(right, var(--highlight), var(--secondary));
+    border: none;
+    border-radius: 21px;
+    cursor: pointer;
+    color: var(--textColor);
+    font-family: "Raleway SemiBold", sans-serif;
+    height: 42.3px;
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 12px;
+    transition: 0.25s;
+  }
+  #invite-btn:hover {
+    box-shadow: 0px 1px 18px var(--secondary);
+  }
+
+  .line-border {
     background: -webkit-linear-gradient(right, var(--highlight), var(--secondary));
     height: 1px;
     width: 100%;
+    margin-bottom: 10px;
   }
