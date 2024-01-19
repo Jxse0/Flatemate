@@ -10,7 +10,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { tokenContext } from "../../AuthProvider.tsx";
+import { tokenContext } from "../../InfoProvider";
 import axios from "axios";
 const GroceryCard = () => {
   const [groceryInput, setGroceryInput] = useState("");

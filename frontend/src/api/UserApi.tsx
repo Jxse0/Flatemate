@@ -1,9 +1,10 @@
-const API_URL = "http://localhost:3001/chat";
+const API_URL_USER = "http://localhost:3001/user";
+const API_URL_WG = "http://localhost:3001/wg";
 
-const ChatApi = {
-  async fetchMessages(token: string) {
+const UserApi = {
+  async getUser(token: string) {
     try {
-      const response = await fetch(API_URL, {
+      const response = await fetch(API_URL_USER, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -14,33 +15,30 @@ const ChatApi = {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      return data[0];
+      return data;
     } catch (error) {
-      console.error("Error fetching messages:", error);
+      console.error("Error fetching User:", error);
       return [];
     }
   },
-
-  async sendMessage(text: string, username: string, token: string) {
+  async getAllUser(token: string) {
     try {
-      const response = await fetch(API_URL, {
-        method: "POST",
+      const response = await fetch(API_URL_WG, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ text, username }),
       });
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      return await response.json();
+      const data = await response.json();
+      return data.Users || [];
     } catch (error) {
-      console.error("Failed to send message:", error);
-      throw error;
+      console.error("Error fetching User:", error);
+      return [];
     }
   },
 };
-
-export default ChatApi;
+export default UserApi;

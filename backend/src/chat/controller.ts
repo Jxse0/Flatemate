@@ -7,7 +7,7 @@ const controller = {
   async send(request: Request, response: Response, next: NextFunction) {
     try {
       const user_token = returnUser(request);
-      if (!user_token || !request.body.message) {
+      if (!user_token || !request.body.text) {
         return response
           .status(400)
           .send({ error: "Missing user token or message" });
@@ -15,9 +15,10 @@ const controller = {
       const message = await service.send(
         user_token.userid,
         user_token.wgid,
-        request.body.message
+        request.body.text
       );
-      sendMessage(request.body.message);
+
+      sendMessage(request.body.text, request.body.username);
       response.status(201).send({
         status: "success",
         data: message,

@@ -16,8 +16,9 @@ export function initWebSocket() {
   });
 }
 
-export function sendMessage(newMessage: string) {
-  const messagePayload = JSON.stringify(newMessage);
+export function sendMessage(text: string, username: string) {
+  const time = new Date().toLocaleTimeString();
+  const messagePayload = JSON.stringify({ text, username, time });
 
   connections.forEach((connection) => connection.send(messagePayload));
 }

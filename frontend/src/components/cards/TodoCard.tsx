@@ -10,7 +10,7 @@ import {
   Button,
   ListItemButton,
 } from "@mui/material";
-import { tokenContext } from "../../AuthProvider.tsx";
+import { tokenContext } from "../../InfoProvider.tsx";
 import axios from "axios";
 import { DateTime } from "luxon";
 
