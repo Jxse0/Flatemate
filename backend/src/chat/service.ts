@@ -28,7 +28,6 @@ const service = {
 
       return newMessage;
     } catch (error) {
-      console.error("Error sending message:", error);
       throw error;
     }
   },
@@ -44,13 +43,11 @@ const service = {
       });
 
       if (chats.length === 0) {
-        console.log("No chats found for the given WG ID.");
         return [];
       }
 
       return chats.map((chat) => chat.messages);
     } catch (error) {
-      console.error("Error retrieving messages:", error);
       throw error;
     }
   },
