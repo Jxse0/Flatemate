@@ -38,7 +38,17 @@ const service = {
           wgid: wgid,
         },
         include: {
-          messages: true,
+          messages: {
+            select: {
+              text: true,
+              time: true,
+              User: {
+                select: {
+                  username: true,
+                },
+              },
+            },
+          },
         },
       });
 
@@ -46,7 +56,13 @@ const service = {
         return [];
       }
 
-      return chats.map((chat) => chat.messages);
+      return chats.map((chat) =>
+        chat.messages.map((message) => ({
+          text: message.text,
+          time: message.time,
+          username: message.User.username,
+        }))
+      );
     } catch (error) {
       throw error;
     }

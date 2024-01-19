@@ -1,20 +1,19 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./Chat.css";
 import ChatApi from "../../api/ChatApi";
-import { tokenContext } from "../../AuthProvider";
+import { tokenContext, userContext } from "../../InfoProvider";
 
 type Message = {
-  id: string;
   text: string;
   time: string;
-  userid: string;
-  chatid: string;
+  username: string;
 };
 
 const Chat: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState<string>("");
   const [token] = useContext(tokenContext);
+  const [user] = useContext(userContext);
 
   useEffect(() => {
     const initMessages = async () => {
@@ -24,21 +23,17 @@ const Chat: React.FC = () => {
 
     initMessages();
 
-    // WebSocket setup
     const socket = new WebSocket(`ws://localhost:8080`);
-    socket.addEventListener("open", () => {
-      console.log("Socket connected");
-    });
+    socket.addEventListener("open", () => {});
     socket.addEventListener("error", (event: Event) => {
       console.error("WebSocket error:", event);
     });
     socket.addEventListener("message", (event: MessageEvent) => {
+      const data = JSON.parse(event.data);
       const incomingMessage: Message = {
-        id: "",
-        text: JSON.parse(event.data),
-        time: "string",
-        userid: "d",
-        chatid: "string",
+        text: data.text,
+        time: data.time,
+        username: data.username,
       };
 
       setMessages((prevMessages) => [...prevMessages, incomingMessage]);
@@ -51,7 +46,7 @@ const Chat: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await ChatApi.sendMessage(newMessage, token);
+    await ChatApi.sendMessage(newMessage, user.username, token);
     setNewMessage("");
   };
 
@@ -62,7 +57,8 @@ const Chat: React.FC = () => {
           messages.map((message, index) => (
             <div key={index} className="message">
               <div>{message.text}</div>
-              <div>{message.userid}</div>
+              <div>{message.username}</div>
+              <div>{message.time}</div>
             </div>
           ))
         ) : (
