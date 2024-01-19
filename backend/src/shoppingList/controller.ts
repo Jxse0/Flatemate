@@ -6,6 +6,9 @@ const ShoppingListController = {
   async getAll(request: Request, response: Response) {
     try {
       const user_token = returnUser(request);
+      if (!user_token) {
+        return response.status(400).json({ error: "User token is required" });
+      }
       const shoppingLists = await service.getAll(user_token.userid);
       response.json(shoppingLists);
     } catch (error) {
@@ -21,21 +24,17 @@ const ShoppingListController = {
     try {
       const { name, items, userIds } = request.body;
 
-      const newShoppingList = await service.create({
-        name,
-        userIds,
-        items,
-      });
+      if (!name || !items || !userIds) {
+        return response.status(400).json({ error: "Missing required fields" });
+      }
 
-      response.status(201).json({
-        status: "success",
-        data: newShoppingList,
-      });
+      const newShoppingList = await service.create({ name, userIds, items });
+      response.status(201).json({ status: "success", data: newShoppingList });
     } catch (error) {
       if (error instanceof Error) {
-        next(error);
+        response.status(500).json({ error: error.message });
       } else {
-        next(new Error("An unknown error occurred"));
+        response.status(500).json({ error: "An unknown error occurred" });
       }
     }
   },
@@ -72,10 +71,14 @@ const ShoppingListController = {
       }
     }
   },
+
   async addItem(request: Request, response: Response) {
     try {
       const shoppingListId = request.params.id;
       const itemData = request.body;
+      if (!itemData) {
+        return response.status(400).json({ error: "Item data is required" });
+      }
       const newItem = await service.addItem(shoppingListId, itemData);
       response
         .status(201)
@@ -88,6 +91,7 @@ const ShoppingListController = {
       }
     }
   },
+
   async removeItem(request: Request, response: Response) {
     try {
       const { shoppingListId, itemId } = request.params;
@@ -106,6 +110,9 @@ const ShoppingListController = {
     try {
       const { itemId } = request.params;
       const itemData = request.body;
+      if (!itemData) {
+        return response.status(400).json({ error: "Item data is required" });
+      }
       const updatedItem = await service.updateListItem(itemId, itemData);
       response
         .status(200)
@@ -123,6 +130,9 @@ const ShoppingListController = {
     try {
       const shoppingListId = request.params.id;
       const listData = request.body;
+      if (!listData) {
+        return response.status(400).json({ error: "List data is required" });
+      }
       const updatedList = await service.updateList(shoppingListId, listData);
       response
         .status(200)
@@ -135,8 +145,6 @@ const ShoppingListController = {
       }
     }
   },
-
-  // Weitere Methoden können hier hinzugefügt werden
 };
 
 export default ShoppingListController;

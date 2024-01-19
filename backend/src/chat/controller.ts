@@ -7,6 +7,11 @@ const controller = {
   async send(request: Request, response: Response, next: NextFunction) {
     try {
       const user_token = returnUser(request);
+      if (!user_token || !request.body.message) {
+        return response
+          .status(400)
+          .send({ error: "Missing user token or message" });
+      }
       const message = await service.send(
         user_token.userid,
         user_token.wgid,
@@ -17,15 +22,22 @@ const controller = {
         status: "success",
         data: message,
       });
-      return message;
     } catch (error) {
-      next(error);
+      response.status(500).send({ error: "Internal Server Error" });
     }
   },
-  async getAll(request: Request, response: Response) {
-    const user_token = returnUser(request);
-    const data = await service.getAll(user_token.wgid);
-    response.json(data);
+
+  async getAll(request: Request, response: Response, next: NextFunction) {
+    try {
+      const user_token = returnUser(request);
+      if (!user_token) {
+        return response.status(400).send({ error: "Missing user token" });
+      }
+      const data = await service.getAll(user_token.wgid);
+      response.json(data);
+    } catch (error) {
+      response.status(500).send({ error: "Internal Server Error" });
+    }
   },
 };
 
