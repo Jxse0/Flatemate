@@ -4,23 +4,27 @@ import returnUser from "../middleware/returnUser";
 
 const controller = {
   async getOne(request: Request, response: Response) {
-    const user_token = returnUser(request);
-    if (!user_token.wgid) {
-      return response
-        .status(400)
-        .send(
-          "The token doesn't contain a wgid, please make sure to login again after creating a wg."
-        );
+    try {
+      const user_token = returnUser(request);
+      if (!user_token.wgid) {
+        return response
+          .status(400)
+          .send(
+            "The token doesn't contain a wgid, please make sure to login again after creating a wg."
+          );
+      }
+      const data = await service.getOne(user_token.wgid);
+      response.json(data);
+    } catch (error) {
+      if (error instanceof Error) {
+        response.status(500).json({ error: error.message });
+      } else {
+        response.status(500).json({ error: "An unknown error occurred" });
+      }
     }
-    const data = await service.getOne(user_token.wgid);
-    response.json(data);
   },
 
-  async create(
-    request: Request,
-    response: Response,
-    next: NextFunction
-  ): Promise<void> {
+  async create(request: Request, response: Response, next: NextFunction) {
     try {
       const user_token = returnUser(request);
       const newWg = {
@@ -35,20 +39,33 @@ const controller = {
         status: "success",
       });
     } catch (error) {
-      next(error);
+      if (error instanceof Error) {
+        next(error);
+      } else {
+        next(new Error("An unknown error occurred"));
+      }
     }
   },
+
   async invite(request: Request, response: Response) {
-    const user_token = returnUser(request);
-    if (!user_token.wgid) {
-      return response
-        .status(400)
-        .send(
-          "The token doesn't contain a wgid, please make sure to login again after creating a wg."
-        );
+    try {
+      const user_token = returnUser(request);
+      if (!user_token.wgid) {
+        return response
+          .status(400)
+          .send(
+            "The token doesn't contain a wgid, please make sure to login again after creating a wg."
+          );
+      }
+      const data = await service.getInviteLink(user_token.wgid);
+      response.json(data);
+    } catch (error) {
+      if (error instanceof Error) {
+        response.status(500).json({ error: error.message });
+      } else {
+        response.status(500).json({ error: "An unknown error occurred" });
+      }
     }
-    const data = await service.getInviteLink(user_token.wgid);
-    response.json(data);
   },
 };
 
