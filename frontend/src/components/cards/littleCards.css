@@ -1,0 +1,40 @@
+.underline {
+    background: -webkit-linear-gradient(right, var(--secondary), var(--highlight));
+    height: 3px;
+    margin: -1.1rem auto 0 auto;
+    width: 50%;
+  }
+  .lineborder {
+    background: -webkit-linear-gradient(right, var(--highlight), var(--secondary));
+    height: 1px;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  #miniamigocard {
+    background: var(--sidebar-color);
+    border-radius: 8px;
+    margin: 10px;
+    width: calc(50% - 20px); 
+    box-shadow: 0px 1px 10px var(--highlight);
+    font-size: medium;
+  }
+  .miniamigocard-container {
+    display: flex;
+    flex-wrap: wrap;
+    max-height: 500px; 
+    overflow-y: auto;
+  }
+  
+  .miniamigoname {
+    margin: 1px;
+  }
+  .wgrules{
+    display: flex;
+    align-items: flex-start;
+    margin-left: 15px;
+  }
+  .user-info {
+    flex-grow: 1;
+  }
+  
+  

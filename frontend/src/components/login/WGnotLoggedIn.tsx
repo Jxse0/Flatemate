@@ -5,7 +5,7 @@ import "./logincard.css";
 import { useNavigate } from "react-router-dom";
 
 const WGnotLoggedIn = () => {
-  const [token] = useContext(tokenContext);
+  const [token, setToken] = useContext(tokenContext);
   const [invitationToken, setInvitationToken] = useState("");
   const [wgname, setWgname] = useState("");
   const [wgdescription, setWgdescription] = useState("");
@@ -42,6 +42,7 @@ const WGnotLoggedIn = () => {
 
       console.debug("Workgroup created successfully:", response.data);
       setShowCreateForm(false);
+      setToken("");
       navigate("/login");
     } catch (error) {
       console.error("Error creating workgroup:", error);
@@ -51,8 +52,6 @@ const WGnotLoggedIn = () => {
   const handleInvitation = async () => {
     // Logic to invite members to the workgroup
     try {
-      console.log(invitationToken);
-
       const response = await axios.put(
         "http://localhost:3001/user/newMember",
         {
@@ -64,10 +63,11 @@ const WGnotLoggedIn = () => {
           },
         }
       );
-
-      console.debug("Members invited!");
-      setShowInviteForm(false);
-      navigate("/login");
+      if(response){
+        setShowInviteForm(false);
+        setToken("");
+        navigate("/login");
+      }
     } catch (error) {
       console.error("Error inviting yourself", error);
     }

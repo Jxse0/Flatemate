@@ -1,16 +1,14 @@
 // Import necessary dependencies
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { CircularProgress, Typography } from "@mui/material";
-import WGnotLoggedIn from "../login/WGnotLoggedIn";
+import { CircularProgress } from "@mui/material";
 import { tokenContext, userContext } from "../../InfoProvider";
-import "./accountDetails.css";
 import { useNavigate } from "react-router-dom";
+import './littleCards.css';
 
 // Main DataFetcherComponent
-const MeAndAmigos: React.FC = () => {
+const WGDetailsCard: React.FC = () => {
   const [token, setToken] = useContext(tokenContext);
-  const [user] = useContext(userContext);
   // State to store fetched data
   const [data, setData] = useState<any>(null);
   // State to track loading state
@@ -39,26 +37,6 @@ const MeAndAmigos: React.FC = () => {
     fetchData();
   }, []);
 
-  const getInviteToken = async () => {
-    try {
-      const response = await axios.get("http://localhost:3001/wg/invite", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      // Copy the text inside the text field
-      await navigator.clipboard.writeText(await response.data);
-
-      // Alert the copied text
-      alert("Copied the key to Clipboard");
-
-      return await response.data;
-    } catch (error) {
-      console.error("Failed to generate WG Invitation Token", error);
-    }
-  };
-
   const handleDelete = async () => {
     try {
       const isConfirmed = window.confirm("Are you sure you want to remove yourself from the WG?")
@@ -84,49 +62,38 @@ const MeAndAmigos: React.FC = () => {
 
   // Display error component if there was an error
   if (error) {
-    return <WGnotLoggedIn />;
+    return(
+        <div >
+        <h2>Oh no. Seems like you didnt join a Flatemate yet. Click up there to register for one</h2>
+        <div className="underline-title"></div>
+        {/* Create div with amigocard id for each user in the array */}
+    </div>
+        ); 
   }
 
   // Display normal page
   return (
-    <div id="accountCard" style={{ position: "relative" }}>
-      <h2>Me and my Amigos</h2>
-      <div className="underline-title"></div>
-      <h1 style={{ color: "var(--highlight)", marginBottom: "10px" }}>
+    <div >
+      <h1 style={{ color: "var(--highlight)", margin: "5px"}}>
         {data.name}
       </h1>
-      <h3 style={{ margin: "5px" }}>{data.description}</h3>
-      <div className="wgrules">Regeln: {data.rules}</div>
-      <div className="line-border"></div>
+      <h3 style={{ margin: "5px", color: "var(--textColor)" }}>{data.description}</h3>
+      <div className="wgrules" style={{color: "var(--textColor)" }}>Regeln: {data.rules}</div>
+      <div className="lineborder"></div>
       {/* Create div with amigocard id for each user in the array */}
+      <div className="miniamigocard-container">
       {data.Users.map((userData: any) => (
-        <div id="amigocard" key={userData.id} className="user-card">
+        <div id="miniamigocard" key={userData.id} style={{color: "var(--textColor)" }}>
           <div className="user-info">
-          <h4 className="amigoname">Name: {userData.name}</h4>
-          <p className="amigoname">Paypal: {userData.paypal}</p>
-          {/* Additional user details can be added here */}
+          <h4 className="miniamigoname">Name: {userData.name}</h4>
+          <p className="miniamigoname">Paypal: {userData.paypal}</p>
+          <p className="miniamigoname">Email: {userData.email}</p>
         </div>
-      {user.id === userData.id && (
-        <button onClick={handleDelete}>Delete</button>
-      )}
   </div>
 ))}
-
-      <button
-        id="invite-btn"
-        onClick={getInviteToken}
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: "50%",
-          transform: "translateX(-50%)",
-          padding: "10px",
-        }}
-      >
-        Invite your Amigos
-      </button>
+</div>
     </div>
   );
 };
 
-export default MeAndAmigos;
+export default WGDetailsCard;

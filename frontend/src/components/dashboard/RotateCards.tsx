@@ -5,6 +5,9 @@ import TodoCard from '../cards/TodoCard';
 import GroceryCard from '../cards/GroceryCard';
 import { Link } from 'react-router-dom';
 import Chat from '../chat/Chat';
+import WGnotLoggedIn from '../login/WGnotLoggedIn';
+import MeAndAmigos from '../accountDetails/meAndAmigos';
+import WGDetailsCard from '../cards/wgDetailsCard';
 
 interface CardsProps {}
 
@@ -113,11 +116,11 @@ const RotateCards: React.FC<CardsProps> = () => {
       </MuiCard>
       {/* Purple Card */}
       <MuiCard className="fill-purple card" data-card="3">
-        <Button className="full-width-button" sx={buttonStyles} component={Link} to="/account">
-          Details
+        <Button className="full-width-button" sx={buttonStyles} component={Link} to="/wg-details">
+         WG Details
         </Button>
         <CardContent className='card-detail'>
-          <Typography variant="h5">details</Typography>
+          <WGDetailsCard/>
         </CardContent>
       </MuiCard>
     </div>
