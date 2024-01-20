@@ -3,18 +3,21 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { CircularProgress, Typography } from "@mui/material";
 import WGnotLoggedIn from "../login/WGnotLoggedIn";
-import { tokenContext } from "../../InfoProvider";
+import { tokenContext, userContext } from "../../InfoProvider";
 import "./accountDetails.css";
+import { useNavigate } from "react-router-dom";
 
 // Main DataFetcherComponent
 const MeAndAmigos: React.FC = () => {
-  const [token] = useContext(tokenContext);
+  const [token, setToken] = useContext(tokenContext);
+  const [user] = useContext(userContext);
   // State to store fetched data
   const [data, setData] = useState<any>(null);
   // State to track loading state
   const [loading, setLoading] = useState(true);
   // State to track error state
   const [error, setError] = useState(false);
+  const navigate = useNavigate();
 
   // useEffect to make the Axios GET request when the component mounts
   useEffect(() => {
@@ -26,7 +29,6 @@ const MeAndAmigos: React.FC = () => {
           },
         });
         setData(response.data);
-        console.log(response.data);
       } catch (error) {
         setError(true);
       } finally {
@@ -57,6 +59,24 @@ const MeAndAmigos: React.FC = () => {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      const isConfirmed = window.confirm("Are you sure you want to remove yourself from the WG?")
+      if(isConfirmed){
+
+        const response = await axios.delete("http://localhost:3001/user/removeMember",
+        {headers:{
+          Authorization:`Bearer ${token}`,
+        },
+      });
+      setToken("");
+      navigate("/");
+    }
+    } catch (error) {
+    console.error("Failed to delete User", error);
+    }
+  };
+
   // Display loading spinner while fetching data
   if (loading) {
     return <CircularProgress />;
@@ -79,16 +99,19 @@ const MeAndAmigos: React.FC = () => {
       <div className="wgrules">Regeln: {data.rules}</div>
       <div className="line-border"></div>
       {/* Create div with amigocard id for each user in the array */}
-      {data.Users.map((user: any) => (
-        <div id="amigocard" key={user.id}>
-          <h4 className="amigoname">Name: {user.name}</h4>
-          <p className="amigoname">Paypal: {user.paypal}</p>
-          {/* Add any additional information you want to display */}
-          <div className="user-details">
-            {/* Additional user details go here */}
-          </div>
+      {data.Users.map((userData: any) => (
+        <div id="amigocard" key={userData.id} className="user-card">
+          <div className="user-info">
+          <h4 className="amigoname">Name: {userData.name}</h4>
+          <p className="amigoname">Paypal: {userData.paypal}</p>
+          {/* Additional user details can be added here */}
         </div>
-      ))}
+      {user.id === userData.id && (
+        <button onClick={handleDelete}>Delete</button>
+      )}
+  </div>
+))}
+
       <button
         id="invite-btn"
         onClick={getInviteToken}
