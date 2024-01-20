@@ -42,7 +42,7 @@ const Chat: React.FC = () => {
 
     initMessages();
 
-    const socket = new WebSocket(`ws://localhost:8080`);
+    const socket = new WebSocket(`${import.meta.env.VITE_WEBSOCKET_URL}`);
     socket.addEventListener("open", () => {});
     socket.addEventListener("error", (event: Event) => {
       console.error("WebSocket error:", event);

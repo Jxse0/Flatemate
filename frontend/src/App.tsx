@@ -1,10 +1,8 @@
 import "./App.css";
-import InfoProvider, { tokenContext } from "./InfoProvider";
-import { useContext } from "react";
+import InfoProvider from "./InfoProvider";
 import Router from "./Routing";
 
 function App() {
-  const [token] = useContext(tokenContext);
   return (
     <InfoProvider>
       <div className="App">

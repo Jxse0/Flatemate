@@ -14,10 +14,13 @@ const Login = () => {
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3001/auth/login", {
-        email: email,
-        password: password,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/auth/login`,
+        {
+          email: email,
+          password: password,
+        }
+      );
 
       const { token } = response.data;
       // Store token in the context

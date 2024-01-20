@@ -27,7 +27,7 @@ const WGnotLoggedIn = () => {
   const handleCreateWorkgroup = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3001/wg",
+        `${import.meta.env.VITE_API_URL}/wg`,
         {
           name: wgname,
           description: wgdescription,
@@ -53,7 +53,7 @@ const WGnotLoggedIn = () => {
     // Logic to invite members to the workgroup
     try {
       const response = await axios.put(
-        "http://localhost:3001/user/newMember",
+        `${import.meta.env.VITE_API_URL}/user/newMember`,
         {
           invite: invitationToken,
         },
@@ -63,7 +63,7 @@ const WGnotLoggedIn = () => {
           },
         }
       );
-      if(response){
+      if (response) {
         setShowInviteForm(false);
         setToken("");
         navigate("/login");

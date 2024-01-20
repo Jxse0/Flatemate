@@ -1,7 +1,7 @@
 // Import necessary dependencies
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { CircularProgress, Typography } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import WGnotLoggedIn from "../login/WGnotLoggedIn";
 import { tokenContext, userContext } from "../../InfoProvider";
 import "./accountDetails.css";
@@ -19,11 +19,13 @@ const MeAndAmigos: React.FC = () => {
   const [error, setError] = useState(false);
   const navigate = useNavigate();
 
+  const api_url = `${import.meta.env.VITE_API_URL}`;
+
   // useEffect to make the Axios GET request when the component mounts
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/wg", {
+        const response = await axios.get(`${api_url}/wg`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -41,7 +43,7 @@ const MeAndAmigos: React.FC = () => {
 
   const getInviteToken = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/wg/invite", {
+      const response = await axios.get(`${api_url}/wg/invite`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -61,19 +63,20 @@ const MeAndAmigos: React.FC = () => {
 
   const handleDelete = async () => {
     try {
-      const isConfirmed = window.confirm("Are you sure you want to remove yourself from the WG?")
-      if(isConfirmed){
-
-        const response = await axios.delete("http://localhost:3001/user/removeMember",
-        {headers:{
-          Authorization:`Bearer ${token}`,
-        },
-      });
-      setToken("");
-      navigate("/");
-    }
+      const isConfirmed = window.confirm(
+        "Are you sure you want to remove yourself from the WG?"
+      );
+      if (isConfirmed) {
+        await axios.delete(`${api_url}/user/removeMember`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setToken("");
+        navigate("/");
+      }
     } catch (error) {
-    console.error("Failed to delete User", error);
+      console.error("Failed to delete User", error);
     }
   };
 
@@ -102,15 +105,15 @@ const MeAndAmigos: React.FC = () => {
       {data.Users.map((userData: any) => (
         <div id="amigocard" key={userData.id} className="user-card">
           <div className="user-info">
-          <h4 className="amigoname">Name: {userData.name}</h4>
-          <p className="amigoname">Paypal: {userData.paypal}</p>
-          {/* Additional user details can be added here */}
+            <h4 className="amigoname">Name: {userData.name}</h4>
+            <p className="amigoname">Paypal: {userData.paypal}</p>
+            {/* Additional user details can be added here */}
+          </div>
+          {user.id === userData.id && (
+            <button onClick={handleDelete}>Delete</button>
+          )}
         </div>
-      {user.id === userData.id && (
-        <button onClick={handleDelete}>Delete</button>
-      )}
-  </div>
-))}
+      ))}
 
       <button
         id="invite-btn"

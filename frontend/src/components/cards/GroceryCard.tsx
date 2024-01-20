@@ -5,10 +5,6 @@ import {
   Card,
   CardContent,
   IconButton,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
   Modal,
   Table,
   TableBody,
@@ -18,14 +14,14 @@ import {
   TableRow,
   TextField,
   Paper,
-  Typography,
 } from "@mui/material";
 import { tokenContext } from "../../InfoProvider";
 import axios from "axios";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
+
 const GroceryCard = () => {
   const [groceryInput, setGroceryInput] = useState("");
-  const [quantityInput, setQuantityInput] = useState("");
+  const [quantityInput, setQuantityInput] = useState<number>(1);
   const [groceries, setGroceries] = useState([]);
   const [token] = useContext(tokenContext);
   const [listId, setListId] = useState("");
@@ -47,9 +43,11 @@ const GroceryCard = () => {
     p: 4,
   };
 
+  const api_url = `${import.meta.env.VITE_API_URL}`;
+
   const getUserId = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/user", {
+      const response = await axios.get(`${api_url}/user`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -62,28 +60,25 @@ const GroceryCard = () => {
   const loadGroceries = async () => {
     let items = [];
     try {
-      const response = await axios.get("http://localhost:3001/shoppingList", {
+      const response = await axios.get(`${api_url}/shoppingList`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       if (response.data.length > 0) {
         const id = response.data[0].id;
-        const listResponse = await axios.get(
-          `http://localhost:3001/shoppingList/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const listResponse = await axios.get(`${api_url}/shoppingList/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setListId(id);
         items = listResponse.data.items;
       } else {
         const userId = await getUserId();
-        const createListResponse = axios
+        axios
           .post(
-            "http://localhost:3001/shoppingList",
+            `${api_url}/shoppingList`,
             {
               name: "default",
               userIds: [userId],
@@ -119,7 +114,7 @@ const GroceryCard = () => {
 
       axios
         .post(
-          `http://localhost:3001/shoppingList/${listId}/items`,
+          `${api_url}/shoppingList/${listId}/items`,
           {
             name: groceryInput,
             quantity: amount,
@@ -134,7 +129,7 @@ const GroceryCard = () => {
           console.log("Erfolgreich gesendet:", response.data);
           loadGroceries();
           setGroceryInput("");
-          setQuantityInput("");
+          setQuantityInput(1);
         })
         .catch((error) => {
           console.error("Fehler beim Senden:", error);
@@ -144,14 +139,11 @@ const GroceryCard = () => {
 
   const handleDeleteTodo = async (id: string) => {
     try {
-      await axios.delete(
-        `http://localhost:3001/shoppingList/${listId}/items/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await axios.delete(`${api_url}/shoppingList/${listId}/items/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       await loadGroceries();
     } catch (error) {
       console.error("Error deleting todo:", error);
@@ -216,7 +208,7 @@ const GroceryCard = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {groceries.map((item, index) => (
+                {groceries.map((item: any, index) => (
                   <TableRow key={index}>
                     <TableCell>{item.name}</TableCell>
                     <TableCell>{item.quantity}</TableCell>

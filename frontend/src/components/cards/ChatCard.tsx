@@ -3,7 +3,6 @@ import {
   Card,
   CardContent,
   TextField,
-  Button,
   Typography,
   Grid,
   Box,
@@ -14,7 +13,7 @@ function ChatBoxCard() {
   const [prompt, setPrompt] = useState("");
   const [response, setResponse] = useState("Response goes here");
 
-  const handlePromptChange = (event) => {
+  const handlePromptChange = (event: any) => {
     setPrompt(event.target.value);
   };
 
@@ -24,7 +23,7 @@ function ChatBoxCard() {
 
     const response = await axios({
       method: "post",
-      url: "http://localhost:3001/gpt",
+      url: `${import.meta.env.VITE_API_URL}/gpt`,
       data: { message: prompt },
     });
 
@@ -32,16 +31,22 @@ function ChatBoxCard() {
   };
 
   return (
-    <Card sx={{ 
-      height: 300, 
-      display: "flex", 
-      flexDirection: "column", 
-      background: "var(--cardBackground)", 
-      borderRadius: "8px",
-      boxShadow: "1px 2px 8px rgba(0, 0, 0, 0.65)"
-    }}>
+    <Card
+      sx={{
+        height: 300,
+        display: "flex",
+        flexDirection: "column",
+        background: "var(--cardBackground)",
+        borderRadius: "8px",
+        boxShadow: "1px 2px 8px rgba(0, 0, 0, 0.65)",
+      }}
+    >
       <CardContent sx={{ flexGrow: 1 }}>
-        <Typography variant="h5" component="div" sx={{ color: "var(--textColor)" }}>
+        <Typography
+          variant="h5"
+          component="div"
+          sx={{ color: "var(--textColor)" }}
+        >
           Ask AImigo
         </Typography>
         <Box
@@ -56,7 +61,11 @@ function ChatBoxCard() {
           }}
         >
           {response && (
-            <Typography variant="body1" component="p" sx={{ color: "var(--textColor)" }}>
+            <Typography
+              variant="body1"
+              component="p"
+              sx={{ color: "var(--textColor)" }}
+            >
               {response}
             </Typography>
           )}
@@ -65,33 +74,36 @@ function ChatBoxCard() {
       <Box sx={{ p: 2 }}>
         <Grid container spacing={2} alignItems="center" justifyContent="center">
           <Grid item xs={12} sm={8}>
-          <TextField
-  fullWidth
-  label="Prompt"
-  variant="outlined"
-  value={prompt}
-  onChange={handlePromptChange}
-  sx={{
-    "& label": {
-      color: "var(--textColor)",
-    },
-    "& .MuiOutlinedInput-root": {
-      borderColor: "var(--highlight)", // Set your desired outline color here
-      "&:hover fieldset": {
-        borderColor: "var(--highlight)", // Change the color on hover
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "var(--highlight)", // Change the color on focus
-            },
-             }, 
-             "& .Mui-focused": {
-              color: "var(--highlight)", // Change the color of the label on focus
-            },
-             }}
-          />
+            <TextField
+              fullWidth
+              label="Prompt"
+              variant="outlined"
+              value={prompt}
+              onChange={handlePromptChange}
+              sx={{
+                "& label": {
+                  color: "var(--textColor)",
+                },
+                "& .MuiOutlinedInput-root": {
+                  borderColor: "var(--highlight)", // Set your desired outline color here
+                  "&:hover fieldset": {
+                    borderColor: "var(--highlight)", // Change the color on hover
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "var(--highlight)", // Change the color on focus
+                  },
+                },
+                "& .Mui-focused": {
+                  color: "var(--highlight)", // Change the color of the label on focus
+                },
+              }}
+            />
           </Grid>
           <Grid item xs={12} sm={4}>
-            <button onClick={handleSubmit} style={{ color: "var(--textColor)" }}>
+            <button
+              onClick={handleSubmit}
+              style={{ color: "var(--textColor)" }}
+            >
               Submit
             </button>
           </Grid>

@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import {
   Card,
   CardContent,
-  Typography,
   TextField,
   Button,
   Autocomplete,
@@ -28,10 +27,10 @@ const TodoCard = () => {
   const [todoInput, setTodoInput] = useState("");
   const [todoDescription, setTodoDescription] = useState("");
   const [cycleInput, setCycleInput] = useState(3);
-  const [todoUsers, setTodoUsers] = useState([]); // [id, id, id]
+  const [todoUsers, setTodoUsers] = useState<any>([]); // [id, id, id]
   const [todos, setTodos] = useState([]);
   const [token] = useContext(tokenContext);
-  const [wgMembers, setWgMembers] = useState([]);
+  const [wgMembers, setWgMembers] = useState<any>([]);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -50,9 +49,11 @@ const TodoCard = () => {
     p: 4,
   };
 
+  const api_url = `${import.meta.env.VITE_API_URL}`;
+
   const loadTodos = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/todo", {
+      const response = await axios.get(`${api_url}/todo`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -60,7 +61,7 @@ const TodoCard = () => {
       let todos = response.data;
       if (todos.length > 0) {
         todos = await Promise.all(
-          todos.map(async (todo) => {
+          todos.map(async (todo: any) => {
             const details = await getTodoDetails(todo.id);
             return { ...todo, details };
           })
@@ -75,12 +76,13 @@ const TodoCard = () => {
 
   const loadWgMembers = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/wg", {
+      const response = await axios.get(`${api_url}/wg`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       if (response.data.Users) {
+        console.log(response.data.Users);
         setWgMembers(response.data.Users);
       } else {
         console.log("No WG created yet");
@@ -98,7 +100,7 @@ const TodoCard = () => {
 
   const getUserId = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/user", {
+      const response = await axios.get(`${api_url}/user`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -111,7 +113,7 @@ const TodoCard = () => {
 
   const getTodoDetails = async (id: string) => {
     try {
-      const response = await axios.get(`http://localhost:3001/todo/${id}`, {
+      const response = await axios.get(`${api_url}/todo/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -132,10 +134,10 @@ const TodoCard = () => {
       }
       axios
         .post(
-          "http://localhost:3001/todo",
+          `${api_url}/todo`,
           {
             title: todoInput,
-            ids: todoUsers.map((user) => user.id),
+            ids: todoUsers.map((user: any) => user.id),
             description: todoDescription,
             startdate: DateTime.now().toISODate(),
             frequenz: cycleInput.toString(),
@@ -156,12 +158,13 @@ const TodoCard = () => {
 
       setTodoInput("");
       setTodoDescription("");
+      setOpen(false);
     }
   };
 
   const handleDeleteTodo = async (id: string) => {
     try {
-      await axios.delete(`http://localhost:3001/todo/${id}`, {
+      await axios.delete(`${api_url}/todo/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -172,13 +175,13 @@ const TodoCard = () => {
     }
   };
 
-  const getDateAndUser = (todoDetails: []) => {
-    return todoDetails.map((detail, index) => {
+  const getDateAndUser = (todoDetails: any[]) => {
+    return todoDetails.map((detail: any, index) => {
       const formattedDate = DateTime.fromISO(detail.nextTurn).toFormat(
         "dd LLL"
       );
       const userName = wgMembers.find(
-        (user) => user.id === detail.userid
+        (user: any) => user.id === detail.userid
       )?.name;
 
       return (
@@ -230,11 +233,12 @@ const TodoCard = () => {
                 multiple
                 id="tags-standard"
                 options={wgMembers}
-                onChange={(event, value) => {
+                onChange={(event, value: any) => {
+                  console.log(event);
                   setTodoUsers(value);
                   console.log(todoUsers);
                 }}
-                getOptionLabel={(option) => option.name}
+                getOptionLabel={(option: any) => option.name}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -276,7 +280,7 @@ const TodoCard = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {todos.map((todo, index) => (
+                {todos.map((todo: any, index) => (
                   <TableRow key={index}>
                     <TableCell>{todo.title}</TableCell>
                     <TableCell>{todo.description}</TableCell>

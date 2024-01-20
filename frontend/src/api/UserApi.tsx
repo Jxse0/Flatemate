@@ -1,5 +1,5 @@
-const API_URL_USER = "http://localhost:3001/user";
-const API_URL_WG = "http://localhost:3001/wg";
+const API_URL_USER = `${import.meta.env.VITE_API_URL}/user`;
+const API_URL_WG = `${import.meta.env.VITE_API_URL}/wg`;
 
 const UserApi = {
   async getUser(token: string) {

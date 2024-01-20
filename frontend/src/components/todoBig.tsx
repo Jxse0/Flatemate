@@ -22,7 +22,7 @@ const Todo = () => {
   const [todoUsers, setTodoUsers] = useState([]); // [id, id, id]
   const [todos, setTodos] = useState([]);
   const [token] = useContext(tokenContext);
-  const [wgMembers, setWgMembers] = useState([]);
+  const [wgMembers, setWgMembers] = useState<any>([]);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -41,9 +41,11 @@ const Todo = () => {
     p: 4,
   };
 
+  const api_url = `${import.meta.env.VITE_API_URL}`;
+
   const loadTodos = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/todo", {
+      const response = await axios.get(`${api_url}/todo`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -51,7 +53,7 @@ const Todo = () => {
       let todos = response.data;
       if (todos.length > 0) {
         todos = await Promise.all(
-          todos.map(async (todo) => {
+          todos.map(async (todo: any) => {
             const details = await getTodoDetails(todo.id);
             return { ...todo, details };
           })
@@ -66,7 +68,7 @@ const Todo = () => {
 
   const loadWgMembers = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/wg", {
+      const response = await axios.get(`${api_url}/wg`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -89,7 +91,7 @@ const Todo = () => {
 
   const getUserId = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/user", {
+      const response = await axios.get(`${api_url}/user`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -102,7 +104,7 @@ const Todo = () => {
 
   const getTodoDetails = async (id: string) => {
     try {
-      const response = await axios.get(`http://localhost:3001/todo/${id}`, {
+      const response = await axios.get(`${api_url}/todo/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -116,17 +118,16 @@ const Todo = () => {
   const handleAddTodo = async () => {
     if (todoInput.trim() !== "" && todoDescription.trim() !== "") {
       const userid = await getUserId();
-      console.log(userid);
-      if (!userid) {
+      if (!userid || todoUsers.length === 0) {
         console.error("User ID not found");
         return;
       }
       axios
         .post(
-          "http://localhost:3001/todo",
+          `${api_url}/todo`,
           {
             title: todoInput,
-            ids: todoUsers.map((user) => user.id),
+            ids: todoUsers.map((user: any) => user.id),
             description: todoDescription,
             startdate: DateTime.now().toISODate(),
             frequenz: cycleInput.toString(),
@@ -152,7 +153,7 @@ const Todo = () => {
 
   const handleDeleteTodo = async (id: string) => {
     try {
-      await axios.delete(`http://localhost:3001/todo/${id}`, {
+      await axios.delete(`${api_url}/todo/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -163,13 +164,13 @@ const Todo = () => {
     }
   };
 
-  const getDateAndUser = (todoDetails: []) => {
+  const getDateAndUser = (todoDetails: any[]) => {
     return todoDetails.map((detail, index) => {
       const formattedDate = DateTime.fromISO(detail.nextTurn).toFormat(
         "dd LLL"
       );
       const userName = wgMembers.find(
-        (user) => user.id === detail.userid
+        (user: any) => user.id === detail.userid
       )?.name;
 
       return (
@@ -219,11 +220,11 @@ const Todo = () => {
             multiple
             id="tags-standard"
             options={wgMembers}
-            onChange={(event, value) => {
-              setTodoUsers(value);
+            onChange={(e: any) => {
+              setTodoUsers(e.target.value);
               console.log(todoUsers);
             }}
-            getOptionLabel={(option) => option.name}
+            getOptionLabel={(option: any) => option.name}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -265,7 +266,7 @@ const Todo = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {todos.map((todo, index) => (
+            {todos.map((todo: any, index) => (
               <TableRow key={index}>
                 <TableCell>{todo.title}</TableCell>
                 <TableCell>{todo.description}</TableCell>

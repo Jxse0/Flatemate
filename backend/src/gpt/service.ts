@@ -1,7 +1,10 @@
 import OpenAI from "openai";
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 const openai = new OpenAI({
-  apiKey: "APIKEYHERE", // defaults to process.env["OPENAI_API_KEY"]
+  apiKey: process.env.OPENAI_API_KEY, // defaults to process.env["OPENAI_API_KEY"]
 });
 
 const service = {
