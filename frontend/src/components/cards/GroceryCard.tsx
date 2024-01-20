@@ -1,23 +1,51 @@
 import { useContext, useEffect, useState } from "react";
 import {
+  Box,
   Button,
   Card,
   CardContent,
+  IconButton,
   List,
   ListItem,
   ListItemButton,
   ListItemText,
+  Modal,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
   TextField,
+  Paper,
   Typography,
 } from "@mui/material";
 import { tokenContext } from "../../InfoProvider";
 import axios from "axios";
+import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 const GroceryCard = () => {
   const [groceryInput, setGroceryInput] = useState("");
   const [quantityInput, setQuantityInput] = useState("");
   const [groceries, setGroceries] = useState([]);
   const [token] = useContext(tokenContext);
   const [listId, setListId] = useState("");
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const style = {
+    position: "absolute" as "absolute",
+    alignItems: "center",
+    textAlign: "center" as "center",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
 
   const getUserId = async () => {
     try {
@@ -133,46 +161,75 @@ const GroceryCard = () => {
   return (
     <Card>
       <CardContent>
-        <CardContent sx={{ height: 200, overflowY: "auto" }}>
-          <TextField
-            value={groceryInput}
-            onChange={(e) => setGroceryInput(e.target.value)}
-            label="Add Item"
-            variant="outlined"
-          />
-          <TextField
-            value={quantityInput}
-            onChange={(e) => setQuantityInput(parseInt(e.target.value))}
-            type="number"
-            label="Add Quantity"
-            variant="outlined"
-          />
-          <Button
-            onClick={handleAddGrocery}
-            variant="contained"
-            color="primary"
-          >
-            Add
+        <CardContent>
+          <Button style={{ marginBottom: "10px" }} onClick={handleOpen}>
+            Add Todo
           </Button>
-          <List>
-            <ListItem>
-              <ListItemText primary={<b>Item</b>} />
-              <ListItemText primary={<b>Quantity</b>} />
-              <ListItemText primary={<b>Delete</b>} />
-            </ListItem>
-            {groceries.map((item, index) => (
-              <ListItem key={index}>
-                <ListItemText primary={item.name} />
-                <ListItemText primary={item.quantity} />
-                <ListItemButton
-                  key={index}
-                  onClick={() => handleDeleteTodo(item.id)}
-                >
-                  Bought it!
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <TextField
+                style={{ paddingRight: "5px" }}
+                value={groceryInput}
+                onChange={(e) => setGroceryInput(e.target.value)}
+                label="Add Item"
+                variant="outlined"
+              />
+              <TextField
+                value={quantityInput}
+                style={{ paddingLeft: "5px" }}
+                onChange={(e) => setQuantityInput(parseInt(e.target.value))}
+                type="number"
+                label="Add Quantity"
+                variant="outlined"
+              />
+              <Button
+                style={{ marginTop: "10px" }}
+                onClick={handleAddGrocery}
+                variant="contained"
+                color="primary"
+              >
+                Add
+              </Button>
+            </Box>
+          </Modal>
+          <TableContainer
+            component={Paper}
+            style={{ maxHeight: 300, overflow: "auto" }}
+          >
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>
+                    <b>Item</b>
+                  </TableCell>
+                  <TableCell>
+                    <b>Quantity</b>
+                  </TableCell>
+                  <TableCell>
+                    <b>Shopped it!</b>
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {groceries.map((item, index) => (
+                  <TableRow key={index}>
+                    <TableCell>{item.name}</TableCell>
+                    <TableCell>{item.quantity}</TableCell>
+                    <TableCell>
+                      <IconButton onClick={() => handleDeleteTodo(item.id)}>
+                        <ShoppingCartCheckoutIcon color="warning" />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>{" "}
         </CardContent>
       </CardContent>
     </Card>
