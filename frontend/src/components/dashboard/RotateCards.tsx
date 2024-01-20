@@ -113,7 +113,7 @@ const RotateCards: React.FC<CardsProps> = () => {
       </MuiCard>
       {/* Purple Card */}
       <MuiCard className="fill-purple card" data-card="3">
-        <Button className="full-width-button" sx={buttonStyles} component={Link} to="/account">
+        <Button className="full-width-button" sx={buttonStyles} component={Link} to="/wg-details">
           Details
         </Button>
         <CardContent className='card-detail'>

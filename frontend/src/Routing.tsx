@@ -3,12 +3,12 @@ import { useContext } from "react";
 import { tokenContext } from "./InfoProvider";
 import SignUp from "./components/login/SignUp";
 import ShoppingList from "./components/shoppinglist/shoppingList";
-import SidebarLeft from "./components/sidebar/sidebar";
 import Login from "./components/login/login";
 import Dashboard from "./components/dashboard/Dashboard";
 import MeAndAmigos from "./components/accountDetails/meAndAmigos";
 import Chat from "./components/chat/Chat";
 import Todo from "./components/todoBig";
+import BasicMenu from "./components/sidebar/newSidebar";
 
 type Props = {
   children: React.ReactNode;
@@ -27,7 +27,7 @@ function Router() {
   return (
     <BrowserRouter>
       <div className="App">
-        <SidebarLeft />
+        <BasicMenu />
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />

@@ -1,0 +1,7 @@
+#basic-button{
+    color: var(--textColor)
+}
+
+#basic-menu {
+    background: var(sidebar-color);
+}
