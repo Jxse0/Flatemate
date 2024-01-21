@@ -129,10 +129,10 @@ const RotateCards: React.FC<CardsProps> = () => {
           Chat
         </Button>
         <CardContent style={{ flex: 1 }}>
-          <Chat />
+          <Chat size="small" />
         </CardContent>
       </MuiCard>
-      {/* Purple Card */}
+      {/* Purple Card with wg details */}
       <MuiCard className="fill-purple card" data-card="3">
         <Button
           className="full-width-button"

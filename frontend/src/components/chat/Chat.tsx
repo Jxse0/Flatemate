@@ -19,7 +19,11 @@ function formatMessageDate(dateString: string) {
   return `${hours}:${minutes} ${day}-${month}-${year}`;
 }
 
-const Chat: React.FC = () => {
+type ChatProps = {
+  size: "big" | "small";
+};
+
+const Chat: React.FC<ChatProps> = ({ size }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState<string>("");
   const [token] = useContext(tokenContext);
@@ -77,8 +81,8 @@ const Chat: React.FC = () => {
     setNewMessage("");
   };
   return (
-    <div className="chat-container">
-      <div className="messages-container">
+    <div className={`chat-container ${size === "big" ? "big-chat" : "small-chat"}`}>
+      <div className={`messages-container ${size === "big" ? "big-container": "small-container"}`}>
         {messages.length > 0 ? (
           messages.map((message, index) => (
             <div key={index} className="message">
@@ -96,7 +100,7 @@ const Chat: React.FC = () => {
       </div>
       <form onSubmit={handleSubmit}>
         <textarea
-          className="chat-input"
+          className={`chat-input ${size === "big" ? "big-input": "small-input"}`}
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
           placeholder="Type your message here..."

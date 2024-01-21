@@ -60,7 +60,7 @@ function Router() {
             path="/chat"
             element={
               <IsLoggedIn>
-                <Chat />
+                <Chat size="big" />
               </IsLoggedIn>
             }
           />
@@ -69,14 +69,6 @@ function Router() {
             element={
               <IsLoggedIn>
                 <Todo />
-              </IsLoggedIn>
-            }
-          />
-          <Route
-            path="/account"
-            element={
-              <IsLoggedIn>
-                <Chat />
               </IsLoggedIn>
             }
           />

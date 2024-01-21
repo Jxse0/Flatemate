@@ -9,6 +9,14 @@
   background-color: #fff;
   width: 1000px;
 }
+.big-chat {
+  /* Styles for the big version */
+}
+
+.small-chat {
+  width: 90%;
+  height: 80%;
+}
 
 .chat-input {
   width: 900px;
@@ -20,6 +28,10 @@
   resize: none;
   font-size: 16px;
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.small-input{
+  width: 	90%;
+  height: 30px;
 }
 
 .send-button {
@@ -48,6 +60,10 @@
   border-radius: 10px;
   background-color: #f9f9f9;
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.small-container{
+  max-height: 100px;
 }
 
 .message {

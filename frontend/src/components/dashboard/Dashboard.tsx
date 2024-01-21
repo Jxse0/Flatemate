@@ -1,5 +1,5 @@
 import { Container, Grid } from "@mui/material";
-import ChatCard from "../cards/ChatCard";
+import ChatCard from "../cards/AImigoCard";
 import RotateCards from "./RotateCards";
 import { userContext, tokenContext, membersContext } from "../../InfoProvider";
 import { useContext, useEffect } from "react";
