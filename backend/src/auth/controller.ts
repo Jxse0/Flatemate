@@ -6,47 +6,63 @@ import service from "./service";
 const refreshTokens: string[] = [];
 
 const authController = {
-  async login(request: Request, response: Response): Promise<void> {
+  async login(request: Request, response: Response) {
     const { email, password } = request.body;
-    const user = await userService.findUserByEmail(email);
-
-    if (!user)
-      response.status(400).send({ status: "Error", message: "No User found!" });
-
     try {
-      if (await bcrypt.compare(password, user?.password as string)) {
-        const ywtAuth = service.login(
-          user?.id as string,
-          user?.username as string
-        );
+      const user = await userService.findUserByEmail(email);
+      if (!user) {
+        return response
+          .status(400)
+          .send({ status: "Error", message: "No User found!" });
+      }
 
-        if (ywtAuth.token) {
-          response.status(200).send(ywtAuth);
+      if (await bcrypt.compare(password, user.password)) {
+        const jwtAuth = service.login(user.id, user.wgid as any);
+        if (jwtAuth.token) {
+          response.status(200).send(jwtAuth);
         } else {
-          response.statusCode = 400;
-          response.send("Bad Request");
+          response
+            .status(400)
+            .send({ status: "Error", message: "Bad Request" });
         }
       } else {
         response.status(403).send({
-          status: "error",
+          status: "Error",
           message: "Username or password does not match!",
         });
       }
-    } catch {
-      response.status(500).send();
+    } catch (error) {
+      if (error instanceof Error) {
+        response.status(500).send({ status: "Error", message: error.message });
+      } else {
+        response
+          .status(500)
+          .send({ status: "Error", message: "An unknown error occurred" });
+      }
     }
   },
-  async token(request: Request, response: Response): Promise<void> {
+
+  async token(request: Request, response: Response) {
     const refreshToken = request.body.token;
 
     if (refreshToken == null) {
-      response.sendStatus(401);
+      return response.sendStatus(401);
     }
     if (!refreshTokens.includes(refreshToken)) {
-      response.sendStatus(403);
-    } else {
+      return response.sendStatus(403);
+    }
+
+    try {
       const accessToken = service.token(refreshToken);
       response.json({ token: accessToken });
+    } catch (error) {
+      if (error instanceof Error) {
+        response.status(500).send({ status: "Error", message: error.message });
+      } else {
+        response
+          .status(500)
+          .send({ status: "Error", message: "An unknown error occurred" });
+      }
     }
   },
 };

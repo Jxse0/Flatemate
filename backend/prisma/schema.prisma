@@ -12,12 +12,74 @@ datasource db {
 }
 
 model User {
-  id            String         @id @unique @default(uuid())
-  email         String         @unique
-  username      String
-  surname       String
+  id        String     @id @unique @default(uuid())
+  email     String     @unique
+  username  String
+  surname   String
+  name      String
+  paypal    String
+  password  String
+  wgid      String?    
+  Wg        Wg?        @relation(fields: [wgid], references: [id]) 
+  UserTodo  UserTodo[]
+  Messages     Message[]
+  ShoppingLists ShoppingList[]   
+}
+model Chat {
+  id        String    @id @unique @default(uuid())
+  messages   Message[]
+  wgid      String
+  Wg        Wg        @relation(fields: [wgid], references: [id])
+}
+
+model Message {
+  id        String   @id @unique @default(uuid())
+  text   String
+  time      DateTime @default(now())
+  userid    String
+  User      User     @relation(fields: [userid], references: [id])
+  chatid    String?   // Optional reference to a Chat
+  Chat      Chat?     @relation(fields: [chatid], references: [id])
+}
+
+model Todo {
+  id          String     @id @unique @default(uuid())
+  title       String        
+  description String
+  frequenz    String
+  UserTodo    UserTodo[] 
+}
+
+model UserTodo {
+  id      String    @id @unique @default(uuid())
+  userid  String
+  todoid  String
+  nextTurn DateTime
+  User    User      @relation(fields: [userid], references: [id])
+  Todo    Todo      @relation(fields: [todoid], references: [id])
+}
+
+model Wg {
+  id          String   @id @unique @default(uuid())
+  name        String
+  description String
+  rules       String
+  Users       User[]
+  Chats     Chat[]    // Relation to multiple chats
+}
+
+model ShoppingList {
+  id        String              @id @unique @default(uuid())
+  name      String              // Name der Einkaufsliste
+  Users     User[]
+  items     ShoppingListItem[]
+}
+
+model ShoppingListItem {
+  id            String        @id @unique @default(uuid())
   name          String
-  paypal        String
-  password      String
-  
+  quantity      Int
+  price         Float?        // Optional, kann null sein
+  shoppingListId String
+  ShoppingList  ShoppingList  @relation(fields: [shoppingListId], references: [id])
 }

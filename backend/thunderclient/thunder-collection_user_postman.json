@@ -1,0 +1,87 @@
+{
+    "info": {
+        "_postman_id": "707011eb-2efb-4050-b438-37178316f188",
+        "name": "user",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": ""
+    },
+    "item": [
+        {
+            "name": "http://localhost:3001/user/",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:3001/user",
+                    "path": [
+                        "user"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "header": [
+                    {
+                        "key": "Accept",
+                        "value": "*/*",
+                        "disabled": true
+                    },
+                    {
+                        "key": "User-Agent",
+                        "value": "Thunder Client (https://www.thunderclient.com)",
+                        "disabled": true
+                    },
+                    {
+                        "key": "Bearer",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNDA0Yzk4LWQzMjQtNDgxYS1iMjdmLTk3YmExMTM1MzBjMyIsInVzZXJuYW1lIjoiaGFuc2dsw7xjayIsImlhdCI6MTY5OTU2NDcxNywiZXhwIjoxNjk5NTc1NTE3fQ.9RBP0Faeu4I1TTVg_UuDf93dVimU_OWYHgOcKSmKYzM",
+                        "disabled": true
+                    }
+                ],
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk3M2ExYzlkLWVjZWQtNDBjYy1iOTk2LTA3MWZhMGZhZTRlNSIsInVzZXJuYW1lIjoiYmVpc3BpZWx1c2VyMiIsImlhdCI6MTcwMjE1NTU2NSwiZXhwIjoxNzAyMTY2MzY1fQ.WvwGKu3563b3mF0HRSCMRYYNfrfhSpzWUtuQF4EfXbA",
+                            "type": "string"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "http://localhost:3001/user",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:3001/user",
+                    "path": [
+                        "user"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "header": [
+                    {
+                        "key": "Accept",
+                        "value": "*/*",
+                        "disabled": true
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"email\": \"beispiel2@example.com\",\n  \"username\": \"beispieluser2\",\n  \"paypal\": \"beispiel@paypal.com\",\n  \"password\": \"Passwort123\",\n  \"surname\": \"Nachname\",\n  \"name\": \"Vorname\"\n}\n"
+                }
+            }
+        }
+    ]
+}
